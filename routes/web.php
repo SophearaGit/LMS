@@ -26,14 +26,6 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
 });
 
-/**
- * ————————————————————————————————————————————————————————————————————————————————
- * ADMIN ROUTE
- * ————————————————————————————————————————————————————————————————————————————————
- */
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
 require __DIR__ . '/auth.php';
 
