@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class InstructorDashboardController extends Controller
+class StudentDashboardController extends Controller
 {
-
     public function index()
     {
-        $data = [
-            'pageTitle' => 'EduCore | Instructor-Dashboard'
+        $date = [
+            'pageTitle' => 'EdoCore | Student-Dashboard'
         ];
-        return view('front.pages.instructor.index', $data);
+        return view('front.pages.student.index', $date);
     }
-
 }
+

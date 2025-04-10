@@ -186,7 +186,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="common_btn" href="#">Sign Up</a>
+                    <a class="common_btn" href="{{ route('login') }}">Sign In</a>
                 </li>
             </ul>
         </div>

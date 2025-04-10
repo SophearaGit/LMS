@@ -13,7 +13,6 @@
 
 
     {{-- ABOUT 3 START --}}
-    ============================-->
     @include('front.pages.home.sections.about')
     {{-- ABOUT 3 END --}}
 
@@ -56,10 +55,5 @@
     {{-- BLOG 4 START --}}
     @include('front.pages.home.sections.blog')
     {{-- BLOG 4 END --}}
-
-
-    {{-- FOOTER 3 START --}}
-    @include('front.layouts.components.footer')
-    {{-- FOOTER 3 END --}}
 
 @endsection
