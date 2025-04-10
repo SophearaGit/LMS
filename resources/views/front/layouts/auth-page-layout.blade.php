@@ -32,10 +32,10 @@
 
 <body class="home_3">
 
-    {{-- PRELOADER START --}}
-    @include('front.layouts.components.preloader')
-    {{-- PRELOADER START --}}
 
+    <!--============ PRELOADER START ===========-->
+    @include('front.layouts.components.preloader')
+    <!--============ PRELOADER START ===========-->
 
     {{-- HEADER START --}}
     @include('front.layouts.components.header')
@@ -51,19 +51,22 @@
     @include('front.layouts.components.sticky-menu')
     {{-- STICKY MENU END --}}
 
-
-    {{-- CONTENT START --}}
+    <!--===========================
+        SIGN IN START
+    ============================-->
     @yield('content')
-    {{-- CONTENT END --}}
+    <!--===========================
+        SIGN IN END
+    ============================-->
 
-
-    {{-- SCROLL BUTTON START --}}
+    <!--================================
+        SCROLL BUTTON START
+    =================================-->
     @include('front.layouts.components.scroll-button')
-    {{-- SCROLL BUTTON END --}}
+    <!--================================
+        SCROLL BUTTON END
+    =================================-->
 
-    {{-- FOOTER 3 START --}}
-    @include('front.layouts.components.footer')
-    {{-- FOOTER 3 END --}}
 
     <!--jquery library js-->
     <script src="/front/js/jquery-3.7.1.min.js"></script>
@@ -106,7 +109,6 @@
 
     <!--main/custom js-->
     <script src="/front/js/main.js"></script>
-    @stack('scripts')
 
 </body>
 
