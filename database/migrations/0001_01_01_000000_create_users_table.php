@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,11 +12,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->enum('role', ['instructor', 'student']);
+            $table->string('image')->default('/defualt-files/user/sophearaAsDubaiCat.jpg');
             $table->string('name');
+            $table->string('headline')->nullable();
             $table->string('email')->unique();
+            $table->text('bio')->nullable();
+            $table->string('document')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['instructor', 'student']);
+            $table->string('facebook')->nullable();
+            $table->string('x')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('website')->nullable();
+            $table->string('github')->nullable();
+            $table->enum('approval_status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('login_as', ['student', 'instructor'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
