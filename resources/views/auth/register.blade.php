@@ -73,10 +73,22 @@
             <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-9 m-auto wow fadeInRight"
                 style="visibility: visible; animation-name: fadeInRight;">
                 <div class="wsus__sign_form_area">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                aria-selected="true">Student</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false" tabindex="-1">Instructor</button>
+                        </li>
+                    </ul>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
-                            <form method="POST" action="{{ route('register') }}">
+                            <form method="POST" action="{{ route('register', ['type' => 'student']) }}">
                                 @csrf
                                 <h2>Sign Up<span>!</span></h2>
                                 <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
@@ -86,7 +98,8 @@
                                         <div class="wsus__login_form_input">
                                             <label>Name</label>
                                             <input type="text" placeholder="Enter your name here." id="name"
-                                                name="name" value="{{ old('name') }}" autofocus autocomplete="name">
+                                                name="name" value="{{ old('name') }}" autofocus autocomplete="name"
+                                                required>
                                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                         </div>
                                     </div>
@@ -95,7 +108,7 @@
                                         <div class="wsus__login_form_input">
                                             <label>Email</label>
                                             <input id="email" type="email" name="email" value="{{ old('email') }}"
-                                                autocomplete="username" placeholder="Enter your email here.">
+                                                autocomplete="username" placeholder="Enter your email here." required>
                                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                         </div>
                                     </div>
@@ -104,7 +117,8 @@
                                         <div class="wsus__login_form_input">
                                             <label>Password</label>
                                             <input id="password" class="block mt-1 w-full" type="password" name="password"
-                                                autocomplete="new-password" placeholder="Enter your password here.">
+                                                autocomplete="new-password" placeholder="Enter your password here."
+                                                required>
                                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                         </div>
                                     </div>
@@ -114,7 +128,74 @@
                                             <label>Confirm Password</label>
                                             <input id="password_confirmation" class="block mt-1 w-full" type="password"
                                                 name="password_confirmation"
-                                                autocomplete="new-password"placeholder="Re-enter your password here.">
+                                                autocomplete="new-password"placeholder="Re-enter your password here."
+                                                required>
+                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <button type="submit" class="common_btn">Sign Up</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
+                            tabindex="0">
+                            <form method="POST" action="{{ route('register', ['type' => 'instructor']) }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <h2>Sign Up as Instructor<span>!</span></h2>
+                                <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
+                                <div class="row">
+                                    <!-- Name -->
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <label>Name</label>
+                                            <input type="text" placeholder="Enter your name here." id="name"
+                                                name="name" value="{{ old('name') }}" autofocus autocomplete="name"
+                                                required>
+                                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                    <!-- Email Address -->
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <label>Email</label>
+                                            <input id="email" type="email" name="email"
+                                                value="{{ old('email') }}" autocomplete="username"
+                                                placeholder="Enter your email here." required>
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                    {{-- Document --}}
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <label>Document (Education/Document)</label>
+                                            <input type="file" placeholder="Provide your document here."
+                                                id="document" name="document" required>
+                                            <x-input-error :messages="$errors->get('document')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                    <!-- Password -->
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <label>Password</label>
+                                            <input id="password" class="block mt-1 w-full" type="password"
+                                                name="password" autocomplete="new-password"
+                                                placeholder="Enter your password here." required>
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                    <!-- Confirm Password -->
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <label>Confirm Password</label>
+                                            <input id="password_confirmation" class="block mt-1 w-full" type="password"
+                                                name="password_confirmation"
+                                                autocomplete="new-password"placeholder="Re-enter your password here."
+                                                required>
                                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                         </div>
                                     </div>
