@@ -4,6 +4,9 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('telescope:prune --hours=48')->daily();
 
 /**
  *————————————————————————————————————————————————————————————————————————————————
@@ -20,6 +23,8 @@ Route::get('/', [FrontendController::class, 'index'])->name('home');
  */
  Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefix" => "student", "as" => "student."], function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/become-instructor', [StudentDashboardController::class, 'becomeInstructor'])->name('become_instructor');
+    Route::post('/become-instructor/{user}', [StudentDashboardController::class, 'becomeInstructorUpdate'])->name('become_instructor_update');
 });
 
 /**
