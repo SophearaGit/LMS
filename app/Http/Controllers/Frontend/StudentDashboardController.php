@@ -52,7 +52,5 @@ class StudentDashboardController extends Controller
         ]);
         return redirect()->route('student.dashboard');
     }
-
-
 }
 
