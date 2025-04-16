@@ -17,10 +17,10 @@
                 <div class="row">
                     <div class="col-12 wow fadeInUp">
                         <div class="wsus__breadcrumb_text">
-                            <h1>Student Profile</h1>
+                            <h1>instructor Profile</h1>
                             <ul>
                                 <li><a href="{{ url('/') }}">Home</a></li>
-                                <li>Student Profile</li>
+                                <li>instructor Profile</li>
                             </ul>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
-                @include('front.pages.student.components.sidebar')
+                @include('front.pages.instructor.components.sidebar')
                 <div class="col-xl-8 col-md-8">
                     <div class="row">
                         <div class="col-xl-12 col-sm-12 wow fadeInUp">
@@ -51,7 +51,7 @@
                                     </div> --}}
                                 </div>
                                 {{-- START UPDATE PROFILE FORM --}}
-                                <form action="{{ route('student.prfile.update') }}" method="POST"
+                                <form action="{{ route('instructor.prfile.update') }}" method="POST"
                                     class="wsus__dashboard_profile_update" enctype="multipart/form-data">
                                     @csrf
                                     <div class="wsus__dashboard_profile wsus__dashboard_profile_avatar">
@@ -141,7 +141,7 @@
                                         that
                                         email
                                         after submitting.</p>
-                                    <form action="{{ route('student.profile.update_password') }}" method="POST"
+                                    <form action="{{ route('instructor.profile.update_password') }}" method="POST"
                                         class="wsus__dashboard_profile_update">
                                         @csrf
                                         <div class="row">
@@ -190,7 +190,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <form action="{{ route('student.profile.update_social_link') }}" method="POST"
+                                <form action="{{ route('instructor.profile.update_social_link') }}" method="POST"
                                     class="wsus__dashboard_social_profile">
                                     @csrf
                                     <div class="wsus__dashboard_social_profile_input">
