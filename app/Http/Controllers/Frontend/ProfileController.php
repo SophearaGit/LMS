@@ -25,11 +25,26 @@ class ProfileController extends Controller
         return view('front.pages.student.profile', $data);
     }
     /**
+     * INSTRUCTOR PROFILE (Template View).
+     */
+    public function instructorProfile(Request $request)
+    {
+        $data = [
+            'pageTitle' => 'EduCore | Instructor Profile'
+        ];
+        return view('front.pages.instructor.profile', $data);
+    }
+    /**
      * STUDENT PROFILE (Template View).
      */
     public function profileUpdate(ProfileUpdateRequest $request)
     {
         $user = Auth::user();
+        if ($request->hasFile('avatar')) {
+            $avatar = $this->uploadFile($request->file('avatar'));
+            $this->deleteIfImageExist($user->image);
+            $user->image = $avatar;
+        }
         $user->name = $request->name;
         $user->headline = $request->headline;
         $user->email = $request->email;
