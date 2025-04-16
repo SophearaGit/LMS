@@ -41,6 +41,11 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefi
  */
 Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "prefix" => "instructor", "as" => "instructor."], function () {
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
+    // PROFIL UPDATE
+    Route::get('/profile', [ProfileController::class, 'instructorProfile'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('prfile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePasswordProfileStore'])->name('profile.update_password');
+    Route::post('/profile/update-social-link', [ProfileController::class, 'updateSocialLink'])->name('profile.update_social_link');
 });
 
 
