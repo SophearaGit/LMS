@@ -21,7 +21,6 @@
     </section>
     {{-- BREADCRUMB END --}}
     {{-- DASHBOARD OVERVIEW START --}}
-    <!-- Session Status -->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
