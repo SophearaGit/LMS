@@ -212,7 +212,8 @@
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                    <a class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}"
+                        href="{{ route('admin.dashboard') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -230,7 +231,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.instructor-requests.index') }}">
+                    <a class="nav-link {{ Route::is('admin.instructor-requests.index') ? 'active' : '' }} "
+                        href="{{ route('admin.instructor-requests.index') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -248,8 +250,19 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.course-languages.index') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-languages.create') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-languages.edit') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-levels.index') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-levels.create') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }}"
+                        href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.course-languages.index') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-languages.create') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-languages.edit') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-levels.index') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-levels.create') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-levels.edit') ? 'true' : 'false' }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -264,14 +277,31 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Interface
+                            Course Management
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{ Route::is('admin.course-languages.index') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-languages.create') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-languages.edit') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-levels.index') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-levels.create') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }}"
+
+                        {{ Route::is('admin.course-languages.index') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-languages.create') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-languages.edit') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-levels.index') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-levels.create') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-levels.edit') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="./alerts.html">
-                                    Alerts
+                                <a class="dropdown-item {{ Route::is('admin.course-languages.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.course-languages.index') }}">
+                                    Course Languages
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.course-levels.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.course-levels.index') }}">
+                                    Course Levels
                                 </a>
                             </div>
                         </div>

@@ -22,7 +22,7 @@ class InstructorRequestController extends Controller
         $data = [
             'pageTitle' => 'EduCore | Instructor Request'
         ];
-        return view('admin.pages.index', $data, compact('instructorRequests'));
+        return view('admin.pages.instructor-requests.index', $data, compact('instructorRequests'));
     }
 
     /**
