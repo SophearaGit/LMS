@@ -18,6 +18,7 @@
     <!-- CSS files -->
     <link href="/admin/assets/dist/css/tabler.min.css?1692870487" rel="stylesheet" />
     <link href="/admin/assets/dist/css/demo.min.css?1692870487" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -27,6 +28,10 @@
 
         body {
             font-feature-settings: "cv03", "cv04", "cv11";
+        }
+
+        .ti {
+            font-size: 20px;
         }
     </style>
     @stack('stylesheets')
@@ -47,7 +52,10 @@
                     Route::is('admin.course-languages.edit') ||
                     Route::is('admin.course-levels.index') ||
                     Route::is('admin.course-levels.create') ||
-                    Route::is('admin.course-levels.edit'))
+                    Route::is('admin.course-levels.edit') ||
+                    Route::is('admin.course-categories.index') ||
+                    Route::is('admin.course-categories.create') ||
+                    Route::is('admin.course-categories.edit'))
             @else
                 @include('admin.layouts.header')
             @endif
