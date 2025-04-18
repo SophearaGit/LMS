@@ -7,7 +7,7 @@ use App\Models\CourseLanguage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException as ValidationValidationException;
-use Str;
+use Illuminate\Support\Str;
 
 class CourseLanguageController extends Controller
 {

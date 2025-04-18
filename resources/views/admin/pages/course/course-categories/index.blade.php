@@ -1,9 +1,7 @@
-hi
 @extends('admin.layouts.master')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @push('stylesheets')
     <style>
-        /* responsive css */
         @media (min-width: 1400px) {
 
             .container,
@@ -23,9 +21,9 @@ hi
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Course Levels</h3>
+                        <h3 class="card-title">Course Categories</h3>
                         <div class="card-actions">
-                            <a href="{{ route('admin.course-levels.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.course-categories.create') }}" class="btn btn-primary">
                                 <i class="ti ti-plus"></i>&nbsp;
                                 Add new
                             </a>
@@ -37,54 +35,55 @@ hi
                             <table class="table table-vcenter card-table">
                                 <thead>
                                     <tr>
+                                        <th>Icon</th>
                                         <th>Name</th>
-                                        <th>Slag</th>
+                                        <th>Trending</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($courseLevels as $item)
+                                    @forelse ($courseCategories as $item)
                                         <tr>
+                                            <td>
+                                                @if ($item->icon)
+                                                    <i class="{{ $item->icon }} text-2xl"></i>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
                                             <td>
                                                 {{ $item->name }}
                                             </td>
                                             <td>
-                                                {{ $item->slug }}
+                                                @if ($item->show_at_trending)
+                                                    <span class="badge badge-outline text-orange">Yes</span>
+
+                                                @else
+                                                    <span class="badge badge-outline text-blue">No</span>
+                                                @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.course-levels.edit', $item->id) }}"
+                                                @if ($item->status)
+                                                    <span class="badge badge-outline text-green">Active</span>
+                                                @else
+                                                    <span class="badge badge-outline text-red">Inactive</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.course-categories.edit', $item->id) }}"
                                                     class="text-primary">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path
-                                                            d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                                                        <path
-                                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                                                        <path d="M16 5l3 3" />
-                                                    </svg>
+                                                    <i class="ti ti-edit"></i>
                                                 </a>
-                                                <a href="{{ route('admin.course-levels.destroy', $item->id) }}"
+                                                <a href="{{ route('admin.course-categories.destroy', $item->id) }}"
                                                     class="text-danger delete-item">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path d="M4 7l16 0" />
-                                                        <path d="M10 11l0 6" />
-                                                        <path d="M14 11l0 6" />
-                                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                    </svg>
+                                                    <i class="ti ti-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">No data found</td>
+                                            <td colspan="8" class="text-center">No data found</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -92,7 +91,7 @@ hi
                         </div>
                         {{-- TABLE END --}}
                         <div class="mt-4">
-                            {{ $courseLevels->links() }}
+                            {{ $courseCategories->links() }}
                         </div>
                     </div>
                 </div>

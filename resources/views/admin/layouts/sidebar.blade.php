@@ -214,16 +214,8 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}"
                         href="{{ route('admin.dashboard') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-home" style="font-size: 20px;"></i>
                         </span>
                         <span class="nav-link-title">
                             Home
@@ -233,16 +225,8 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.instructor-requests.index') ? 'active' : '' }} "
                         href="{{ route('admin.instructor-requests.index') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-user-exclamation" style="font-size: 20px;"></i>
                         </span>
                         <span class="nav-link-title">
                             Instructor Requests
@@ -255,26 +239,22 @@
                         {{ Route::is('admin.course-languages.edit') ? 'show' : '' }} ||
                         {{ Route::is('admin.course-levels.index') ? 'show' : '' }} ||
                         {{ Route::is('admin.course-levels.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }}"
+                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-categories.index') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-categories.create') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-categories.edit') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
                         aria-expanded="{{ Route::is('admin.course-languages.index') ? 'true' : 'false' }} ||
                         {{ Route::is('admin.course-languages.create') ? 'true' : 'false' }} ||
                         {{ Route::is('admin.course-languages.edit') ? 'true' : 'false' }} ||
                         {{ Route::is('admin.course-levels.index') ? 'true' : 'false' }} ||
                         {{ Route::is('admin.course-levels.create') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'true' : 'false' }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                <path d="M12 12l8 -4.5" />
-                                <path d="M12 12l0 9" />
-                                <path d="M12 12l-8 -4.5" />
-                                <path d="M16 5.25l-8 4.5" />
-                            </svg>
+                        {{ Route::is('admin.course-levels.edit') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-categories.index') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-categories.create') ? 'true' : 'false' }} ||
+                        {{ Route::is('admin.course-categories.edit') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-books" style="font-size: 20px;"></i>
                         </span>
                         <span class="nav-link-title">
                             Course Management
@@ -285,14 +265,19 @@
                         {{ Route::is('admin.course-languages.edit') ? 'show' : '' }} ||
                         {{ Route::is('admin.course-levels.index') ? 'show' : '' }} ||
                         {{ Route::is('admin.course-levels.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }}"
-
+                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-categories.index') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-categories.create') ? 'show' : '' }} ||
+                        {{ Route::is('admin.course-categories.edit') ? 'show' : '' }}"
                         {{ Route::is('admin.course-languages.index') ? 'data-bs-popper="static"' : '' }} ||
                         {{ Route::is('admin.course-languages.create') ? 'data-bs-popper="static"' : '' }} ||
                         {{ Route::is('admin.course-languages.edit') ? 'data-bs-popper="static"' : '' }} ||
                         {{ Route::is('admin.course-levels.index') ? 'data-bs-popper="static"' : '' }} ||
                         {{ Route::is('admin.course-levels.create') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'data-bs-popper="static"' : '' }}>
+                        {{ Route::is('admin.course-levels.edit') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-categories.index') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-categories.create') ? 'data-bs-popper="static"' : '' }} ||
+                        {{ Route::is('admin.course-categories.edit') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ Route::is('admin.course-languages.index') ? 'active' : '' }} "
@@ -302,6 +287,10 @@
                                 <a class="dropdown-item {{ Route::is('admin.course-levels.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-levels.index') }}">
                                     Course Levels
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.course-categories.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.course-categories.index') }}">
+                                    Course Categories
                                 </a>
                             </div>
                         </div>
