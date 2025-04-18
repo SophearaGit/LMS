@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseLevel;
 use Exception;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class CourseLevelController extends Controller
 {
