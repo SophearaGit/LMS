@@ -18,6 +18,7 @@
     <!-- CSS files -->
     <link href="/admin/assets/dist/css/tabler.min.css?1692870487" rel="stylesheet" />
     <link href="/admin/assets/dist/css/demo.min.css?1692870487" rel="stylesheet" />
+    <link rel="stylesheet" href="/vendor/flasher/flasher-notyf.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <style>
         @import url('https://rsms.me/inter/inter.css');
@@ -46,7 +47,7 @@
         @include('admin.layouts.navbar')
         <div class="page-wrapper">
             <!-- Page header -->
-            @if (Route::is('admin.instructor-requests.index') ||
+            {{-- @if (Route::is('admin.instructor-requests.index') ||
                     Route::is('admin.course-languages.index') ||
                     Route::is('admin.course-languages.create') ||
                     Route::is('admin.course-languages.edit') ||
@@ -58,7 +59,7 @@
                     Route::is('admin.course-categories.edit'))
             @else
                 @include('admin.layouts.header')
-            @endif
+            @endif --}}
             <!-- Page body -->
             @yield('content')
             <!-- Footer -->
@@ -105,6 +106,7 @@
     </div>
 
     <!-- Libs JS -->
+    <script src="/vendor/flasher/flasher-notyf.min.js"></script>
 
     <!-- Tabler Core -->
     <script src="/admin/assets/dist/js/tabler.min.js?1692870487" defer></script>

@@ -3,7 +3,6 @@
 @push('stylesheets')
     <style>
         @media (min-width: 1400px) {
-
             .container,
             .container-lg,
             .container-md,
@@ -21,9 +20,14 @@
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Course Categories</h3>
+                        <h3 class="card-title">Course Sub Categories of ({{ $courseCategory->name }})</h3>
                         <div class="card-actions">
-                            <a href="{{ route('admin.course-categories.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.course-categories.index') }}" class="btn btn-primary">
+                                <i class="ti ti-chevrons-left"></i>&nbsp;
+                                Back
+                            </a>
+                            <a href="{{ route('admin.course-sub-categories.create', $courseCategory->id) }}"
+                                class="btn btn-primary">
                                 <i class="ti ti-plus"></i>&nbsp;
                                 Add new
                             </a>
@@ -43,7 +47,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($courseCategories as $item)
+                                    @forelse ($subCategories as $item)
                                         <tr>
                                             <td>
                                                 @if ($item->icon)
@@ -70,15 +74,17 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.course-sub-categories.index', $item->id) }}"
-                                                    class="text-warning">
-                                                    <i class="ti ti-list"></i>
-                                                </a>
-                                                <a href="{{ route('admin.course-categories.edit', $item->id) }}"
+                                                <a href="{{ route('admin.course-sub-categories.edit', [
+                                                    'course_category' => $courseCategory->id,
+                                                    'course_sub_category' => $item->id,
+                                                ]) }}"
                                                     class="text-primary">
                                                     <i class="ti ti-edit"></i>
                                                 </a>
-                                                <a href="{{ route('admin.course-categories.destroy', $item->id) }}"
+                                                <a href="{{ route('admin.course-sub-categories.destroy', [
+                                                    'course_category' => $courseCategory->id,
+                                                    'course_sub_category' => $item->id,
+                                                ]) }}"
                                                     class="text-danger delete-item">
                                                     <i class="ti ti-trash"></i>
                                                 </a>
@@ -94,7 +100,7 @@
                         </div>
                         {{-- TABLE END --}}
                         <div class="mt-4">
-                            {{ $courseCategories->links() }}
+                            {{ $subCategories->links() }}
                         </div>
                     </div>
                 </div>
@@ -103,12 +109,13 @@
     </div>
 @endsection
 @push('scripts')
-    {{-- <script src="/vendor/flasher/flasher-notyf.min.js"></script> --}}
     <script src="/front/js/jquery-3.7.1.min.js"></script>
     <script>
         const csrf_token = $(`meta[name=csrf_token]`).attr('content');
         var delete_url = null;
-
+        var notyf = new Notyf({
+            duration: 9000,
+        });
 
         $('.delete-item').on('click', function(e) {
             e.preventDefault();
@@ -132,16 +139,9 @@
                     window.location.reload();
                 },
                 error: function(xhr, status, error) {
-                    let errMsg = xhr.responseJSON.message;
-                    notyf.error({
-                        message: errMsg,
-                        duration: 8000,
-                        dismissible: true,
-                    });
+                    let errMsg = xhr.responseJSON;
+                    notyf.error(errMsg.message);
                 },
-                complete: function() {
-                    $('.delete-confirm-btn').text('Delete');
-                }
             });
         });
     </script>
