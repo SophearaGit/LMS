@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -46,6 +47,17 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('prfile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePasswordProfileStore'])->name('profile.update_password');
     Route::post('/profile/update-social-link', [ProfileController::class, 'updateSocialLink'])->name('profile.update_social_link');
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * COURSE ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+    Route::post('/courses/store-basic-info', action: [CourseController::class, 'storeBasicInfo'])->name('courses.store_basic_info');
+    Route::get('/courses/{id}/edit-basic-info', [CourseController::class, 'editBasicInfo'])->name('courses.edit_basic_info');
+    Route::post('/courses/update-more-info', action: [CourseController::class, 'updateMoreInfo'])->name('courses.update_more_info');
+
 });
 
 
