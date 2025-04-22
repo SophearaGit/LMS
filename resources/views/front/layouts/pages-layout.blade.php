@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="base_url" content="{{ url('') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('pageTitle')</title>
     <link rel="icon" type="image/png" href="/front/images/favicon.png">
     <link rel="stylesheet" href="/front/css/all.min.css">
