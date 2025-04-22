@@ -12,7 +12,8 @@
         </div>
         <ul class="wsus__dashboard_sidebar_menu">
             <li>
-                <a href="{{ route('instructor.dashboard') }}" class="{{ Route::is('instructor.dashboard') ? 'active' : '' }}">
+                <a href="{{ route('instructor.dashboard') }}"
+                    class="{{ Route::is('instructor.dashboard') ? 'active' : '' }}">
                     <div class="img">
                         <img src="/front/images/dash_icon_8.png" alt="icon" class="img-fluid w-100">
                     </div>
@@ -20,11 +21,21 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('instructor.profile') }}" class="{{ Route::is('instructor.profile') ? 'active' : '' }}">
+                <a href="{{ route('instructor.profile') }}"
+                    class="{{ Route::is('instructor.profile') ? 'active' : '' }}">
                     <div class="img">
                         <img src="/front/images/dash_icon_1.png" alt="icon" class="img-fluid w-100">
                     </div>
                     Profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('instructor.courses.index') }}"
+                    class="{{ Route::is('instructor.courses.index') || Route::is('instructor.courses.create') ? 'active' : '' }}">
+                    <div class="img">
+                        <img src="/front/images/dash_icon_2.png" alt="icon" class="img-fluid w-100">
+                    </div>
+                    Courses
                 </a>
             </li>
             <li>
