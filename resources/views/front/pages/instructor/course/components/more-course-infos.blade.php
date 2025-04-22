@@ -114,7 +114,18 @@
                     }
                 },
                 error: function(xhr, status, error) {
-
+                    let errors = xhr.responseJSON.errors;
+                    const notyf = new Notyf({
+                        duration: 8000,
+                        dismissible: true,
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                    });
+                    $.each(errors, function(key, value) {
+                        notyf.error(value[0])
+                    })
                 },
                 complete: function() {
 
