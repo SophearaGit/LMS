@@ -1,5 +1,8 @@
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
+@push('stylesheets')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+@endpush
 @section('content')
     {{-- BREADCRUMB START --}}
     <section class="wsus__breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">
@@ -69,7 +72,7 @@
                                                 <div class="col-xl-6">
                                                     <div class="add_course_basic_info_imput">
                                                         <label for="#">Demo Video Storage <b>(optional)</b></label>
-                                                        <select class="select_js" style="display: none;"
+                                                        <select class="select_js storage" style="display: none;"
                                                             name="demo_video_storage">
                                                             <option value=""> Please Select </option>
                                                             <option value="upload">Upload</option>
@@ -81,8 +84,28 @@
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="add_course_basic_info_imput">
-                                                        <label for="#">Path</label>
-                                                        <input type="file" name="demo_video_source">
+                                                        <div class="upload_source">
+                                                            <label for="#">Path</label>
+                                                            <input type="file" name="demo_video_source">
+                                                        </div>
+                                                        <div class="link_source d-none">
+                                                            <label for="#">Path</label>
+                                                            <input type="text" name="demo_video_source"
+                                                                placeholder="Please provide link source.">
+                                                        </div>
+                                                        {{--  --}}
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <a id="lfm" data-input="thumbnail"
+                                                                    data-preview="holder" class="btn btn-primary">
+                                                                    <i class="fa fa-picture-o"></i> Choose
+                                                                </a>
+                                                            </span>
+                                                            <input id="thumbnail" class="form-control" type="text"
+                                                                name="filepath">
+                                                        </div>
+                                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                                                        {{--  --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
@@ -143,7 +166,18 @@
                     }
                 },
                 error: function(xhr, status, error) {
-
+                    let errors = xhr.responseJSON.errors;
+                    const notyf = new Notyf({
+                        duration: 8000,
+                        dismissible: true,
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                    });
+                    $.each(errors, function(key, value) {
+                        notyf.error(value[0])
+                    })
                 },
                 complete: function() {
 
@@ -159,5 +193,20 @@
                 $('.course_form').trigger('submit');
             });
         });
+
+        // CHANGING PATH BASE ON UPLOAD OR LINK VIDEO
+        $('.storage').on('change', function() {
+            let storage_val = $(this).val();
+            if (storage_val == 'upload') {
+                $('.upload_source').removeClass('d-none');
+                $('.link_source').addClass('d-none');
+            } else {
+                $('.upload_source').addClass('d-none');
+                $('.link_source').removeClass('d-none');
+            }
+        });
+
+        //
+        $('#lfm').filemanager('file');
     </script>
 @endpush

@@ -31,7 +31,7 @@
             </li>
             <li>
                 <a href="{{ route('instructor.courses.index') }}"
-                    class="{{ Route::is('instructor.courses.index') || Route::is('instructor.courses.create') ? 'active' : '' }}">
+                    class="{{ Route::is('instructor.courses.index') || Route::is('instructor.courses.create') || request()->step ? 'active' : '' }}">
                     <div class="img">
                         <img src="/front/images/dash_icon_2.png" alt="icon" class="img-fluid w-100">
                     </div>

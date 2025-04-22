@@ -139,7 +139,6 @@ class CourseController extends Controller
                     'message' => 'Updated successfully',
                     'redirect' => route('instructor.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
                 ]);
-                break;
             case '2':
                 $request->validate([
                     'capacity' => 'nullable|numeric',
