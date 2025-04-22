@@ -44,24 +44,21 @@
                 @include('front.pages.instructor.components.sidebar')
                 <div class="col-xl-8 col-md-8">
                     <div class="row">
-                        <div class="col-xl-12 col-sm-12 wow fadeInUp">
-                            <div
-                                class="wsus__dash_earning d-flex align-items-center flex-wrap
+                        @if (auth()->user()->approval_status === 'pending')
+                            <div class="col-xl-12 col-sm-12 wow fadeInUp">
+                                <div
+                                    class="wsus__dash_earning d-flex align-items-center flex-wrap
                                 @if (auth()->user()->approval_status === 'pending') justify-content-between
                                 @else justify-content-end @endif">
-                                @if (auth()->user()->approval_status === 'pending')
-                                    <div class="alert alert-primary m-0  col-8" role="alert">
-                                        Your request to become an instructor has been submitted and is currently under
-                                        review. <br> We'll notify you once it's approved!
-                                    </div>
-                                @endif
-                                {{-- <div class="col-3">
-                                    <a href="{{ route('instructor.become_instructor') }}" class="common_btn">
-                                        Become An Instructor?
-                                    </a>
-                                </div> --}}
+                                    @if (auth()->user()->approval_status === 'pending')
+                                        <div class="alert alert-primary m-0  col-8" role="alert">
+                                            Your request to become an instructor has been submitted and is currently under
+                                            review. <br> We'll notify you once it's approved!
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="col-xl-4 col-sm-6 wow fadeInUp">
                             <div class="wsus__dash_earning">
                                 <h6>REVENUE</h6>
