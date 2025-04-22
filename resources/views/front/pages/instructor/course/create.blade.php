@@ -1,5 +1,8 @@
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
+@push('stylesheets')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+@endpush
 @section('content')
     {{-- BREADCRUMB START --}}
     <section class="wsus__breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">
@@ -51,6 +54,7 @@
     {{-- DASHBOARD OVERVIEW END --}}
 @endsection
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.course-tab').on('click', function(e) {
