@@ -69,6 +69,8 @@
 
     <!--jquery library js-->
     <script src="/front/js/jquery-3.7.1.min.js"></script>
+    <!--larvel file manager-->
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <!--bootstrap js-->
     <script src="/front/js/bootstrap.bundle.min.js"></script>
     <!--font-awesome js-->
