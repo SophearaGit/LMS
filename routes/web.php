@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
@@ -57,6 +58,13 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::post('/courses/store-basic-info', action: [CourseController::class, 'storeBasicInfo'])->name('courses.store_basic_info');
     Route::get('/courses/{id}/edit-basic-info', [CourseController::class, 'editBasicInfo'])->name('courses.edit_basic_info');
     Route::post('/courses/update-more-info', action: [CourseController::class, 'updateMoreInfo'])->name('courses.update_more_info');
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * COURSE CONTENT ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/course-content/{course_id}/create-chapter', [CourseContentController::class, 'createChapterModal'])->name('course-content.create-chapter');
+    Route::post('/course-content/{course_id}/create-chapter', [CourseContentController::class, 'storeChapterModal'])->name('course-content.store-chapter');
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * LARAVEL FILE MANAGER
