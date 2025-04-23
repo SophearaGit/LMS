@@ -58,6 +58,12 @@
     @yield('content')
     {{-- CONTENT END --}}
 
+    <!-- Modal -->
+    <div class="modal fade" id="dynamic_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg dynamic-modal-content">
+            {{-- @include('front.pages.instructor.course.components.partials.course-chapter-modal') --}}
+        </div>
+    </div>
 
     {{-- SCROLL BUTTON START --}}
     @include('front.layouts.components.scroll-button')

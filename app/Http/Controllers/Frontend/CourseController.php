@@ -24,7 +24,7 @@ class CourseController extends Controller
     {
         $data = [
             'pageTitle' => 'EduCore | Courses',
-            'courses' => Course::all(),
+            'courses' => Course::where('instructor_id', Auth::guard('web')->user()->id)->latest()->get(),
         ];
         return view('front.pages.instructor.course.index', $data);
     }
@@ -52,7 +52,7 @@ class CourseController extends Controller
         $course->seo_description = $request->seo_description;
         $course->thumbnail = $thumbnailPath;
         $course->demo_video_storage = $request->demo_video_storage;
-        $course->demo_video_source = $request->demo_video_source;
+        $course->demo_video_source = $request->filled('filepath') ? $request->filepath : $request->demo_video_source;
         $course->price = $request->price;
         $course->discount = $request->discount;
         $course->description = $request->description;
@@ -93,6 +93,15 @@ class CourseController extends Controller
                     'course' => Course::findOrFail($request->id),
                 ];
                 return view('front.pages.instructor.course.create', $data);
+            case '3':
+                # code...
+                $data = [
+                    'pageTitle' => 'EduCore | Edit Course',
+                    'courseId' => $request->id,
+                    'step' => $request->next_step,
+                    'course' => Course::findOrFail($request->id),
+                ];
+                return view('front.pages.instructor.course.create', $data);
             default:
                 # code...
                 break;
@@ -125,7 +134,7 @@ class CourseController extends Controller
                 $course->slug = Str::slug($request->title);
                 $course->seo_description = $request->seo_description;
                 $course->demo_video_storage = $request->demo_video_storage;
-                $course->demo_video_source = $request->demo_video_source;
+                $course->demo_video_source = $request->filled('filepath') ? $request->filepath : $request->demo_video_source;
                 $course->price = $request->price;
                 $course->discount = $request->discount;
                 $course->description = $request->description;
