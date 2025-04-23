@@ -37,12 +37,14 @@
                             </div>
                         </div>
                         <div class="dashboard_add_courses">
-                            @include('front.pages.instructor.course.components.ul-nav-tab')
+                            @include('front.pages.instructor.course.components.partials.ul-nav-tab')
                             <div class="tab-content" id="pills-tabContent">
                                 @if (request()->get('step') == 1 || Route::is('instructor.courses.create'))
                                     @include('front.pages.instructor.course.components.create-course-content')
                                 @elseif (request()->get('step') == 2)
                                     @include('front.pages.instructor.course.components.more-course-infos')
+                                @elseif (request()->get('step') == 3)
+                                    @include('front.pages.instructor.course.components.main-course-content')
                                 @endif
                             </div>
                         </div>

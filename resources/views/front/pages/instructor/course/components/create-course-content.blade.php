@@ -1,4 +1,4 @@
-<div class="tab-pane fade {{ Route::is('instructor.courses.edit_basic_info', ['id' => $courseId, 'step' => 1]) || Route::is('instructor.courses.create') ? 'show active' : '' }}"
+<div class="tab-pane fade {{ request()->get('step') == 1 || Route::is('instructor.courses.create') ? 'show active' : '' }}"
     id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
     <div class="add_course_basic_info">
         <form action="{{ route('instructor.courses.store_basic_info') }}" method="POST" enctype="multipart/form-data"
@@ -41,11 +41,20 @@
                     <div class="add_course_basic_info_imput">
                         <div class="upload_source">
                             <label for="#">Path</label>
-                            <input type="file" name="demo_video_source">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <a id="lfm" data-input="thumbnail" data-preview="holder"
+                                        class="btn btn-primary">
+                                        <i class="fa fa-picture-o"></i> Choose
+                                    </a>
+                                </span>
+                                <input id="thumbnail" class="form-control inps_path" type="text" name="filepath">
+                            </div>
                         </div>
                         <div class="link_source d-none">
                             <label for="#">Path</label>
-                            <input type="text" name="demo_video_source" placeholder="Please provide link here.">
+                            <input type="text" name="demo_video_source" placeholder="Please provide link here."
+                                class="inps_path">
                         </div>
                     </div>
                 </div>
@@ -118,6 +127,7 @@
 
         $('.storage').on('change', function() {
             let storage_val = $(this).val();
+            $('.inps_path').val('');
             if (storage_val == 'upload') {
                 $('.upload_source').removeClass('d-none');
                 $('.link_source').addClass('d-none');
