@@ -1,5 +1,5 @@
-<div class="tab-pane fade {{ Route::is('instructor.courses.edit_basic_info', ['id' => $courseId, 'step' => $step]) ? 'show active' : '' }} "
-    id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+<div class="tab-pane fade {{ request()->get('step') == 2 ? 'show active' : '' }}" id="pills-profile" role="tabpanel"
+    aria-labelledby="pills-profile-tab" tabindex="0">
     <div class="add_course_more_info">
         <form action="" class="more_info_form course_form">
             @csrf

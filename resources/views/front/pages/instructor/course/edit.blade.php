@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="dashboard_add_courses">
-                            @include('front.pages.instructor.course.components.ul-nav-tab')
+                            @include('front.pages.instructor.course.components.partials.ul-nav-tab')
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade {{ Route::is('instructor.courses.edit_basic_info', ['id' => $courseId, 'step' => 1]) ? 'show active' : '' }}"
                                     id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
@@ -74,38 +74,44 @@
                                                         <label for="#">Demo Video Storage <b>(optional)</b></label>
                                                         <select class="select_js storage" style="display: none;"
                                                             name="demo_video_storage">
-                                                            <option value=""> Please Select </option>
-                                                            <option value="upload">Upload</option>
-                                                            <option value="youtube">Youtube</option>
-                                                            <option value="vimeo">Vimeo</option>
-                                                            <option value="external_link">External Link</option>
+                                                            <option value=""> PleaseSelect </option>
+                                                            <option @selected($course->demo_video_storage == 'upload') value="upload">Upload
+                                                            </option>
+                                                            <option @selected($course->demo_video_storage == 'youtube') value="youtube">Youtube
+                                                            </option>
+                                                            <option @selected($course->demo_video_storage == 'vimeo') value="vimeo">Vimeo
+                                                            </option>
+                                                            <option @selected($course->demo_video_storage == 'external_link') value="external_link">
+                                                                External Link</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="add_course_basic_info_imput">
-                                                        <div class="upload_source">
+                                                        <div
+                                                            class="upload_source {{ $course->demo_video_source == 'upload' ? '' : 'd-none' }}">
                                                             <label for="#">Path</label>
-                                                            <input type="file" name="demo_video_source">
+                                                            <div class="input-group ">
+                                                                <span class="input-group-btn">
+                                                                    <a id="lfm" data-input="thumbnail"
+                                                                        data-preview="holder" class="btn btn-primary">
+                                                                        <i class="fa fa-picture-o"></i> Choose
+                                                                    </a>
+                                                                </span>
+                                                                <input id="thumbnail" class="form-control inps_path"
+                                                                    type="text" name="filepath"
+                                                                    value="{{ $course->demo_video_source }}">
+                                                            </div>
+                                                            {{-- <div id="holder" style="margin-top:15px;max-height:100px;">
+                                                            </div> --}}
                                                         </div>
-                                                        <div class="link_source d-none">
+                                                        <div
+                                                            class="link_source {{ $course->demo_video_source != 'upload' ? '' : 'd-none' }}">
                                                             <label for="#">Path</label>
                                                             <input type="text" name="demo_video_source"
-                                                                placeholder="Please provide link source.">
+                                                                placeholder="Please provide link source." class="inps_path"
+                                                                value="{{ $course->demo_video_source }}">
                                                         </div>
-                                                        {{--  --}}
-                                                        <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <a id="lfm" data-input="thumbnail"
-                                                                    data-preview="holder" class="btn btn-primary">
-                                                                    <i class="fa fa-picture-o"></i> Choose
-                                                                </a>
-                                                            </span>
-                                                            <input id="thumbnail" class="form-control" type="text"
-                                                                name="filepath">
-                                                        </div>
-                                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                                                        {{--  --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
@@ -197,6 +203,7 @@
         // CHANGING PATH BASE ON UPLOAD OR LINK VIDEO
         $('.storage').on('change', function() {
             let storage_val = $(this).val();
+            $('.inps_path').val('');
             if (storage_val == 'upload') {
                 $('.upload_source').removeClass('d-none');
                 $('.link_source').addClass('d-none');
