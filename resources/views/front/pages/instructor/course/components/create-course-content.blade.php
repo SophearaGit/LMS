@@ -85,6 +85,8 @@
 @push('scripts')
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
+        $('#lfm').filemanager('file');
+
         const base_url = $('meta[name="base_url"]').attr('content');
         const basic_info_url = base_url + '/instructor/courses/store-basic-info';
 
@@ -136,7 +138,5 @@
                 $('.link_source').removeClass('d-none');
             }
         });
-
-        $('#lfm').filemanager('file');
     </script>
 @endpush

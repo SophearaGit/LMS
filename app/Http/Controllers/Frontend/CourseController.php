@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\CourseStoreBasicInfoRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\CourseChapter;
 use App\Models\CourseLanguage;
 use App\Models\CourseLevel;
 use App\Traites\FileUpload;
@@ -100,6 +101,7 @@ class CourseController extends Controller
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'course' => Course::findOrFail($request->id),
+                    'chapters' => CourseChapter::where(['course_id' => $request->id, 'instructor_id' => Auth::user()->id])->get(),
                 ];
                 return view('front.pages.instructor.course.create', $data);
             default:
@@ -171,6 +173,12 @@ class CourseController extends Controller
                     'status' => 'success',
                     'message' => 'Updated successfully',
                     'redirect' => route('instructor.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
+                ]);
+            case '3':
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Updated successfully',
+                    'redirect' => route('instructor.courses.edit_basic_info', ['id' => $request->course_id, 'step' => $request->next_step])
                 ]);
             default:
                 # code...
