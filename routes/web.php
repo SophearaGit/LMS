@@ -60,11 +60,22 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::post('/courses/update-more-info', action: [CourseController::class, 'updateMoreInfo'])->name('courses.update_more_info');
     /**
      * ————————————————————————————————————————————————————————————————————————————————
-     * COURSE CONTENT ROUTE
+     * COURSE CHAPTER ROUTE
      * ————————————————————————————————————————————————————————————————————————————————
      */
     Route::get('/course-content/{course_id}/create-chapter', [CourseContentController::class, 'createChapterModal'])->name('course-content.create-chapter');
     Route::post('/course-content/{course_id}/create-chapter', [CourseContentController::class, 'storeChapterModal'])->name('course-content.store-chapter');
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * COURSE LESSON ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/course-content/create-lesson', [CourseContentController::class, 'createLessonModal'])->name('course-content.create-lesson');
+    Route::post('/course-content/create-lesson', [CourseContentController::class, 'storeLessonModal'])->name('course-content.store-lesson');
+    Route::get('/course-content/edit-lesson', [CourseContentController::class, 'editLessonModal'])->name('course-content.edit-lesson');
+    Route::post('/course-content/{id}/update-lesson', [CourseContentController::class, 'updateLessonModal'])->name('course-content.update-lesson');
+
+
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * LARAVEL FILE MANAGER
