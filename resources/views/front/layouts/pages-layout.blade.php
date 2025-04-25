@@ -118,6 +118,22 @@
     <script src="/front/js/main.js"></script>
     @stack('scripts')
 
+    <script>
+        @if ($errors->any())
+            const notyf = new Notyf({
+                duration: 8000,
+                dismissible: true,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+            });
+            @foreach ($errors as $error)
+                notyf.error("{{ $error }}");
+            @endforeach
+        @endif
+    </script>
+
 </body>
 
 </html>
