@@ -153,6 +153,51 @@ class CourseContentController extends Controller
         }
     }
 
+    public function editChapterModal(Request $request)
+    {
+        // dd($request->all());
+        $data = [
+            'on_edit' => true,
+            'course_id' => $request->course_id,
+            'chapter_id' => $request->chapter_id,
+            'chapter' => CourseChapter::where(column: [
+                'instructor_id' => Auth::user()->id,
+                'course_id' => $request->course_id,
+                'id' => $request->chapter_id
+            ])->firstOrFail(),
+        ];
+        return view('front.pages.instructor.course.components.partials.course-chapter-modal', $data)->render();
+    }
+
+    public function updateChapterModal(Request $request, string $chapter_id)
+    {
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+        ]);
+
+        $chapter = CourseChapter::findOrFail($chapter_id);
+        $chapter->title = $request->title;
+        $chapter->save();
+
+        notyf()->success('Update successfully!');
+
+        return redirect()->back();
+    }
+
+    public function deleteChapterModal(string $id)
+    {
+        try {
+            $chapter = CourseChapter::findOrFail($id);
+            $chapter->delete();
+            notyf()->success('Delete successfully!');
+            return response(['message' => 'Delete successfully!', 200]);
+        } catch (Exception $e) {
+            logger("chapter Error >>" . $e);
+            return response(['message' => 'Something when wrong!', 500]);
+
+        }
+    }
+
 
 
 }
