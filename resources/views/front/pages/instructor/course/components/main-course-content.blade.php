@@ -39,7 +39,8 @@
                                 </ul>
                             </div>
                             <a class="edit" href="#"><i class="far fa-edit" aria-hidden="true"></i></a>
-                            <a class="del" href="#"><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
+                            <a class="del btn_dynamic_delete" href="javascript:;"><i class="fas fa-trash-alt"
+                                    aria-hidden="true"></i></a>
                         </div>
                     </h2>
                     <div id="collapse-{{ $chapter->id }}" class="accordion-collapse collapse"
@@ -57,8 +58,9 @@
                                                     class="far
                                                 fa-edit"
                                                     aria-hidden="true"></i></a>
-                                            <a class="del" href="#"><i class="fas fa-trash-alt"
-                                                    aria-hidden="true"></i></a>
+                                            <a class="del btn_dynamic_delete"
+                                                href="{{ route('instructor.course-content.delete-lesson', $lesson->id) }}"><i
+                                                    class="fas fa-trash-alt" aria-hidden="true"></i></a>
                                             <a class="arrow" href="#"><i class="fas fa-arrows-alt"
                                                     aria-hidden="true"></i></a>
                                         </div>
