@@ -103,8 +103,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <button type="submit"
-                    class="btn btn-primary">{{ @$on_edit == true ? 'Update' : 'Create' }}</button>
+                <button type="submit" class="btn btn-primary">{{ @$on_edit == true ? 'Update' : 'Create' }}</button>
             </div>
         </form>
     </div>
