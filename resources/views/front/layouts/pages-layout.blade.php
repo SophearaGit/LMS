@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="/front/css/sticky_menu.css">
     <link rel="stylesheet" href="/front/css/animate.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="/front/css/jquery-ui.min.css">
+
     <link rel=" stylesheet" href="/front/css/spacing.css">
     <link rel="stylesheet" href="/front/css/style.css">
     <link rel="stylesheet" href="/front/css/responsive.css">
@@ -75,6 +78,12 @@
 
     <!--jquery library js-->
     <script src="/front/js/jquery-3.7.1.min.js"></script>
+    {{-- jquery-ui --}}
+    <script src="/front/js/jquery-ui.min.js"></script>
+    {{-- notyf --}}
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    {{-- sweetalert2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>s
     <!--larvel file manager-->
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <!--bootstrap js-->
@@ -132,6 +141,46 @@
                 notyf.error("{{ $error }}");
             @endforeach
         @endif
+
+        // DYNAMIC DELETE MODAL
+        const csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+        $(function() {
+            $('.btn_dynamic_delete').on('click', function(e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Swal.fire({
+                        //     title: "Deleted!",
+                        //     text: "Your file has been deleted.",
+                        //     icon: "success"
+                        // });
+                        $.ajax({
+                            method: 'DELETE',
+                            url: url,
+                            data: {
+                                _token: csrf_token,
+                            },
+                            success: function(data) {
+                                window.location.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                notyf.error(error);
+                            },
+                        })
+                    }
+                });
+            })
+        })
     </script>
 
 </body>
