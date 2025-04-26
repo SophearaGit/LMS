@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\CourseChapter;
 use App\Models\CourseChapterLessons;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CourseContentController extends Controller
 {
+
     public function createChapterModal(string $course_id)
     {
         return view('front.pages.instructor.course.components.partials.course-chapter-modal', compact('course_id'))->render();
@@ -135,6 +137,20 @@ class CourseContentController extends Controller
         notyf()->success('Update successfully!');
 
         return redirect()->back();
+    }
+
+    public function deleteLessonModal(string $id)
+    {
+        try {
+            $lesson = CourseChapterLessons::findOrFail($id);
+            $lesson->delete();
+            notyf()->success('Delete successfully!');
+            return response(['message' => 'Delete successfully!', 200]);
+        } catch (Exception $e) {
+            logger("Lesson Error >>" . $e);
+            return response(['message' => 'Something when wrong!', 500]);
+
+        }
     }
 
 
