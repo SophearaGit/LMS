@@ -38,14 +38,17 @@
                                     <li><a class="dropdown-item" href="#">Add Quiz</a></li>
                                 </ul>
                             </div>
-                            <a class="edit" href="#"><i class="far fa-edit" aria-hidden="true"></i></a>
-                            <a class="del" href="#"><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
+                            <a class="edit edit-chapter-btn" href="javascript:;" data-course-id="{{ $courseId }}"
+                                data-chapter-id="{{ $chapter->id }}"><i class="far fa-edit" aria-hidden="true"></i></a>
+                            <a class="del btn_dynamic_delete"
+                                href="{{ route('instructor.course-content.delete-chapter', $chapter->id) }}"><i
+                                    class="fas fa-trash-alt" aria-hidden="true"></i></a>
                         </div>
                     </h2>
                     <div id="collapse-{{ $chapter->id }}" class="accordion-collapse collapse"
                         data-bs-parent="#accordionExample" style="">
                         <div class="accordion-body">
-                            <ul class="item_list">
+                            <ul class="item_list sortable_list">
                                 @forelse ($chapter->lessons ?? [] as $lesson)
                                     <li>
                                         <span>{{ $lesson->title }}</span>
@@ -57,9 +60,10 @@
                                                     class="far
                                                 fa-edit"
                                                     aria-hidden="true"></i></a>
-                                            <a class="del" href="#"><i class="fas fa-trash-alt"
-                                                    aria-hidden="true"></i></a>
-                                            <a class="arrow" href="#"><i class="fas fa-arrows-alt"
+                                            <a class="del btn_dynamic_delete"
+                                                href="{{ route('instructor.course-content.delete-lesson', $lesson->id) }}"><i
+                                                    class="fas fa-trash-alt" aria-hidden="true"></i></a>
+                                            <a class="arrow dragger" href="javascript:;"><i class="fas fa-arrows-alt"
                                                     aria-hidden="true"></i></a>
                                         </div>
                                     </li>
@@ -119,6 +123,7 @@
     </div>
 </div>
 @push('scripts')
+    <script src="/front/js/jquery-ui.min.js"></script>
     <script>
         const base_url = $('meta[name="base_url"]').attr('content');
         const get_course_content_url = base_url + `/instructor/course-content/:id/create-chapter`;
@@ -196,6 +201,34 @@
                 }
             });
         });
+
+        // GET DYNAMIC MODAL TO ADD LESSON TO CHAPTER
+        $('.edit-chapter-btn').on('click', function() {
+            $('#dynamic_modal').modal('show');
+            let course_id = $(this).data('course-id');
+            let chapter_id = $(this).data('chapter-id');
+            let get_edit_chapter_url = base_url + '/instructor/course-content/:course_id/edit-chapter';
+
+            $.ajax({
+                method: 'GET',
+                url: get_edit_chapter_url.replace('course_id', course_id),
+                data: {
+                    'course_id': course_id,
+                    'chapter_id': chapter_id,
+                },
+                beforeSend: function() {
+                    $('.dynamic-modal-content').html(modalLoader);
+                },
+                success: function(data) {
+                    $('.dynamic-modal-content').html(data);
+                },
+                error: function(xhr, status, error) {
+
+                },
+            })
+        })
+
+
         // GET DYNAMIC MODAL TO ADD LESSON TO CHAPTER
         $('.add-lesson-btn').on('click', function() {
             // e.preventDefault();
@@ -262,5 +295,22 @@
                 }
             });
         })
+        console.log($('.sortable_list li').length);
+
+        // SORTABLE LIST
+        if ($('.sortable_list li').length) {
+            $('.sortable_list').sortable({
+                items: "li",
+                containment: "parent",
+                cursor: "move",
+                handle: ".dragger",
+                update: function(event, ui) {
+                    let orderIds = $(this).sortable("toArray", {
+                        attribute: "data-lesson-id"
+                    })
+                    console.log(orderIds);
+                }
+            });
+        }
     </script>
 @endpush
