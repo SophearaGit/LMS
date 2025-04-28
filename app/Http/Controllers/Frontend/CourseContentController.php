@@ -31,6 +31,8 @@ class CourseContentController extends Controller
         $chapter->order = CourseChapter::where('course_id', $course_id)->count() + 1;
         $chapter->save();
 
+        notyf()->success('Created successfully!');
+
         return redirect()->back();
     }
 
@@ -184,7 +186,7 @@ class CourseContentController extends Controller
         return redirect()->back();
     }
 
-    public function deleteChapterModal(string $id)
+    public function deleteChapterModal(Request $request, string $id)
     {
         try {
             $chapter = CourseChapter::findOrFail($id);
@@ -196,6 +198,17 @@ class CourseContentController extends Controller
             return response(['message' => 'Something when wrong!', 500]);
 
         }
+    }
+
+    public function sortLesson(Request $request, string $id)
+    {
+        $new_orders = $request->order_ids;
+        foreach ($new_orders as $key => $itemId) {
+            $lesson = CourseChapterLessons::where(['chapter_id' => $id, 'id' => $itemId])->first();
+            $lesson->order = $key + 1;
+            $lesson->save();
+        }
+        return response(["status" => "success", "message" => "Updated successfully!"]);
     }
 
 
