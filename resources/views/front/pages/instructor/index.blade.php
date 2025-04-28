@@ -29,7 +29,7 @@
                             <ul>
                                 <li><a href="{{ url('/') }}">Home</a></li>
                                 <li>Instructor Dashboard</li>
-                            </ul>
+                            </ul>ss
                         </div>
                     </div>
                 </div>

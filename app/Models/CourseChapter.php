@@ -13,7 +13,7 @@ class CourseChapter extends Model
 
     public function lessons(): HasMany
     {
-        return $this->hasMany(CourseChapterLessons::class, 'chapter_id', 'id');
+        return $this->hasMany(CourseChapterLessons::class, 'chapter_id', 'id')->orderBy('order');
     }
 
 
