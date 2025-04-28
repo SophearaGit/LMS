@@ -50,7 +50,7 @@
                         <div class="accordion-body">
                             <ul class="item_list sortable_list">
                                 @forelse ($chapter->lessons ?? [] as $lesson)
-                                    <li>
+                                    <li data-lesson-id="{{ $lesson->id }}" data-chapter-id="{{ $chapter->id }}">
                                         <span>{{ $lesson->title }}</span>
                                         <div class="add_course_content_action_btn">
                                             <a class="edit_lesson" href="javascript:;"
@@ -123,6 +123,7 @@
     </div>
 </div>
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/front/js/jquery-ui.min.js"></script>
     <script>
         const base_url = $('meta[name="base_url"]').attr('content');
@@ -201,7 +202,6 @@
                 }
             });
         });
-
         // GET DYNAMIC MODAL TO ADD LESSON TO CHAPTER
         $('.edit-chapter-btn').on('click', function() {
             $('#dynamic_modal').modal('show');
@@ -227,8 +227,6 @@
                 },
             })
         })
-
-
         // GET DYNAMIC MODAL TO ADD LESSON TO CHAPTER
         $('.add-lesson-btn').on('click', function() {
             // e.preventDefault();
@@ -295,8 +293,7 @@
                 }
             });
         })
-        console.log($('.sortable_list li').length);
-
+        // const csrf_token = $('meta[name="csrf-token"]').attr('content');
         // SORTABLE LIST
         if ($('.sortable_list li').length) {
             $('.sortable_list').sortable({
@@ -308,9 +305,56 @@
                     let orderIds = $(this).sortable("toArray", {
                         attribute: "data-lesson-id"
                     })
-                    console.log(orderIds);
+                    let chapterIds = ui.item.data("chapter-id")
+                    $.ajax({
+                        method: "POST",
+                        url: base_url + `/instructor/course-chapter/${chapterIds}/sort-lesson`,
+                        data: {
+                            _token: csrf_token,
+                            order_ids: orderIds,
+                        },
+                        success: function(data) {
+                            const notyf = new Notyf({
+                                duration: 8000,
+                                dismissible: true,
+                                position: {
+                                    x: 'right',
+                                    y: 'bottom',
+                                },
+                            });
+                            notyf.success(data.message);
+                        },
+                        error: function(xhr, status, error) {
+
+                        },
+                    })
                 }
             });
         }
+
+        // DELETE PART
+        $('.btn_dynamic_delete').on('click', function(e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: url,
+                        data: "",
+                        success: function(data) {},
+                        error: function(xhr, status, data) {},
+                    })
+                }
+            });
+        })
     </script>
 @endpush
