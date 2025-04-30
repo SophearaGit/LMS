@@ -102,7 +102,7 @@ class CourseContentController extends Controller
         return view('front.pages.instructor.course.components.partials.chapter-lesson-modal', $data)->render();
     }
 
-    public function updateLessonModal(Request $request, string $lesson_id)
+    public function updateLessonModal(Request $request, string $id)
     {
         // dd($request->all());
         $rules = [
@@ -121,7 +121,7 @@ class CourseContentController extends Controller
         }
         $request->validate($rules);
 
-        $lesson = CourseChapterLessons::findOrFail($lesson_id);
+        $lesson = CourseChapterLessons::findOrFail($id);
         $lesson->instructor_id = Auth::user()->id;
         $lesson->course_id = $request->course_id;
         $lesson->chapter_id = $request->chapter_id;
@@ -207,6 +207,25 @@ class CourseContentController extends Controller
             $lesson = CourseChapterLessons::where(['chapter_id' => $id, 'id' => $itemId])->first();
             $lesson->order = $key + 1;
             $lesson->save();
+        }
+        return response(["status" => "success", "message" => "Updated successfully!"]);
+    }
+
+    public function sortChapter(string $id)
+    {
+        $data = [
+            'chapters' => CourseChapter::where('course_id', $id)->orderBy('order')->get(),
+        ];
+        return view('front.pages.instructor.course.components.partials.sorting-chapter-modal', $data)->render();
+    }
+
+    public function UpdateSortChapter(Request $request, string $id)
+    {
+        $new_orders = $request->order_ids;
+        foreach ($new_orders as $key => $itemId) {
+            $chapter = CourseChapter::where(['course_id' => $id, 'id' => $itemId])->first();
+            $chapter->order = $key + 1;
+            $chapter->save();
         }
         return response(["status" => "success", "message" => "Updated successfully!"]);
     }

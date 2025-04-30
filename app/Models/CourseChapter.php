@@ -11,6 +11,12 @@ class CourseChapter extends Model
     /** @use HasFactory<\Database\Factories\CourseChapterFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'instructor_id',
+        'course_id',
+    ];
+
     public function lessons(): HasMany
     {
         return $this->hasMany(CourseChapterLessons::class, 'chapter_id', 'id')->orderBy('order');

@@ -101,7 +101,7 @@ class CourseController extends Controller
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'course' => Course::findOrFail($request->id),
-                    'chapters' => CourseChapter::where(['course_id' => $request->id, 'instructor_id' => Auth::user()->id])->get(),
+                    'chapters' => CourseChapter::where(['course_id' => $request->id, 'instructor_id' => Auth::user()->id])->orderBy('order')->get(),
                 ];
                 return view('front.pages.instructor.course.create', $data);
             default:
