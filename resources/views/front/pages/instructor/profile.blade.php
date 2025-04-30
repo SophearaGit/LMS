@@ -11,7 +11,7 @@
 @endpush
 @section('content')
     {{-- BREADCRUMB START --}}
-    <section class="wsus__breadcrumb" style="background: url(/front//front/images/breadcrumb_bg.jpg);">
+    <section class="wsus__breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
                 <div class="row">
