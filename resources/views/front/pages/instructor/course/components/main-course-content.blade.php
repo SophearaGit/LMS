@@ -10,7 +10,8 @@
         <div class="add_course_content_btn_area d-flex flex-wrap justify-content-between">
             <a class="common_btn add_course_chapter_btn" href="#" data-id="{{ $courseId }}">Add New
                 Chapter</a>
-            <a class="common_btn" href="#">Short Chapter</a>
+            <a class="common_btn short_chapter_btn" data-course-id="{{ $courseId }}" href="javascript:;">Short
+                Chapter</a>
         </div>
         <div class="accordion" id="accordionExample">
             @forelse ($chapters as $chapter)
@@ -39,7 +40,8 @@
                                 </ul>
                             </div>
                             <a class="edit edit-chapter-btn" href="javascript:;" data-course-id="{{ $courseId }}"
-                                data-chapter-id="{{ $chapter->id }}"><i class="far fa-edit" aria-hidden="true"></i></a>
+                                data-chapter-id="{{ $chapter->id }}"><i class="far fa-edit"
+                                    aria-hidden="true"></i></a>
                             <a class="del btn_dynamic_delete"
                                 href="{{ route('instructor.course-content.delete-chapter', $chapter->id) }}"><i
                                     class="fas fa-trash-alt" aria-hidden="true"></i></a>
@@ -54,7 +56,7 @@
                                         <span>{{ $lesson->title }}</span>
                                         <div class="add_course_content_action_btn">
                                             <a class="edit_lesson" href="javascript:;"
-                                                data-course-id="{{ $courseId }}"
+                                                data-course-id="{{ $course->id }}"
                                                 data-chapter-id="{{ $chapter->id }}"
                                                 data-lesson-id="{{ $lesson->id }}"><i
                                                     class="far
@@ -122,6 +124,7 @@
         </div>
     </div>
 </div>
+
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/front/js/jquery-ui.min.js"></script>
@@ -355,6 +358,29 @@
                     })
                 }
             });
+        })
+
+        $('.short_chapter_btn').on('click', function(e) {
+            e.preventDefault();
+
+            $('#dynamic_modal').modal('show');
+            $('#dynamic_modal').attr('data-bs-backdrop', 'static');
+
+            let course_id = $(this).data('course-id');
+            $.ajax({
+                method: 'GET',
+                url: base_url + `/instructor/course-content/${course_id}/sort-chapter`,
+                data: {},
+                beforeSend: function() {
+                    $('.dynamic-modal-content').html(modalLoader);
+                },
+                success: function(data) {
+                    $('.dynamic-modal-content').html(data);
+                },
+                error: function(xhr, status, error) {
+                    notyf.error(error);
+                },
+            })
         })
     </script>
 @endpush
