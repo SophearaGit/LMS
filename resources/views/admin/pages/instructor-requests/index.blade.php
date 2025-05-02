@@ -77,7 +77,7 @@
                                                     method="POST" class="status-{{ $item->id }}">
                                                     @csrf
                                                     @method('PUT')
-                                                    <select name="status" id="status" class="form-select"
+                                                    <select name="status" id="status"
                                                         aria-label="Default select example"
                                                         onchange="$('.status-{{ $item->id }}').submit();">
                                                         <option @selected($item->approval_status === 'pending') value="pending">Pending
@@ -109,4 +109,9 @@
 @endsection
 @push('scripts')
     <script src="/front/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('select').niceSelect();
+        });
+    </script>
 @endpush

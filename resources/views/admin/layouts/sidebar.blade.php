@@ -292,6 +292,10 @@
                         {{ Route::is('admin.course-sub-categories.edit') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.courses.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.courses.index') }}">
+                                    Courses
+                                </a>
                                 <a class="dropdown-item {{ Route::is('admin.course-languages.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-languages.index') }}">
                                     Course Languages
