@@ -13,11 +13,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="base_url" content="{{ url('/') }}">
     <meta name="csrf_token" content="{{ csrf_token() }}" />
     <title>@yield('pageTitle')</title>
     <!-- CSS files -->
     <link href="/admin/assets/dist/css/tabler.min.css?1692870487" rel="stylesheet" />
     <link href="/admin/assets/dist/css/demo.min.css?1692870487" rel="stylesheet" />
+    <link href="/admin/assets/dist/css/nice-select.css" rel="stylesheet" />
     <link rel="stylesheet" href="/vendor/flasher/flasher-notyf.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <style>
@@ -47,16 +49,7 @@
         @include('admin.layouts.navbar')
         <div class="page-wrapper">
             <!-- Page header -->
-            {{-- @if (Route::is('admin.instructor-requests.index') ||
-                    Route::is('admin.course-languages.index') ||
-                    Route::is('admin.course-languages.create') ||
-                    Route::is('admin.course-languages.edit') ||
-                    Route::is('admin.course-levels.index') ||
-                    Route::is('admin.course-levels.create') ||
-                    Route::is('admin.course-levels.edit') ||
-                    Route::is('admin.course-categories.index') ||
-                    Route::is('admin.course-categories.create') ||
-                    Route::is('admin.course-categories.edit'))
+            {{-- @if (Route::is('admin.instructor-requests.index') || Route::is('admin.course-languages.index') || Route::is('admin.course-languages.create') || Route::is('admin.course-languages.edit') || Route::is('admin.course-levels.index') || Route::is('admin.course-levels.create') || Route::is('admin.course-levels.edit') || Route::is('admin.course-categories.index') || Route::is('admin.course-categories.create') || Route::is('admin.course-categories.edit'))
             @else
                 @include('admin.layouts.header')
             @endif --}}
@@ -111,6 +104,7 @@
     <!-- Tabler Core -->
     <script src="/admin/assets/dist/js/tabler.min.js?1692870487" defer></script>
     <script src="/admin/assets/dist/js/demo.min.js?1692870487" defer></script>
+    <script src="/admin/assets/dist/js/jquery.nice-select.min.js" defer></script>
 
     @stack('scripts')
 </body>
