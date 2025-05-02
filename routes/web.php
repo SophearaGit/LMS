@@ -84,10 +84,6 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::get('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter');
     Route::post('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'UpdateSortChapter'])->name('course-content.update-sort-chapter');
 
-
-
-
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * LARAVEL FILE MANAGER

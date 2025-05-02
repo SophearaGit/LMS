@@ -36,7 +36,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <div class="add_course_basic_info_imput">
-                            <div class="upload_source">
+                            <div class="upload_source {{ @$lesson?->storage == 'upload' ? '' : 'd-none' }}">
                                 <label for="#" class="mt-1">Path</label>
                                 <div class="input-group">
                                     <span class="input-group-btn">
@@ -49,10 +49,10 @@
                                         value="{{ @$lesson?->file_path }}">
                                 </div>
                             </div>
-                            <div class="link_source d-none">
+                            <div class="link_source {{ @$lesson?->storage != 'upload' ? '' : 'd-none' }}">
                                 <label for="#">Path</label>
                                 <input type="text" name="url" placeholder="Please provide link here."
-                                    class="inps_path" value="{{ @$lesson?->file_type }}">
+                                    class="inps_path" value="{{ @$lesson?->file_path }}">
                             </div>
                         </div>
                     </div>
