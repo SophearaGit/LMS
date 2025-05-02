@@ -45,6 +45,8 @@
                                     @include('front.pages.instructor.course.components.more-course-infos')
                                 @elseif (request()->get('step') == 3)
                                     @include('front.pages.instructor.course.components.main-course-content')
+                                @elseif (request()->get('step') == 4)
+                                    @include('front.pages.instructor.course.components.finish')
                                 @endif
                             </div>
                         </div>

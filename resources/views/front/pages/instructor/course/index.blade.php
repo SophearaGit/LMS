@@ -1,5 +1,15 @@
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
+@push('stylesheets')
+    <style>
+        .wsus__dash_course_table .image img {
+            /* width: 160px !important;
+            border-radius: 10px; */
+            height: 120px !important;
+            object-fit: cover !important;
+        }
+    </style>
+@endpush
 @section('content')
     {{-- BREADCRUMB START --}}
     <section class="wsus__breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">

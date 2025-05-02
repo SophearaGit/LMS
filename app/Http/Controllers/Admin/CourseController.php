@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\CourseStoreBasicInfoRequest;
@@ -19,16 +19,30 @@ class CourseController extends Controller
 {
     use FileUpload;
     /**
-     * SHOW INSTRUCTOR COURSE PAGE
+     * SHOW INSTRUCTOR COURSE PAGEs
      */
     public function index()
     {
         $data = [
             'pageTitle' => 'EduCore | Courses',
-            'courses' => Course::where('instructor_id', Auth::guard('web')->user()->id)->latest()->get(),
+            'courses' => Course::with(['instructor'])->paginate(15),
         ];
-        return view('front.pages.instructor.course.index', $data);
+        return view('admin.pages.course.course-module.index', $data);
     }
+    /**
+     * UPDATE COURSE APPROVAL STATUS
+     */
+    public function update_approval(Request $request, String $id)
+    {
+        $course =  Course::findOrFail($id);
+        $course->is_approved = $request->status;
+        $course->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Updated successfully',
+        ]);
+    }
+
     /**
      * SHOW INSTRUCTOR COURSE CREATE PAGE
      */
@@ -48,6 +62,7 @@ class CourseController extends Controller
     {
         $thumbnailPath = $this->uploadFile($request->file('thumbnail'));
         $course = new Course();
+        $course->instructor_id = Auth::guard('web')->user()->id;
         $course->title = $request->title;
         $course->slug = Str::slug($request->title);
         $course->seo_description = $request->seo_description;
@@ -57,7 +72,6 @@ class CourseController extends Controller
         $course->price = $request->price;
         $course->discount = $request->discount;
         $course->description = $request->description;
-        $course->instructor_id = Auth::guard('web')->user()->id;
         $course->save();
         // save course id on session
         Session::put('course_create_id', $course->id);
