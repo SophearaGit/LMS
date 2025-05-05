@@ -40,7 +40,7 @@ class CourseSeeder extends Seeder
         $language_arr_ids = array_map('intval', CourseLanguage::pluck('id')->toArray());
 
         foreach ($course_imgs as $img) {
-            $filename = '/edu_' . Str::random(10) . '.' . $img->getExtension();
+            $filename = '/educore_' . Str::random(10) . '.' . $img->getExtension();
             $destinationPath = $path_to_upload_course . '/' . $filename;
 
             File::copy($img->getPathname(), $destinationPath);
