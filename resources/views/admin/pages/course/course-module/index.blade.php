@@ -24,7 +24,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Courses</h3>
                         <div class="card-actions">
-                            <a href="{{ route('admin.course-levels.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.courses.create') }}" class="btn btn-primary">
                                 <i class="ti ti-plus"></i>&nbsp;
                                 Add new
                             </a>
