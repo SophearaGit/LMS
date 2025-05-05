@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseLevelController;
 use App\Http\Controllers\Admin\CourseCategoryController;
+use App\Http\Controllers\Admin\CourseContentController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -123,9 +124,13 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     // SORT CHAPTER ROUTE
     Route::get('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter');
     Route::post('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'UpdateSortChapter'])->name('course-content.update-sort-chapter');
-
-
-
-
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * LARAVEL FILE MANAGER
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });
 

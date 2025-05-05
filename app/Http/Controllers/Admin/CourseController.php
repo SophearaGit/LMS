@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\CourseStoreBasicInfoRequest;
+use App\Http\Requests\Admin\CourseStoreBasicInfoRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\CourseChapter;
 use App\Models\CourseLanguage;
 use App\Models\CourseLevel;
+use App\Models\User;
 use App\Traites\FileUpload;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -29,12 +30,13 @@ class CourseController extends Controller
         ];
         return view('admin.pages.course.course-module.index', $data);
     }
+
     /**
      * UPDATE COURSE APPROVAL STATUS
      */
-    public function update_approval(Request $request, String $id)
+    public function update_approval(Request $request, string $id)
     {
-        $course =  Course::findOrFail($id);
+        $course = Course::findOrFail($id);
         $course->is_approved = $request->status;
         $course->save();
         return response()->json([
@@ -50,11 +52,11 @@ class CourseController extends Controller
     {
         $data = [
             'pageTitle' => 'EduCore | Create Course',
-            'courseId' => $request->id,
-            'step' => $request->next_step,
+            'instructors' => User::where('role', 'instructor')->where('approval_status', 'approved')->get(),
         ];
-        return view('front.pages.instructor.course.create', $data);
+        return view('admin.pages.course.course-module.create', $data);
     }
+
     /**
      * STORE BASIC INFO
      */
@@ -62,7 +64,7 @@ class CourseController extends Controller
     {
         $thumbnailPath = $this->uploadFile($request->file('thumbnail'));
         $course = new Course();
-        $course->instructor_id = Auth::guard('web')->user()->id;
+        $course->instructor_id = $request->instructor_id;
         $course->title = $request->title;
         $course->slug = Str::slug($request->title);
         $course->seo_description = $request->seo_description;
@@ -79,7 +81,7 @@ class CourseController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Updated successfully',
-            'redirect' => route('instructor.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
+            'redirect' => route('admin.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
         ]);
     }
     /**
@@ -94,10 +96,10 @@ class CourseController extends Controller
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'course' => Course::findOrFail($request->id),
+                    'instructors' => User::where('role', 'instructor')->where('approval_status', 'approved')->get(),
                 ];
-                return view('front.pages.instructor.course.edit', $data);
+                return view('admin.pages.course.course-module.edit', $data);
             case '2':
-                # code...
                 $data = [
                     'pageTitle' => 'EduCore | Edit Course',
                     'courseId' => $request->id,
@@ -107,19 +109,17 @@ class CourseController extends Controller
                     'course_language_for_check' => CourseLanguage::all(),
                     'course' => Course::findOrFail($request->id),
                 ];
-                return view('front.pages.instructor.course.create', $data);
+                return view('admin.pages.course.course-module.edit', $data);
             case '3':
-                # code...
                 $data = [
                     'pageTitle' => 'EduCore | Edit Course',
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'course' => Course::findOrFail($request->id),
-                    'chapters' => CourseChapter::where(['course_id' => $request->id, 'instructor_id' => Auth::user()->id])->orderBy('order')->get(),
+                    'chapters' => CourseChapter::where(['course_id' => $request->id, 'instructor_id' => Course::findOrFail($request->id)->instructor_id])->orderBy('order')->get(),
                 ];
-                return view('front.pages.instructor.course.create', $data);
+                return view('admin.pages.course.course-module.edit', $data);
             case '4':
-                # code...
                 $data = [
                     'pageTitle' => 'EduCore | Edit Course',
                     'courseId' => $request->id,
@@ -127,7 +127,6 @@ class CourseController extends Controller
                 ];
                 return view('front.pages.instructor.course.create', $data);
             default:
-                # code...
                 break;
         }
     }
@@ -170,7 +169,7 @@ class CourseController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Updated successfully',
-                    'redirect' => route('instructor.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
+                    'redirect' => route('admin.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
                 ]);
             case '2':
                 $request->validate([
@@ -194,13 +193,13 @@ class CourseController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Updated successfully',
-                    'redirect' => route('instructor.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
+                    'redirect' => route('admin.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
                 ]);
             case '3':
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Updated successfully',
-                    'redirect' => route('instructor.courses.edit_basic_info', ['id' => $request->course_id, 'step' => $request->next_step])
+                    'redirect' => route('admin.courses.edit_basic_info', ['id' => $request->course_id, 'step' => $request->next_step])
                 ]);
             case '4':
                 $request->validate([
@@ -214,7 +213,7 @@ class CourseController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Updated successfully',
-                    'redirect' => route('instructor.courses.index')
+                    'redirect' => route('admin.courses.index')
                 ]);
             default:
                 # code...
