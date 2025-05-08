@@ -64,6 +64,8 @@ class CourseSeeder extends Seeder
                 "discount" => $faker->numberBetween(10, 90),
                 "certificate" => 1,
                 "qna" => 1,
+                "is_approved" => "approved",
+                "status" => "active",
                 "course_level_id" => $faker->randomElement($level_arr_ids),
                 "course_language_id" => $faker->randomElement($language_arr_ids),
             ]);

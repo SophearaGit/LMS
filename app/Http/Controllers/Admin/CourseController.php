@@ -125,7 +125,7 @@ class CourseController extends Controller
                     'courseId' => $request->id,
                     'course' => Course::findOrFail($request->id),
                 ];
-                return view('front.pages.instructor.course.create', $data);
+                return view('admin.pages.course.course-module.edit', $data);
             default:
                 break;
         }
@@ -161,7 +161,7 @@ class CourseController extends Controller
                 $course->price = $request->price;
                 $course->discount = $request->discount;
                 $course->description = $request->description;
-                $course->instructor_id = Auth::guard('web')->user()->id;
+                $course->instructor_id = $course->instructor->id;
                 $course->save();
                 // save course id on session
                 Session::put('course_create_id', $course->id);
@@ -172,6 +172,7 @@ class CourseController extends Controller
                     'redirect' => route('admin.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
                 ]);
             case '2':
+                // dd($request->all());
                 $request->validate([
                     'capacity' => 'nullable|numeric',
                     'duration' => 'required|numeric',

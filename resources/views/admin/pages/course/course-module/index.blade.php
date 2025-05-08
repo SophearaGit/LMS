@@ -76,7 +76,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.course-levels.edit', $item->id) }}"
+                                                <a href="{{ route('admin.courses.edit_basic_info', ['id' => $item->id, 'step' => 1]) }}"
                                                     class="text-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"

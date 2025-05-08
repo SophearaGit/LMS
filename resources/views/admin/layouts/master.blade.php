@@ -119,6 +119,7 @@
     <script src="/admin/assets/dist/js/jquery.nice-select.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/admin/assets/dist/js/jquery-ui.min.js"></script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 
     @stack('scripts')
 </body>
