@@ -7,6 +7,7 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="base_url" content="{{ url('') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @stack('meta')
     <title>@yield('pageTitle')</title>
     <link rel="icon" type="image/png" href="/front/images/favicon.png">
     <link rel="stylesheet" href="/front/css/all.min.css">
@@ -25,13 +26,14 @@
     <link rel="stylesheet" href="/front/css/select2.min.css">
     <link rel="stylesheet" href="/front/css/sticky_menu.css">
     <link rel="stylesheet" href="/front/css/animate.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link rel="stylesheet" href="/front/css/jquery-ui.min.css">
-
     <link rel=" stylesheet" href="/front/css/spacing.css">
     <link rel="stylesheet" href="/front/css/style.css">
     <link rel="stylesheet" href="/front/css/responsive.css">
+    {{-- <link rel="stylesheet" href="/front/css/tabler.min.css"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+
     @stack('stylesheets')
 </head>
 
@@ -123,6 +125,7 @@
     <script src="/front/js/video_player_youtube.js"></script>
     <!--wow js-->
     <script src="/front/js/wow.min.js"></script>
+    {{-- <script src="/front/js/tabler.min.js"></script> --}}
 
     <!--main/custom js-->
     <script src="/front/js/main.js"></script>
@@ -182,6 +185,10 @@
                 });
             })
         })
+        // EZSHARE pluggin for sharing course.
+        document.addEventListener("DOMContentLoaded", function() {
+            ezShare.execute();
+        });
     </script>
 
 </body>

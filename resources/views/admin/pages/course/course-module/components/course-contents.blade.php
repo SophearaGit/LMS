@@ -431,7 +431,7 @@
 
 
 <div class="tab-pane {{ request()->get('step') == 3 ? 'active' : '' }}" id="basic-infos" role="tabpanel">
-    <form action="" class="course_content_form course_form">
+    <form method="POST" class="course_content_form course_form">
         @csrf
         <input type="hidden" name="course_id" value="{{ $courseId }}">
         <input type="hidden" name="current_step" value="3">
@@ -523,13 +523,13 @@
 <script src="/admin/assets/dist/js/jquery-ui.min.js"></script>
 
 <script>
-    // VARIABLE URL NEEDED
-    const base_admin_url = $('meta[name="base_url"]').attr('content');
-
     // LARAVEL FILE MANAGEER INITIALIZATION
     $('#lfm').filemanager('file', {
         prefix: '/admin/laravel-filemanager'
     });
+    // VARIABLE URL NEEDED
+    const base_admin_url = $('meta[name="base_url"]').attr('content');
+
 
     // SELECT 2 INITIALIZATION
     $('.select2').select2();
@@ -720,4 +720,49 @@
             },
         })
     })
+    $('.course_content_form').on('submit', function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            method: 'POST',
+            url: update_url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+
+            },
+            success: function(data) {
+                if (data.status == 'success') {
+                    window.location.href = data.redirect;
+                }
+            },
+            error: function(xhr, status, error) {
+                let errors = xhr.responseJSON.errors;
+                const notyf = new Notyf({
+                    duration: 8000,
+                    dismissible: true,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                });
+                $.each(errors, function(key, value) {
+                    notyf.error(value[0])
+                })
+            },
+            complete: function() {
+
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('.course-tab').on('click', function(e) {
+            e.preventDefault();
+            let step = $(this).data('step');
+            $('.course_form').find('input[name=next_step]').val(step);
+            $('.course_form').trigger('submit');
+        });
+    });
 </script>
