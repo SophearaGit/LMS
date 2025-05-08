@@ -1,5 +1,5 @@
 <div class="tab-pane {{ request()->get('step') == 2 ? 'active' : '' }}" id="more-infos" role="tabpanel">
-    <form class="more_infos_form course_form">
+    <form method="POST" class="more_infos_form course_form">
         @csrf
         <input type="hidden" name="course_id" value="{{ $courseId }}">
         <input type="hidden" name="current_step" value="2">
@@ -184,14 +184,14 @@
     $('.select2').select2();
     // SUBMIT FORM BASIC-INFOS VIA AJAX
     const base_admin_url = $('meta[name="base_url"]').attr('content');
-    const more_infos_url = base_admin_url + '/admin/courses/update-more-info';
+    // const more_infos_url = base_admin_url + '/admin/courses/update-more-info';
 
     $('.more_infos_form').on('submit', function(e) {
         e.preventDefault();
         let formData = new FormData(this);
         $.ajax({
             method: 'POST',
-            url: more_infos_url,
+            url: base_admin_url + '/admin/courses/update-more-info',
             data: formData,
             contentType: false,
             processData: false,
@@ -206,11 +206,11 @@
             error: function(xhr, status, error) {
                 let errors = xhr.responseJSON.errors;
                 const notyf = new Notyf({
-                    duration: 7000,
+                    duration: 8000,
                     dismissible: true,
                     position: {
                         x: 'right',
-                        y: 'bottom',
+                        y: 'top',
                     },
                 });
                 $.each(errors, function(key, value) {
@@ -220,6 +220,52 @@
             complete: function() {
 
             }
+        });
+    });
+
+    $('.edit_basic_info_form').on('submit', function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            method: 'POST',
+            url: base_admin_url + '/admin/courses/update-more-info',
+            data: formData,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+
+            },
+            success: function(data) {
+                if (data.status == 'success') {
+                    window.location.href = data.redirect;
+                }
+            },
+            error: function(xhr, status, error) {
+                let errors = xhr.responseJSON.errors;
+                const notyf = new Notyf({
+                    duration: 8000,
+                    dismissible: true,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                });
+                $.each(errors, function(key, value) {
+                    notyf.error(value[0])
+                })
+            },
+            complete: function() {
+
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('.course-tab').on('click', function(e) {
+            e.preventDefault();
+            let step = $(this).data('step');
+            $('.course_form').find('input[name=next_step]').val(step);
+            $('.course_form').trigger('submit');
         });
     });
 </script>
