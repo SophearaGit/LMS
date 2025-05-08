@@ -1,6 +1,7 @@
 <div class="tab-pane {{ request()->get('step') == 1 || Route::is('admin.courses.create') ? 'active' : '' }}"
     id="basic-infos" role="tabpanel">
-    <form class="basic_infos_form course-tab">
+    <form method="POST" action="{{ route('instructor.courses.store_basic_info') }}" enctype="multipart/form-data"
+        class="basic_infos_form course_form">
         @csrf
         <input type="hidden" name="current_step" value="1">
         <input type="hidden" name="next_step" value="2">

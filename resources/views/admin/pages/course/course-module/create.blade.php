@@ -44,7 +44,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
-                                    @include('admin.pages.course.course-module.components.basic-infos')
+                                    @if (Route::is('admin.courses.create'))
+                                        @include('admin.pages.course.course-module.components.basic-infos')
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -54,3 +56,4 @@
         </div>
     </div>
 @endsection
+
