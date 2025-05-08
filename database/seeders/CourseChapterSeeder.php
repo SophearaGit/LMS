@@ -22,7 +22,7 @@ class CourseChapterSeeder extends Seeder
         // Loop through each course ID
         foreach ($course_arr_ids as $course_id) {
             // Number of chapters to create for each course
-            $numberOfChapters = 8; // Adjust as needed
+            $numberOfChapters = 3; // Adjust as needed
 
             // Loop to create chapters
             for ($i = 1; $i <= $numberOfChapters; $i++) {

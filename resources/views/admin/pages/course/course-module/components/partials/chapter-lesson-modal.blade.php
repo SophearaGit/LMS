@@ -108,7 +108,6 @@
         </form>
     </div>
 </div>
-
 <script>
     $('#lfm').filemanager('file', {
         prefix: '/admin/laravel-filemanager'

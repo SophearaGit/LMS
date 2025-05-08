@@ -7,7 +7,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="menu_category">
+        {{-- <div class="menu_category">
             <div class="icon">
                 <img src="/front/images/grid_icon.png" alt="Category" class="img-fluid">
             </div>
@@ -112,13 +112,13 @@
                     </ul>
                 </li>
             </ul>
-        </div>
+        </div> --}}
         <ul class="navbar-nav m-auto">
             <li class="nav-item">
                 <a class="nav-link active" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
+                <a class="nav-link" href="{{ route('courses') }}">Courses</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Courses <i class="far fa-angle-down"></i></a>

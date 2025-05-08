@@ -19,10 +19,18 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'headline',
         'email',
+        'bio',
+        'gender',
         'password',
         'role',
         'approval_status',
+        'facebook',
+        'x',
+        'linkedin',
+        'website',
+        'github',
         'document',
     ];
 
@@ -48,4 +56,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Count courses.
+     *
+     *
+     */
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'instructor_id', 'id');
+    }
+
+
+
 }
