@@ -7,6 +7,14 @@
                         <h1>
                             @if (Route::is('courses'))
                                 Our Courses
+                            @elseif (Route::is('cart.index'))
+                                Shopping Cart
+                            @elseif (Route::is('checkout.index'))
+                                Checkout
+                            @elseif (Route::is('order.success'))
+                                Payment Success!
+                            @elseif (Route::is('order.fail'))
+                                Payment Cancelled!
                             @endif
                         </h1>
                         <ul>
@@ -14,6 +22,14 @@
                             <li>
                                 @if (Route::is('courses'))
                                     Our Courses
+                                @elseif (Route::is('cart.index'))
+                                    Shopping Cart
+                                @elseif (Route::is('checkout.index'))
+                                    Checkout
+                                @elseif (Route::is('order.success'))
+                                    Payment Success!
+                                @elseif (Route::is('order.fail'))
+                                    Payment Cancelled!
                                 @endif
                             </li>
                         </ul>

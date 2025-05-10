@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +21,26 @@ Schedule::command('telescope:prune --hours=48')->daily();
  *————————————————————————————————————————————————————————————————————————————————
  */
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
 Route::get('/courses/{slug}', [CoursePageController::class, 'getcoursedetailpage'])->name('courses.show');
 
+// CART PAGE START
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/{course_id}/store', [CartController::class, 'store'])->name('cart.store');
+Route::get('/cart/{cart_id}/delete', [CartController::class, 'destroy'])->name('cart.destroy');
+
+// CHECKOUT PAGE START
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+// PAYMENT ROUTE START
+Route::get('/payment/paypal', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+Route::get('/payment/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+Route::get('/payment/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+Route::get('/payment/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+Route::get('/order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
+Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.fail');
 
 /**
  *————————————————————————————————————————————————————————————————————————————————
