@@ -115,10 +115,11 @@
         </div> --}}
         <ul class="navbar-nav m-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="index.html">Home</a>
+                <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('courses') }}">Courses</a>
+                <a class="nav-link {{ Route::is('courses') ? 'active' : '' }} "
+                    href="{{ route('courses') }}">Courses</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Courses <i class="far fa-angle-down"></i></a>
@@ -170,7 +171,7 @@
             </div>
             <ul>
                 <li>
-                    <a class="menu_signin" href="#">
+                    <a class="menu_signin" href="{{ route('cart.index') }}">
                         <span>
                             <img src="/front/images/cart_icon_black.png" alt="user" class="img-fluid">
                         </span>

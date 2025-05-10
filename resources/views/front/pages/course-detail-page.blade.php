@@ -566,6 +566,3 @@
         </div>
     </section>
 @endsection
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
-@endpush
