@@ -129,6 +129,8 @@
 
     <!--main/custom js-->
     <script src="/front/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
+
     @stack('scripts')
 
     <script>
