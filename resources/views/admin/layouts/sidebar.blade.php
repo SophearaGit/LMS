@@ -233,34 +233,44 @@
                         </span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.orders.index') ? 'active' : '' }} "
+                        href="{{ route('admin.orders.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-shopping-cart" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title">
+                            Orders
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.payment-settings.index') ? 'active' : '' }} "
+                        href="{{ route('admin.payment-settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-credit-card" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title">
+                            Payment Settings
+                        </span>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Route::is('admin.course-languages.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-languages.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-languages.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-categories.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-categories.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-categories.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.courses.index') ? 'show' : '' }}"
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.course-languages.*') ||
+                    Route::is('admin.course-levels.*') ||
+                    Route::is('admin.course-categories.*') ||
+                    Route::is('admin.course-sub-categories.*') ||
+                    Route::is('admin.courses.*')
+                        ? 'show'
+                        : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
-                        aria-expanded="{{ Route::is('admin.course-languages.index') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-languages.create') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-languages.edit') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-levels.index') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-levels.create') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-categories.index') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-categories.create') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-categories.edit') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-sub-categories.index') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-sub-categories.create') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.course-sub-categories.edit') ? 'true' : 'false' }} ||
-                        {{ Route::is('admin.courses.index') ? 'true' : 'false' }}">
+                        aria-expanded="{{ Route::is('admin.course-languages.*') ||
+                        Route::is('admin.course-levels.*') ||
+                        Route::is('admin.course-categories.*') ||
+                        Route::is('admin.course-sub-categories.*') ||
+                        Route::is('admin.courses.*')
+                            ? 'true'
+                            : 'false' }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-books" style="font-size: 20px;"></i>
                         </span>
@@ -268,32 +278,8 @@
                             Course Management
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Route::is('admin.course-languages.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-languages.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-languages.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-categories.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-categories.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-categories.edit') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.create') ? 'show' : '' }} ||
-                        {{ Route::is('admin.courses.index') ? 'show' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.edit') ? 'show' : '' }}"
-                        {{ Route::is('admin.course-languages.index') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-languages.create') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-languages.edit') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-levels.index') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-levels.create') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-levels.edit') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-categories.index') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-categories.create') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-categories.edit') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.index') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.create') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.course-sub-categories.edit') ? 'data-bs-popper="static"' : '' }} ||
-                        {{ Route::is('admin.courses.index') ? 'data-bs-popper="static"' : '' }}>
+                    <div class="dropdown-menu {{ Route::is('admin.course-languages.*') || Route::is('admin.course-levels.*') || Route::is('admin.course-categories.*') || Route::is('admin.course-sub-categories.*') || Route::is('admin.courses.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.course-languages.*') || Route::is('admin.course-levels.*') || Route::is('admin.course-categories.*') || Route::is('admin.course-sub-categories.*') || Route::is('admin.courses.*') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ Route::is('admin.courses.index') ? 'active' : '' }} "

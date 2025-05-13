@@ -18,19 +18,19 @@
                             {{-- STRIPE --}}
                             <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
-                                <a href="#" class="payment_mathod" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
+                                <a href="{{ route('stripe.payment') }}" class="payment_mathod">
                                     <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
                                 </a>
                             </div>
-                            {{-- VISA --}}
+                            {{-- RAZORPAY --}}
                             <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
-                                <a href="#" class="payment_mathod" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    <img src="/front/images/payment_8.png" alt="payment" class="img-fluid w-100">
+                                <a href="{{ route('razorpay.redirect') }}" class="payment_mathod">
+                                    {{-- <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100"> --}}
+                                    <h2>Razorpay</h2>
                                 </a>
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PaymentSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => "guest:admin", "prefix" => "admin", "as" => "admin."], function () {
@@ -124,6 +126,26 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     // SORT CHAPTER ROUTE
     Route::get('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter');
     Route::post('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'UpdateSortChapter'])->name('course-content.update-sort-chapter');
+
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * PAYMENT SETTINGS ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
+    Route::post('/payment-settings/paypal', [PaymentSettingController::class, 'paypal_store'])->name('payment-settings.paypal');
+    Route::post('/payment-settings/stripe', [PaymentSettingController::class, 'stripe_store'])->name('payment-settings.stripe');
+    Route::post('/payment-settings/razorpay', [PaymentSettingController::class, 'razorpay_store'])->name('payment-settings.razorpay');
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     *  ORDERS ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order_id}/show', [OrderController::class, 'show'])->name('orders.show');
+
+
+
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * LARAVEL FILE MANAGER
