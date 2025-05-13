@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
             [
                 'name' => "hengly",
                 'headline' => "Web Developer",
-                'email' => "lenghengly@gmail.com",
+                'email' => "lenghengly-t@gmail.com",
                 'bio' => "I am a web developer",
                 'password' => bcrypt("12345678"),
                 'role' => 'instructor',
