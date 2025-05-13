@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             CourseChapterSeeder::class,
             CourseChapterLessonsSeeder::class,
-            PaymentSettingSeeder::class,
         ]);
     }
 }
