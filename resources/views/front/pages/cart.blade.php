@@ -12,7 +12,7 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th class="pro_img">Product</th>
+                                            <th class="pro_img">Course</th>
 
                                             <th class="pro_name"></th>
 
@@ -73,7 +73,7 @@
                         style="visibility: visible; animation-name: fadeInUp;">
                         <div class="total_price">
                             <div class="subtotal_area">
-                                <h5>Subtotal<span>${{ cartTotalPrice() }}</span></h5>
+                                <h5>Total<span>${{ cartTotalPrice() }}</span></h5>
                                 <a href="{{ url('/checkout') }}" class="common_btn">proceed checkout</a>
                             </div>
                         </div>
