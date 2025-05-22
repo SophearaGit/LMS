@@ -3,7 +3,7 @@
         <div class="col-xl-6 col-lg-6 wow fadeInUp">
             <div class="wsus__banner_3_text">
                 <h5>Show Up For Learning</h5>
-                <h1>Premier E-Learning Courses From <span>EduCore</span></h1>
+                <h1>Premier E-Learning Courses From <span>CAIDT</span></h1>
                 <p class="description">Nullam tincidunt tortor est, ac maximus justo gravida non phasellus
                     dignissim
                     quam odio ipsum
@@ -82,3 +82,4 @@
         </li>
     </ul>
 </section>
+

@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
+use App\Http\Controllers\Admin\PayoutGatewayController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => "guest:admin", "prefix" => "admin", "as" => "admin."], function () {
@@ -127,6 +129,15 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::get('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter');
     Route::post('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'UpdateSortChapter'])->name('course-content.update-sort-chapter');
 
+
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     *  ORDERS ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order_id}/show', [OrderController::class, 'show'])->name('orders.show');
+
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * PAYMENT SETTINGS ROUTE
@@ -136,13 +147,20 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::post('/payment-settings/paypal', [PaymentSettingController::class, 'paypal_store'])->name('payment-settings.paypal');
     Route::post('/payment-settings/stripe', [PaymentSettingController::class, 'stripe_store'])->name('payment-settings.stripe');
     Route::post('/payment-settings/razorpay', [PaymentSettingController::class, 'razorpay_store'])->name('payment-settings.razorpay');
+
     /**
      * ————————————————————————————————————————————————————————————————————————————————
-     *  ORDERS ROUTE
+     * SITE SETTINGS ROUTE
      * ————————————————————————————————————————————————————————————————————————————————
      */
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order_id}/show', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/site-settings', [SettingController::class, 'index'])->name('site-settings.index');
+    Route::post('/update-general-settings', [SettingController::class, 'updateGeneralSettings'])->name('site-settings.update-general-settings');
+    // commission settings
+    Route::get('/commission-settings', [SettingController::class, 'commissionSettings'])->name('site-settings.commission-settings');
+    Route::post('/update-commission-settings', [SettingController::class, 'updateCommissionSettings'])->name('site-settings.update-commission-settings');
+    // payout settings resource
+    Route::resource('payout-gateways', PayoutGatewayController::class);
+
 
 
 

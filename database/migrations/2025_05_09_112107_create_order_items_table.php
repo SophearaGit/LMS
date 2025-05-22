@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreignId('course_id');
             $table->integer('qty')->default(1);
             $table->double('price');
+            $table->double('commission_rate')->default(0);
             $table->enum('item_type', ['course'])->default('course');
             $table->timestamps();
         });
