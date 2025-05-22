@@ -7,9 +7,11 @@ use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
+use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
+use App\Http\Controllers\Frontend\WithdrawController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schedule;
 
@@ -78,6 +80,7 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('prfile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePasswordProfileStore'])->name('profile.update_password');
     Route::post('/profile/update-social-link', [ProfileController::class, 'updateSocialLink'])->name('profile.update_social_link');
+    Route::post('/profile/update-payout', [ProfileController::class, 'updatePayout'])->name('profile.update_payout');
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * COURSE ROUTE
@@ -113,6 +116,21 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     // SORT CHAPTER ROUTE
     Route::get('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter');
     Route::post('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'UpdateSortChapter'])->name('course-content.update-sort-chapter');
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * ORDERS ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    /**
+     * ————————————————————————————————————————————————————————————————————————————————
+     * WITHDRAW ROUTE
+     * ————————————————————————————————————————————————————————————————————————————————
+     */
+    Route::get('/withdraws', [WithdrawController::class, 'index'])->name('withdraws.index');
+    Route::get('/withdraws/request-payout', [WithdrawController::class, 'requestPayout'])->name('withdraws.request_payout');
+    Route::post('/withdraws/request-payout', [WithdrawController::class, 'requestPayoutStore'])->name('withdraws.request_payout_store');
+
 
     /**
      * ————————————————————————————————————————————————————————————————————————————————

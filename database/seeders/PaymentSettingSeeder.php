@@ -30,9 +30,7 @@ class PaymentSettingSeeder extends Seeder
             ['key' => 'razorpay_key_id', 'value' => 'rzp_test_cvrsy43xvBZfDT'],
             ['key' => 'razorpay_key_secret', 'value' => 'c9AmI4C5vOfSWmZehhlns5df'],
         ];
-
         PaymentSetting::insert($settings);
-
     }
 }
 

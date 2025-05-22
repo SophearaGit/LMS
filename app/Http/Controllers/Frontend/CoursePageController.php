@@ -14,6 +14,7 @@ class CoursePageController extends Controller
             'pageTitle' => 'Edu | Course',
             'courses' => Course::where('is_approved', 'approved')
                 ->where('status', 'active')
+                ->orderBy('created_at', 'desc')
                 ->paginate(12),
         ];
         return view('front.pages.course-page', $data);

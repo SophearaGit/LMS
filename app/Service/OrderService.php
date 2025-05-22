@@ -39,7 +39,18 @@ class OrderService
                 $order_items = new OrderItem();
                 $order_items->order_id = $order->id;
                 $order_items->course_id = $item->course->id;
-                $order_items->price = $item->course->price;
+
+                $order_items->price = number_format(
+                    $item->course->discount > 0
+                        ? $item->course->price * (1 - ($item->course->discount / 100))
+                        : $item->course->price,
+                    2,
+                    '.',
+                    ''
+                );
+
+
+                $order_items->commission_rate = config('settings.commission', 0);
                 $order_items->save();
                 // Store in enrollments table.
                 $enrollment = new Enrollments();
@@ -47,6 +58,27 @@ class OrderService
                 $enrollment->course_id = $item->course->id;
                 $enrollment->instructor_id = $item->course->instructor_id;
                 $enrollment->save();
+                $instructorWallet = $item->course->instructor;
+                if ($item->course->discount > 0) {
+                    $commissionBase = $item->course->price * (1 - ($item->course->discount / 100));
+                } else {
+                    $commissionBase = $item->course->price;
+                }
+                $commissionRate = config('settings.commission', 0);
+                $commission = calculateCommission($commissionBase, $commissionRate);
+                $instructorEarnings = $commissionBase - $commission;
+
+                // Ensure correct money format (2 decimal places)
+                $instructorEarnings = number_format($instructorEarnings, 2, '.', '');
+
+                $instructorWallet->wallet = number_format(
+                    $instructorWallet->wallet + $instructorEarnings,
+                    2,
+                    '.',
+                    ''
+                );
+
+                $instructorWallet->save();
             }
             $cart->delete();
         } catch (\Throwable $e) {

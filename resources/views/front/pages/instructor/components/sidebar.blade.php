@@ -39,6 +39,24 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('instructor.orders.index') }}"
+                    class="{{ Route::is('instructor.orders.index') ? 'active' : '' }}">
+                    <div class="img">
+                        <img src="/front/images/dash_icon_5.png" alt="icon" class="img-fluid w-100">
+                    </div>
+                    Orders
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('instructor.withdraws.index') }}"
+                    class="{{ Route::is('instructor.withdraws.index') || Route::is('instructor.withdraws.request_payout') ? 'active' : '' }}">
+                    <div class="img">
+                        <img src="/front/images/dash_icon_7.png" alt="icon" class="img-fluid w-100">
+                    </div>
+                    Withdraw
+                </a>
+            </li>
+            <li>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" class="logoutForm">
                     @csrf
