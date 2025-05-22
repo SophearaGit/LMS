@@ -29,6 +29,7 @@ return new class extends Migration {
             $table->string('github')->nullable();
             $table->enum('approval_status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->enum('login_as', ['student', 'instructor'])->nullable();
+            $table->double('wallet')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
