@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\ProfileUpdatePasswordRequest;
 use App\Http\Requests\Frontend\ProfileUpdateRequest;
 use App\Http\Requests\Frontend\ProfileUpdateSocialLink;
+use App\Models\InstructorPayoutInformation;
+use App\Models\PayoutGateway;
 use Illuminate\Http\Request;
 use App\Traites\FileUpload;
 use App\Models\User;
@@ -30,7 +32,8 @@ class ProfileController extends Controller
     public function instructorProfile(Request $request)
     {
         $data = [
-            'pageTitle' => 'EduCore | Instructor Profile'
+            'pageTitle' => 'EduCore | Instructor Profile',
+            'payoutGateways' => PayoutGateway::where('status', 1)->get(),
         ];
         return view('front.pages.instructor.profile', $data);
     }
@@ -80,4 +83,35 @@ class ProfileController extends Controller
         notyf()->success('Social link updated successfully');
         return redirect()->back();
     }
+
+
+    /**
+     * INSTRUCTOR UPDATE PAYOUT
+     */
+    public function updatePayout(Request $request)
+    {
+        $request->validate([
+            'gateway' => 'required|string|max:255',
+            'gateway_information' => 'required|string|max:2000',
+        ]);
+        $user = Auth::user();
+        $payout = InstructorPayoutInformation::where('instructor_id', $user->id)->first();
+        if ($payout) {
+            $payout->instructor_id = $user->id;
+            $payout->gateway = $request->gateway;
+            $payout->information = $request->gateway_information;
+            $payout->save();
+        } else {
+            InstructorPayoutInformation::create([
+                'instructor_id' => $user->id,
+                'gateway' => $request->gateway,
+                'information' => $request->gateway_information,
+            ]);
+        }
+        notyf()->success('Payout information updated successfully');
+        return redirect()->back();
+    }
+
+
+
 }
