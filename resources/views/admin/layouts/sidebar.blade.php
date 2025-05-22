@@ -217,7 +217,7 @@
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-home" style="font-size: 20px;"></i>
                         </span>
-                        <span class="nav-link-title">
+                        <span class="nav-link-title mt-1">
                             Home
                         </span>
                     </a>
@@ -228,7 +228,7 @@
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-user-exclamation" style="font-size: 20px;"></i>
                         </span>
-                        <span class="nav-link-title">
+                        <span class="nav-link-title mt-1">
                             Instructor Requests
                         </span>
                     </a>
@@ -239,8 +239,20 @@
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-shopping-cart" style="font-size: 20px;"></i>
                         </span>
-                        <span class="nav-link-title">
+                        <span class="nav-link-title mt-1">
                             Orders
+                        </span>
+                    </a>
+                </li>
+                {{-- pay out get way --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.payout-gateways.*') ? 'active' : '' }} "
+                        href="{{ route('admin.payout-gateways.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-wallet" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Payout Gateways
                         </span>
                     </a>
                 </li>
@@ -250,7 +262,7 @@
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-credit-card" style="font-size: 20px;"></i>
                         </span>
-                        <span class="nav-link-title">
+                        <span class="nav-link-title mt-1">
                             Payment Settings
                         </span>
                     </a>
@@ -274,7 +286,7 @@
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-books" style="font-size: 20px;"></i>
                         </span>
-                        <span class="nav-link-title">
+                        <span class="nav-link-title mt-1">
                             Course Management
                         </span>
                     </a>
@@ -301,6 +313,17 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.site-settings.index') ? 'active' : '' }} "
+                        href="{{ route('admin.site-settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-settings" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Site Settings
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>
