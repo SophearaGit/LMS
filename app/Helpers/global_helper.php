@@ -3,6 +3,16 @@
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 
+if (!function_exists('calculateCommission')) {
+    function calculateCommission($amount, $commission)
+    {
+        if ($amount == 0 || $commission == 0) {
+            return 0;
+        }
+        return ($amount * $commission) / 100;
+    }
+}
+
 if (!function_exists('minToHours')) {
     function minToHours($minutes)
     {

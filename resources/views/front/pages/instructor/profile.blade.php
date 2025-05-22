@@ -30,7 +30,6 @@
     </section>
     {{-- BREADCRUMB END --}}
     {{-- DASHBOARD OVERVIEW START --}}
-    <!-- Session Status -->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -116,7 +115,7 @@
                                         </div>
                                         <div class="col-xl-12">
                                             <div class="wsus__dashboard_profile_update_btn">
-                                                <button type="submit" class="common_btn">Update Profile</button>
+                                                <button type="submit" class="common_btn">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -130,17 +129,14 @@
                                     <div class="wsus__dashboard_heading">
                                         <h5>Security update</h5>
                                         <p class="text-muted">
-                                            For your account’s safety, we recommend updating your password regularly and
-                                            avoiding the reuse of old passwords. Your security is important to us.
+                                            We will email you a confirmation when changing your password, so please expect
+                                            that
+                                            email
+                                            after submitting.
                                         </p>
                                     </div>
                                 </div>
-                                <div class="wsus__dashboard_password_change">
-                                    <h6>Change Password</h6>
-                                    <p>We will email you a confirmation when changing your password, so please expect
-                                        that
-                                        email
-                                        after submitting.</p>
+                                <div class="wsus__dashboard_password_change" style="padding: 0;">
                                     <form action="{{ route('instructor.profile.update_password') }}" method="POST"
                                         class="wsus__dashboard_profile_update">
                                         @csrf
@@ -162,7 +158,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
-                                                <div class="wsus__dashboard_password_change_input">
+                                                <div class="wsus__dashboard_password_change_input mb-3">
                                                     <label for="password_confirmation">Confirm Password</label>
                                                     <input type="password" name="password_confirmation"
                                                         id="password_confirmation" placeholder="Confirm New Password"
@@ -172,7 +168,64 @@
                                             </div>
                                             <div class="col-xl-12">
                                                 <div class="wsus__dashboard_password_change_btn">
-                                                    <button type="submit" class="common_btn">Update Password</button>
+                                                    <button type="submit" class="common_btn">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-sm-12 wow fadeInUp">
+                            <div class="wsus__dashboard_contant">
+                                <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                                    <div class="wsus__dashboard_heading">
+                                        <h5>Payout Settings</h5>
+                                        <p class="text-muted">
+                                            Manage your payout methods securely.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="wsus__dashboard_password_change p-0">
+                                    <form action="{{ route('instructor.profile.update_payout') }}" method="POST"
+                                        class="wsus__dashboard_profile_update">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="wsus__dashboard_password_change_input">
+                                                    @foreach ($payoutGateways as $payoutGateway)
+                                                        <span
+                                                            class="d-none gateway-{{ $payoutGateway->id }}">{!! $payoutGateway->description !!}</span>
+                                                    @endforeach
+                                                    <label for="gateway">Gateway</label>
+                                                    <select class="mt-2 gateway" name="gateway" id="gateway">
+                                                        <option data-display="Select your gateway here." value="">
+                                                            Nothing
+                                                        </option>
+                                                        @foreach ($payoutGateways as $payoutGateway)
+                                                            <option @selected($payoutGateway->name == auth()->user()->payoutGatewayInfo->gateway)
+                                                                value="{{ $payoutGateway->name }} "
+                                                                data-id={{ $payoutGateway->id }}>
+                                                                {{ $payoutGateway->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <x-input-error :messages="$errors->get('gateway')" class="mt-2" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="wsus__dashboard_password_change_input mb-3">
+                                                    <label for="gateway_information">Gateway Information</label>
+                                                    <textarea rows="7" class="gateway_description" name="gateway_information" id="gateway_information"
+                                                        placeholder="Enter your gateway info here.">{!! auth()->user()->payoutGatewayInfo->information !!}</textarea>
+                                                    </textarea>
+                                                    <x-input-error :messages="$errors->get('gateway_information')" class="mt-2" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="wsus__dashboard_password_change_btn">
+                                                    <button type="submit" class="common_btn">Update</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -238,6 +291,10 @@
 @endsection
 @push('scripts')
     <script>
+        $('.gateway').on('change', function() {
+            let id = $(this).find(':selected').data('id');
+            $('.gateway_description').attr('placeholder', $('.gateway-' + id).html());
+        });
         $(document).ready(function() {
             $('select').niceSelect();
         });
