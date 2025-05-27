@@ -1,26 +1,7 @@
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @section('content')
-    {{-- BREADCRUMB START --}}
-    <section class="wsus__breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">
-        <div class="wsus__breadcrumb_overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 wow fadeInUp">
-                        <div class="wsus__breadcrumb_text">
-                            <h1>Student Dashboard</h1>
-                            <ul>
-                                <li><a href="{{ url('/') }}">Home</a></li>
-                                <li>Student Dashboard</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    {{-- BREADCRUMB END --}}
-    {{-- DASHBOARD OVERVIEW START --}}
+    @include('front.pages.student.partials.breadcrum-banner')
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -71,5 +52,4 @@
             </div>
         </div>
     </section>
-    {{-- DASHBOARD OVERVIEW END --}}
 @endsection

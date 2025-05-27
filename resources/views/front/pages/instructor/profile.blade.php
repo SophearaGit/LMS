@@ -204,9 +204,9 @@
                                                             Nothing
                                                         </option>
                                                         @foreach ($payoutGateways as $payoutGateway)
-                                                            <option @selected($payoutGateway->name == auth()->user()->payoutGatewayInfo->gateway)
-                                                                value="{{ $payoutGateway->name }} "
-                                                                data-id={{ $payoutGateway->id }}>
+                                                            <option @selected($payoutGateway->name == optional(auth()->user()->payoutGatewayInfo)->gateway)
+                                                                value="{{ $payoutGateway->name }}"
+                                                                data-id="{{ $payoutGateway->id }}">
                                                                 {{ $payoutGateway->name }}
                                                             </option>
                                                         @endforeach
@@ -218,8 +218,7 @@
                                                 <div class="wsus__dashboard_password_change_input mb-3">
                                                     <label for="gateway_information">Gateway Information</label>
                                                     <textarea rows="7" class="gateway_description" name="gateway_information" id="gateway_information"
-                                                        placeholder="Enter your gateway info here.">{!! auth()->user()->payoutGatewayInfo->information !!}</textarea>
-                                                    </textarea>
+                                                        placeholder="Enter your gateway info here.">{!! optional(auth()->user()->payoutGatewayInfo)->information !!}</textarea>
                                                     <x-input-error :messages="$errors->get('gateway_information')" class="mt-2" />
                                                 </div>
                                             </div>

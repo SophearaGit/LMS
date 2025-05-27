@@ -39,7 +39,7 @@
                                     style="visibility: visible; animation-name: fadeInUp;">
                                     <div class="wsus__dash_earning">
                                         <h6>CURRENT BALLANCE</h6>
-                                        <h3>{{ config('settings.site_currency_icon') }} {{ $currentBallance }}</h3>
+                                        <h3>{{ config('settings.site_currency_icon') }} {{ $currentBallance ?? 0 }}</h3>
                                         <p>
                                             Total amount available for withdrawal
                                         </p>

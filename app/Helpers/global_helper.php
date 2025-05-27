@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 if (!function_exists('calculateCommission')) {
     function calculateCommission($amount, $commission)
     {
+        // dd($amount, $commission);
         if ($amount == 0 || $commission == 0) {
             return 0;
         }

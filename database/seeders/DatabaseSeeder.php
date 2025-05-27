@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Setting;
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\Seeder;
 
@@ -24,6 +25,8 @@ class DatabaseSeeder extends Seeder
             CourseChapterSeeder::class,
             CourseChapterLessonsSeeder::class,
             PaymentSettingSeeder::class,
+            PayoutGatewaySeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

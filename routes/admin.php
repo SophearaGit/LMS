@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\PayoutGatewayController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\WithdrawRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => "guest:admin", "prefix" => "admin", "as" => "admin."], function () {
@@ -160,6 +161,10 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::post('/update-commission-settings', [SettingController::class, 'updateCommissionSettings'])->name('site-settings.update-commission-settings');
     // payout settings resource
     Route::resource('payout-gateways', PayoutGatewayController::class);
+    // withdraw request
+    Route::get('/withdraw-request', [WithdrawRequestController::class, 'index'])->name('withdraw-request.index');
+    Route::get('/withdraw-request/{withdraw}/show', [WithdrawRequestController::class, 'show'])->name('withdraw-request.show');
+    Route::post('/withdraw-request/{withdraw}/status', [WithdrawRequestController::class, 'updateStatus'])->name('withdraw-request.update-status');
 
 
 
