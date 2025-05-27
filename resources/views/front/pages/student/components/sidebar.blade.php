@@ -28,6 +28,15 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('student.enroll_courses.index') }}"
+                    class="{{ Route::is('student.enroll_courses.index') ? 'active' : '' }}">
+                    <div class="img">
+                        <img src="/front/images/dash_icon_2.png" alt="icon" class="img-fluid w-100">
+                    </div>
+                    My Courses
+                </a>
+            </li>
+            <li>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" class="logoutForm">
                     @csrf

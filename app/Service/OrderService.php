@@ -35,6 +35,7 @@ class OrderService
             // Store in order_items table.
             $cart = Cart::where('user_id', $buyer_id);
             $cart_items = $cart->get();
+
             foreach ($cart_items as $item) {
                 $order_items = new OrderItem();
                 $order_items->order_id = $order->id;
@@ -42,8 +43,8 @@ class OrderService
 
                 $order_items->price = number_format(
                     $item->course->discount > 0
-                        ? $item->course->price * (1 - ($item->course->discount / 100))
-                        : $item->course->price,
+                    ? $item->course->price * (1 - ($item->course->discount / 100))
+                    : $item->course->price,
                     2,
                     '.',
                     ''
@@ -58,26 +59,20 @@ class OrderService
                 $enrollment->course_id = $item->course->id;
                 $enrollment->instructor_id = $item->course->instructor_id;
                 $enrollment->save();
+
+
                 $instructorWallet = $item->course->instructor;
-                if ($item->course->discount > 0) {
-                    $commissionBase = $item->course->price * (1 - ($item->course->discount / 100));
-                } else {
-                    $commissionBase = $item->course->price;
-                }
-                $commissionRate = config('settings.commission', 0);
-                $commission = calculateCommission($commissionBase, $commissionRate);
-                $instructorEarnings = $commissionBase - $commission;
-
-                // Ensure correct money format (2 decimal places)
-                $instructorEarnings = number_format($instructorEarnings, 2, '.', '');
-
-                $instructorWallet->wallet = number_format(
-                    $instructorWallet->wallet + $instructorEarnings,
-                    2,
-                    '.',
-                    ''
+                $instructorWallet->wallet += calculateCommission(
+                    number_format(
+                        $item->course->discount > 0
+                        ? $item->course->price * (1 - ($item->course->discount / 100))
+                        : $item->course->price,
+                        2,
+                        '.',
+                        ''
+                    ),
+                    config('settings.commission', 0)
                 );
-
                 $instructorWallet->save();
             }
             $cart->delete();

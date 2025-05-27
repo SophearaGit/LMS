@@ -86,7 +86,7 @@
     {{-- notyf --}}
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     {{-- sweetalert2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>s
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--larvel file manager-->
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <!--bootstrap js-->

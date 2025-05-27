@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
+use App\Http\Controllers\Frontend\EnrolledCourseController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\OrderController;
@@ -65,6 +66,18 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefi
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('prfile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePasswordProfileStore'])->name('profile.update_password');
     Route::post('/profile/update-social-link', [ProfileController::class, 'updateSocialLink'])->name('profile.update_social_link');
+    // ENROLL COURSES ROUTE
+    Route::get('/enroll-courses', [EnrolledCourseController::class, 'index'])->name('enroll_courses.index');
+    Route::get('/enroll-courses/{slug}/course-videos', [EnrolledCourseController::class, 'enrolledCourseVideos'])->name('enroll_courses.course_videos');
+    Route::get('/enroll-courses/get-lesson-content', [EnrolledCourseController::class, 'getLessonContent'])->name('enroll_courses.get_lesson_content');
+    Route::post('/enroll-courses/update-watch-history', [EnrolledCourseController::class, 'updateWatchHistory'])->name('enroll_courses.update_watch_history');
+    Route::post('/enroll-courses/update-lesson-completion', [EnrolledCourseController::class, 'updateLessonCompletion'])->name('enroll_courses.update_lesson_completion');
+    Route::get('/enroll-courses/{lesson_id}/download-file', [EnrolledCourseController::class, 'downloadFile'])->name('enroll_courses.download_file');
+
+
+
+
+
 
 });
 
