@@ -15,7 +15,7 @@ class StudentDashboardController extends Controller
     public function index()
     {
         $date = [
-            'pageTitle' => 'EdoCore | Student-Dashboard'
+            'pageTitle' => 'CAITD | Student-Dashboard'
         ];
         return view('front.pages.student.index', $date);
     }
@@ -31,7 +31,7 @@ class StudentDashboardController extends Controller
             abort(403);
 
         $data = [
-            'pageTitle' => 'EduCore | Become Instructor'
+            'pageTitle' => 'CAITD | Become Instructor'
         ];
 
         return view('front.pages.student.become-instructor', $data);

@@ -11,7 +11,7 @@ class CoursePageController extends Controller
     public function getCoursePage()
     {
         $data = [
-            'pageTitle' => 'Edu | Course',
+            'pageTitle' => 'CAITD | Course',
             'courses' => Course::where('is_approved', 'approved')
                 ->where('status', 'active')
                 ->orderBy('created_at', 'desc')
@@ -22,7 +22,7 @@ class CoursePageController extends Controller
     public function getcoursedetailpage(string $slug)
     {
         $data = [
-            'pageTitle' => 'Edu | Course',
+            'pageTitle' => 'CAITD | Course',
             'course' => Course::where('slug', $slug)
                 ->where('is_approved', 'approved')
                 ->where('status', 'active')
