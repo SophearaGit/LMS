@@ -6,7 +6,7 @@
                     <div class="col-lg-3 wow fadeInUp">
                         <div class="wsus__footer_3_logo_area">
                             <a class="logo" href="index.html">
-                                <img src="/front/images/footer_logo.png" alt="EduCore" class="img-fluid">
+                                <img src="/front/images/footer_logo.png" alt="CAITD" class="img-fluid">
                             </a>
                             <p>Nunc in sollicitudin diam, ut bibendum malesuada sodales porttitor.</p>
                             <h2>Follow Us On</h2>
@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="wsus__footer_copyright_text">
-                            <p>Copyright © 2024 All Rights Reserved by EduCore Education</p>
+                            <p>Copyright © 2024 All Rights Reserved by CAITD Education</p>
                             <ul>
                                 <li><a href="#">Privacy Policy</a></li>
                                 <li><a href="#">Term of Service</a></li>

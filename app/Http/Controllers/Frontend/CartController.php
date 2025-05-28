@@ -13,7 +13,7 @@ class CartController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'LMS | Cart',
+            'pageTitle' => 'CAITD | Cart',
             'cart' => Cart::with(['course'])
                 ->where(['user_id' => Auth::guard('web')->user()?->id])
                 ->paginate(),
@@ -46,7 +46,7 @@ class CartController extends Controller
         $cart->course_id = $course->id;
         $cart->save();
         $data = [
-            'pageTitle' => 'LMS | Cart',
+            'pageTitle' => 'CAITD | Cart',
         ];
         return response(
             [
@@ -67,7 +67,7 @@ class CartController extends Controller
     public function checkout(int $cart_id)
     {
         $data = [
-            'pageTitle' => 'LMS | Checkout',
+            'pageTitle' => 'CAITD | Checkout',
             'cart' => Cart::where(['id' => $cart_id, 'user_id' => Auth::guard('web')->user()->id])->first(),
         ];
         return view('front.pages.checkout', $data);

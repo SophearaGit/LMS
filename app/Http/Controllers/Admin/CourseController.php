@@ -25,7 +25,7 @@ class CourseController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'EduCore | Courses',
+            'pageTitle' => 'CAITD | Courses',
             'courses' => Course::with(['instructor'])->paginate(15),
         ];
         return view('admin.pages.course.course-module.index', $data);
@@ -51,7 +51,7 @@ class CourseController extends Controller
     public function create(Request $request)
     {
         $data = [
-            'pageTitle' => 'EduCore | Create Course',
+            'pageTitle' => 'CAITD | Create Course',
             'instructors' => User::where('role', 'instructor')->where('approval_status', 'approved')->get(),
         ];
         return view('admin.pages.course.course-module.create', $data);
@@ -92,7 +92,7 @@ class CourseController extends Controller
         switch ($request->step) {
             case '1':
                 $data = [
-                    'pageTitle' => 'EduCore | Edit Course',
+                    'pageTitle' => 'CAITD | Edit Course',
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'course' => Course::findOrFail($request->id),
@@ -101,7 +101,7 @@ class CourseController extends Controller
                 return view('admin.pages.course.course-module.edit', $data);
             case '2':
                 $data = [
-                    'pageTitle' => 'EduCore | Edit Course',
+                    'pageTitle' => 'CAITD | Edit Course',
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'categories_for_select' => CourseCategory::where('status', 1)->get(),
@@ -112,7 +112,7 @@ class CourseController extends Controller
                 return view('admin.pages.course.course-module.edit', $data);
             case '3':
                 $data = [
-                    'pageTitle' => 'EduCore | Edit Course',
+                    'pageTitle' => 'CAITD | Edit Course',
                     'courseId' => $request->id,
                     'step' => $request->next_step,
                     'course' => Course::findOrFail($request->id),
@@ -121,7 +121,7 @@ class CourseController extends Controller
                 return view('admin.pages.course.course-module.edit', $data);
             case '4':
                 $data = [
-                    'pageTitle' => 'EduCore | Edit Course',
+                    'pageTitle' => 'CAITD | Edit Course',
                     'courseId' => $request->id,
                     'course' => Course::findOrFail($request->id),
                 ];

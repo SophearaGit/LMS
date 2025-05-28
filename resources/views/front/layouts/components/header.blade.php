@@ -9,7 +9,7 @@
         </div>
         <div class="col-xxl-5 col-lg-7 d-none d-xxl-block">
             <div class="wsus__header_center">
-                <p> <span>Limited-Time Special</span> Use Code to Get 30% Off Your First Buying EduCore. <a
+                <p> <span>Limited-Time Special</span> Use Code to Get 30% Off Your First Buying CAITD. <a
                         href="#">Find out more!</a></p>
             </div>
         </div>

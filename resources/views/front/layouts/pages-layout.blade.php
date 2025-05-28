@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('meta')
     <title>@yield('pageTitle')</title>
-    <link rel="icon" type="image/png" href="/front/images/favicon.png">
+    <link rel="icon" type="image/png" href="/front/images/preloader.png">
     <link rel="stylesheet" href="/front/css/all.min.css">
     <link rel="stylesheet" href="/front/css/bootstrap.min.css">
     <link rel="stylesheet" href="/front/css/animated_barfiller.css">
