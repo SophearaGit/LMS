@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\InstructorPayoutInformation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class InstructorPayoutInformationSeeder extends Seeder
 {
@@ -12,6 +14,12 @@ class InstructorPayoutInformationSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        InstructorPayoutInformation::insert([
+            'instructor_id' => 2,
+            'gateway' => 'Paypal',
+            'information' => 'credential id, secret key.',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

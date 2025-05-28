@@ -12,7 +12,7 @@ class InstructorDashboardController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'EduCore | Instructor-Dashboard'
+            'pageTitle' => 'CAITD | Instructor-Dashboard'
         ];
         return view('front.pages.instructor.index', $data);
     }

@@ -20,7 +20,7 @@ class InstructorRequestController extends Controller
             ->orWhere('approval_status', 'rejected')
             ->get();
         $data = [
-            'pageTitle' => 'EduCore | Instructor Request'
+            'pageTitle' => 'CAITD | Instructor Request'
         ];
         return view('admin.pages.instructor-requests.index', $data, compact('instructorRequests'));
     }

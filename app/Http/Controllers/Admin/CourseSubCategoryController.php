@@ -21,7 +21,7 @@ class CourseSubCategoryController extends Controller
         CourseCategory $courseCategory
     ) {
         $data = [
-            'pageTitle' => 'Educore | Course Sub Categories',
+            'pageTitle' => 'CAITD | Course Sub Categories',
             'courseCategory' => $courseCategory,
             'subCategories' => CourseCategory::where('parent_id', $courseCategory->id)->paginate(15),
         ];
@@ -34,7 +34,7 @@ class CourseSubCategoryController extends Controller
     public function create(CourseCategory $courseCategory)
     {
         $data = [
-            'pageTitle' => 'Educore | Create Course Sub Category',
+            'pageTitle' => 'CAITD | Create Course Sub Category',
             'courseCategory' => $courseCategory,
         ];
         return view('admin.pages.course.course-sub-categories.create', $data);
@@ -70,7 +70,7 @@ class CourseSubCategoryController extends Controller
         CourseCategory $course_sub_category,
     ) {
         $data = [
-            'pageTitle' => 'Educore | Edit Course Sub Category',
+            'pageTitle' => 'CAITD | Edit Course Sub Category',
             'course_category' => $course_category,
             'course_sub_category' => $course_sub_category,
         ];

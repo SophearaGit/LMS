@@ -16,7 +16,7 @@ class CourseLevelController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'EduCore | Course Level'
+            'pageTitle' => 'CAITD | Course Level'
         ];
         $courseLevels = CourseLevel::paginate(15);
         $data['courseLevels'] = $courseLevels;
@@ -30,7 +30,7 @@ class CourseLevelController extends Controller
     public function create()
     {
         $data = [
-            'pageTitle' => 'EduCore | Create Course Level'
+            'pageTitle' => 'CAITD | Create Course Level'
         ];
         return view('admin.pages.course.course-levels.create', $data);
     }
@@ -57,7 +57,7 @@ class CourseLevelController extends Controller
     public function edit(CourseLevel $courseLevel)
     {
         return view('admin.pages.course.course-levels.edit', [
-            'pageTitle' => 'EduCore | Edit Course Level',
+            'pageTitle' => 'CAITD | Edit Course Level',
             'courseLevel' => $courseLevel
         ]);
     }

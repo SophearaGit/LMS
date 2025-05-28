@@ -10,7 +10,7 @@ class FrontendController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'EduCore | Homepage'
+            'pageTitle' => 'CAITD | Homepage'
         ];
         return view('front.pages.index', $data);
     }

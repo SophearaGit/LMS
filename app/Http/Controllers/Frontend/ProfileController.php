@@ -22,7 +22,7 @@ class ProfileController extends Controller
     public function profile(Request $request)
     {
         $data = [
-            'pageTitle' => 'EduCore | Student Profile'
+            'pageTitle' => 'CAITD | Student Profile'
         ];
         return view('front.pages.student.profile', $data);
     }
@@ -32,7 +32,7 @@ class ProfileController extends Controller
     public function instructorProfile(Request $request)
     {
         $data = [
-            'pageTitle' => 'EduCore | Instructor Profile',
+            'pageTitle' => 'CAITD | Instructor Profile',
             'payoutGateways' => PayoutGateway::where('status', 1)->get(),
         ];
         return view('front.pages.instructor.profile', $data);

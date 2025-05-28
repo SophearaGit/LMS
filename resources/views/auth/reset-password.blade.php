@@ -39,7 +39,7 @@
 </x-guest-layout> --}}
 
 @extends('front.layouts.auth-page-layout')
-@section('pageTitle', isset($pageTitle) ? $pageTitle : 'EduCore | Sign In')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'CAITD | Sign In')
 @push('stylesheets')
     <style>
         .wsus__sign_in {
@@ -54,7 +54,7 @@
                 <div class="wsus__sign_img">
                     <img src="/front/images/login_img_1.jpg" alt="login" class="img-fluid">
                     <a href="index.html">
-                        <img src="/front/images/logo.png" alt="EduCore" class="img-fluid">
+                        <img src="/front/images/logo.png" alt="CAITD" class="img-fluid">
                     </a>
                 </div>
             </div>
