@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'Orders',
+            'pageTitle' => 'CAITD | Orders',
             'orders' => Order::with(['customer'])->paginate(25)
         ];
         return view('admin.pages.orders.index', $data);
@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function show(Request $request, int $order_id)
     {
         $data = [
-            'pageTitle' => 'Orders',
+            'pageTitle' => 'CAITD | Order Details',
             'order' => Order::with(['customer'])->findOrFail($order_id),
         ];
         return view('admin.pages.orders.show', $data);

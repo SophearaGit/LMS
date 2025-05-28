@@ -17,7 +17,7 @@ class CourseLanguageController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'EduCore | Course Language'
+            'pageTitle' => 'CAITD | Course Language'
         ];
         $courseLanguages = CourseLanguage::paginate(15);
         $data['courseLanguages'] = $courseLanguages;
@@ -31,7 +31,7 @@ class CourseLanguageController extends Controller
     public function create(Request $request)
     {
         $data = [
-            'pageTitle' => 'EduCore | Create Course Language'
+            'pageTitle' => 'CAITD | Create Course Language'
         ];
         return view('admin.pages.course.course-languages.create', $data);
     }
@@ -58,7 +58,7 @@ class CourseLanguageController extends Controller
     public function edit(CourseLanguage $course_language)
     {
         return view('admin.pages.course.course-languages.edit', [
-            'pageTitle' => 'EduCore | Edit Course Language',
+            'pageTitle' => 'CAITD | Edit Course Language',
             'course_language' => $course_language
         ]);
     }

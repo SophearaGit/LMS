@@ -1,7 +1,7 @@
 <div class="mobile_menu_area">
     <div class="mobile_menu_area_top">
         <a class="mobile_menu_logo" href="index.html">
-            <img src="/front/images/logo.png" alt="EduCore">
+            <img src="/front/images/logo.png" alt="CAITD">
         </a>
         <div class="mobile_menu_icon d-block d-lg-none" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">

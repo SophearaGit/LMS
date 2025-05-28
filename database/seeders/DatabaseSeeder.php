@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             PaymentSettingSeeder::class,
             PayoutGatewaySeeder::class,
             SettingSeeder::class,
+            InstructorPayoutInformationSeeder::class,
         ]);
     }
 }

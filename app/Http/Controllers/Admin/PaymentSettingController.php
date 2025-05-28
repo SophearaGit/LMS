@@ -12,7 +12,7 @@ class PaymentSettingController extends Controller
     public function index()
     {
         $data = [
-            'PageTitle' => 'Payment Settings',
+            'PageTitle' => 'CAITD | Payment Settings',
         ];
         return view('admin.pages.payment-settings.index', $data);
     }

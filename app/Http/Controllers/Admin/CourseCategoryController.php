@@ -20,7 +20,7 @@ class CourseCategoryController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'EduCore | Course Category',
+            'pageTitle' => 'CAITD | Course Category',
             'courseCategories' => CourseCategory::whereNull('parent_id')->paginate(15),
         ];
         return view('admin.pages.course.course-categories.index', $data);
@@ -32,7 +32,7 @@ class CourseCategoryController extends Controller
     public function create()
     {
         $data = [
-            'pageTitle' => 'EduCore | Course Category'
+            'pageTitle' => 'CAITD | Course Category'
         ];
         return view('admin.pages.course.course-categories.create', $data);
     }
@@ -61,7 +61,7 @@ class CourseCategoryController extends Controller
     public function edit(CourseCategory $courseCategory)
     {
         $data = [
-            'pageTitle' => 'EduCore | Course Category',
+            'pageTitle' => 'CAITD | Course Category',
             'courseCategory' => $courseCategory
         ];
         return view('admin.pages.course.course-categories.edit', $data);
