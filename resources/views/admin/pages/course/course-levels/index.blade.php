@@ -1,11 +1,8 @@
-hi
 @extends('admin.layouts.master')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @push('stylesheets')
     <style>
-        /* responsive css */
         @media (min-width: 1400px) {
-
             .container,
             .container-lg,
             .container-md,

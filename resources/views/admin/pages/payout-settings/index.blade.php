@@ -1,4 +1,3 @@
-hi
 @extends('admin.layouts.master')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @push('stylesheets')

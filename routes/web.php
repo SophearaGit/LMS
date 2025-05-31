@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
@@ -73,6 +74,8 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefi
     Route::post('/enroll-courses/update-watch-history', [EnrolledCourseController::class, 'updateWatchHistory'])->name('enroll_courses.update_watch_history');
     Route::post('/enroll-courses/update-lesson-completion', [EnrolledCourseController::class, 'updateLessonCompletion'])->name('enroll_courses.update_lesson_completion');
     Route::get('/enroll-courses/{lesson_id}/download-file', [EnrolledCourseController::class, 'downloadFile'])->name('enroll_courses.download_file');
+    // CERTIFICATE ROUTE
+    Route::get('/certificate/{course}/download', [CertificateController::class, 'download'])->name('certificate.download');
 
 
 

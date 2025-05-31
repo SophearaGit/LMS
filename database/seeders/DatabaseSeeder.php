@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             PayoutGatewaySeeder::class,
             SettingSeeder::class,
             InstructorPayoutInformationSeeder::class,
+            CertificateBuilderSeeder::class,
+            CertificateBuilderItemSeeder::class,
         ]);
     }
 }

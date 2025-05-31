@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 // use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\CertificateBuilderController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseLevelController;
 use App\Http\Controllers\Admin\CourseCategoryController;
@@ -165,6 +166,10 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::get('/withdraw-request', [WithdrawRequestController::class, 'index'])->name('withdraw-request.index');
     Route::get('/withdraw-request/{withdraw}/show', [WithdrawRequestController::class, 'show'])->name('withdraw-request.show');
     Route::post('/withdraw-request/{withdraw}/status', [WithdrawRequestController::class, 'updateStatus'])->name('withdraw-request.update-status');
+
+    Route::get('/certificate-builder', [CertificateBuilderController::class, 'index'])->name('certificate-builder.index');
+    Route::post('/certificate-builder/store', [CertificateBuilderController::class, 'store'])->name('certificate-builder.store');
+    Route::post('/certificate-builder/update-position', [CertificateBuilderController::class, 'updatePosition'])->name('certificate-builder.update-position');
 
 
 
