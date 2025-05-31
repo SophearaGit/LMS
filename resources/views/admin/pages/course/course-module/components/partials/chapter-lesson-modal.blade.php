@@ -2,6 +2,9 @@
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">lesson</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        {{-- @php
+            dd(@$lesson);
+        @endphp --}}
     </div>
     <div class="modal-body">
         <form
@@ -13,7 +16,7 @@
             <div class="row">
                 <input type="hidden" name="course_id" value="{{ $course_id }}">
                 <input type="hidden" name="chapter_id" value="{{ $chapter_id }}">
-                {{-- <input type="hidden" name="lesson_id" value="{{ $lesson_id }}"> --}}
+                <input type="hidden" name="lesson_id" value="{{ $lesson_id }}">
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>

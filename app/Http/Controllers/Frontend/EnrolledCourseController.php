@@ -88,7 +88,7 @@ class EnrolledCourseController extends Controller
     }
 
     // downloadFile
-    public function downloadFile(String $id)
+    public function downloadFile(string $id)
     {
         $lesson = CourseChapterLessons::findOrFail($id);
         return response()->download(public_path($lesson->file_path));
