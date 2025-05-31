@@ -336,6 +336,17 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.certificate-builder.index') ? 'active' : '' }} "
+                        href="{{ route('admin.certificate-builder.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-certificate" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Certificate Builder
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.site-settings.index') ? 'active' : '' }} "
                         href="{{ route('admin.site-settings.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
