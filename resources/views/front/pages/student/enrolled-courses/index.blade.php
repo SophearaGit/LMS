@@ -63,7 +63,27 @@
                                                             <div class="text-muted">
                                                                 Instructor: {{ $enrolledCourse->course->instructor->name }}
                                                             </div>
-
+                                                            @php
+                                                                $lessonCount = \App\Models\CourseChapterLessons::where(
+                                                                    'course_id',
+                                                                    $enrolledCourse->course->id,
+                                                                )->count();
+                                                                $finishLessonCount = \App\Models\MakeHistory::where(
+                                                                    'user_id',
+                                                                    Auth::id(),
+                                                                )
+                                                                    ->where('course_id', $enrolledCourse->course->id)
+                                                                    ->where('is_completed', 1)
+                                                                    ->count();
+                                                            @endphp
+                                                            @if ($lessonCount == $finishLessonCount)
+                                                                <a target="_blank"
+                                                                    href="{{ route('student.certificate.download', $enrolledCourse->course->id) }}"
+                                                                    class="btn btn-warning btn-sm">
+                                                                    <i class="fas fa-certificate"></i>
+                                                                    Donwload Certificate!
+                                                                </a>
+                                                            @endif
                                                         </td>
                                                         <td class="">
                                                             <a class="common_btn"
