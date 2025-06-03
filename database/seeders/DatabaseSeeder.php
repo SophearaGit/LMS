@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
             InstructorPayoutInformationSeeder::class,
             CertificateBuilderSeeder::class,
             CertificateBuilderItemSeeder::class,
+            HeroSeeder::class,
+            FeatureSeeder::class,
+            AboutUsSectionSeeder::class,
         ]);
     }
 }
