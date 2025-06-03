@@ -115,6 +115,7 @@
 
     <!-- Libs JS -->
     <script src="/vendor/flasher/flasher-notyf.min.js"></script>
+    <script src="/admin/assets/dist/libs/tinymce/tinymce.min.js"></script>
 
     <!-- Tabler Core -->
     <script src="/admin/assets/dist/js/tabler.min.js?1692870487" defer></script>
@@ -124,8 +125,6 @@
     <script src="/admin/assets/dist/js/jquery-ui.min.js"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-
     @stack('scripts')
 </body>
 

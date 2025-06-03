@@ -335,6 +335,56 @@
                         </div>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'show' : '' }}"
+                        href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-versions" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Sections
+                        </span>
+                    </a>
+                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'data-bs-popper="static"' : '' }}>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.hero.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.hero.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-layout-navbar" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Hero
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.features.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.features.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-layout-grid" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Feature
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.about-section.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.about-section.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-info-circle" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        About Us
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.certificate-builder.index') ? 'active' : '' }} "
                         href="{{ route('admin.certificate-builder.index') }}">
