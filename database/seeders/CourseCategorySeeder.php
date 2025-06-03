@@ -227,7 +227,8 @@ class CourseCategorySeeder extends Seeder
             CourseCategory::create([
                 'name' => $category['name'],
                 'parent_id' => $category['parent_id'] ?? null,
-                'image' => '/uploads/edu_',
+                'show_at_trending' => 1,
+                'image' => '/default-images/categoryDefaultImages/default.png',
                 'icon' => $category['icon'],
                 'slug' => Str::slug($category['name']),
             ]);
