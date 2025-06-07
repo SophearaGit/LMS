@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
             HeroSeeder::class,
             FeatureSeeder::class,
             AboutUsSectionSeeder::class,
+            LatestCourseSectionSeeder::class,
+            BecomeInstructorSectionSeeder::class,
+            VideoSectionSeeder::class,
         ]);
     }
 }
