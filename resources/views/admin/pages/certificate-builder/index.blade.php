@@ -17,7 +17,6 @@
         .certificate-body {
             height: 600px;
             width: 930px;
-            background-image: url('{{ $certificate?->background }}');
             background-size: cover;
             background-position: center;
             text-align: center
@@ -123,7 +122,7 @@
 
                     </div>
                     <div class="card-body">
-                        <div class="certificate-body">
+                        <div class="certificate-body" style="background-image: url('{{ $certificate?->background }}');">
                             <div id="title" class="title draggable-element">{{ $certificate?->title }}</div>
                             <div id="subtitle" class="subtitle draggable-element">{{ $certificate?->subtitle }}</div>
                             <div id="description" class="description draggable-element">{!! $certificate?->description !!}</div>
