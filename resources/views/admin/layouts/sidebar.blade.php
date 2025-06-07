@@ -336,9 +336,9 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'show' : '' }}"
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
-                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'true' : 'false' }}">
+                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'true' : 'false' }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-versions" style="font-size: 20px;"></i>
                         </span>
@@ -346,8 +346,8 @@
                             Sections
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'show' : '' }}"
-                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') ? 'data-bs-popper="static"' : '' }}>
+                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ Route::is('admin.hero.index') ? 'active' : '' }} "
@@ -379,6 +379,39 @@
                                     </span>
                                     <span class="nav-link-title mt-1">
                                         About Us
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.latest-courses.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.latest-courses.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-home-star" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Latest Courses
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.become-instructor.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.become-instructor.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-user-plus" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Become Instructor
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.video-section.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.video-section.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-video" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Video Section
                                     </span>
                                 </a>
                             </div>

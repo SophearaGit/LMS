@@ -53,6 +53,8 @@ Route::post('/razorpay/payment', [PaymentController::class, 'payWithRazorpay'])-
 Route::get('/order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
 Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.fail');
 
+Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
+
 /**
  *————————————————————————————————————————————————————————————————————————————————
  * STUDENT ROUTE

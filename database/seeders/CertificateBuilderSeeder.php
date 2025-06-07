@@ -14,11 +14,11 @@ class CertificateBuilderSeeder extends Seeder
     public function run(): void
     {
         CertificateBuilder::insert([
-            'background' => public_path('\default-images\certificate-info\certificate.png'),
+            'background' => '/default-images/certificate-info/certificate.png',
             'title' => '[student_name]',
             'subtitle' => '[student_name] has successfully completed this [course_name] from [plateform_name].',
             'description' => '[student_name], [course_name], [date], [plateform_name], [instructor_name]',
-            'signature' => public_path('\default-images\certificate-info\signatureFake.png'),
+            'signature' => '/default-images/certificate-info/signatureFake.png',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

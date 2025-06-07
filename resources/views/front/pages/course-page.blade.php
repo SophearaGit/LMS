@@ -629,8 +629,8 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <span class="time"><i class="far fa-clock" aria-hidden="true"></i> 15
-                                            Hours</span>
+                                        <span class="time"><i class="far fa-clock" aria-hidden="true"></i>
+                                            {{ minToHours($course->duration) }}</span>
                                     </div>
                                     <div class="wsus__single_courses_text_3">
                                         <div class="rating_area">
@@ -647,7 +647,7 @@
                                         <a class="title"
                                             href="{{ route('courses.show', $course->slug) }}">{{ $course->title }}</a>
                                         <ul>
-                                            <li>24 Lessons</li>
+                                            <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>38 Student</li>
                                         </ul>
                                         <a class="author" href="#">

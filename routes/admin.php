@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\BecomeInstructorSectionController;
 use App\Http\Controllers\Admin\CertificateBuilderController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseLevelController;
@@ -19,10 +20,12 @@ use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\InstructorRequestController;
+use App\Http\Controllers\Admin\LatestCourseSectionController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\PayoutGatewayController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\VideoSectionController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Frontend\HeroController;
 use Illuminate\Support\Facades\Route;
@@ -177,6 +180,14 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/hero', HeroController::class);
     Route::resource('/features', FeatureController::class);
     Route::resource('/about-section', AboutUsSectionController::class);
+    Route::resource('/latest-courses', LatestCourseSectionController::class);
+    Route::resource('/become-instructor', BecomeInstructorSectionController::class);
+    Route::resource('/video-section', VideoSectionController::class);
+
+
+
+
+
 
 
 
