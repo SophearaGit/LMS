@@ -38,12 +38,12 @@
 
 
     {{-- BRAND START --}}
-    {{-- @include('front.pages.home.sections.brand') --}}
+    @include('front.pages.home.sections.brand')
     {{-- BRAND END --}}
 
 
     {{-- QUALITY COURSES START --}}
-    {{-- @include('front.pages.home.sections.quality-courses') --}}
+    @include('front.pages.home.sections.quality-courses')
     {{-- QUALITY COURSES END --}}
 
 
