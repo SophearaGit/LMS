@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\AboutUsSection;
 use App\Models\BecomeInstructorSection;
+use App\Models\Brand;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Feature;
@@ -35,6 +36,7 @@ class FrontendController extends Controller
             'latestCourses' => LatestCourseSection::first(),
             'becomeInstructorSectionItems' => BecomeInstructorSection::first(),
             'videoSectionItems' => VideoSection::first(),
+            'brandSecitonItems' => Brand::where('status', 1)->get(),
         ];
         return view('front.pages.index', $data);
     }

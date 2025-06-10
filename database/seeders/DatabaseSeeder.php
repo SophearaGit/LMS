@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             LatestCourseSectionSeeder::class,
             BecomeInstructorSectionSeeder::class,
             VideoSectionSeeder::class,
+            BrandSeeder::class,
         ]);
     }
 }
