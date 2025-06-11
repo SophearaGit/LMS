@@ -576,7 +576,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -605,7 +604,7 @@
                     <div class="row">
                         @forelse ($courses as $course)
                             <div class="col-xl-4 col-md-6 wow fadeInUp"
-                                style="visibility: visible; animation-name: fadeInUp;">
+                                style="visibility: visible; animation-name: fadeInUp;" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
                                         <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">

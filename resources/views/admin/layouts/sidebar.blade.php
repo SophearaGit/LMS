@@ -336,9 +336,9 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'show' : '' }}"
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
-                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'true' : 'false' }}">
+                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') ? 'true' : 'false' }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-versions" style="font-size: 20px;"></i>
                         </span>
@@ -346,8 +346,8 @@
                             Sections
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'show' : '' }}"
-                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') ? 'data-bs-popper="static"' : '' }}>
+                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ Route::is('admin.hero.index') ? 'active' : '' }} "
@@ -412,6 +412,17 @@
                                     </span>
                                     <span class="nav-link-title mt-1">
                                         Video Section
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.brand-section.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.brand-section.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-heart-handshake" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Brand Section
                                     </span>
                                 </a>
                             </div>

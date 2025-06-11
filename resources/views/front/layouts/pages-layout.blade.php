@@ -85,6 +85,9 @@
     <script src="/front/js/jquery-ui.min.js"></script>
     {{-- notyf --}}
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    {{-- tiltjs --}}
+    <script src="/front/js/tilt.jquery.min.js"></script>
+    {{-- popper js --}}
     {{-- sweetalert2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--larvel file manager-->
