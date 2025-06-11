@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BecomeInstructorSectionController;
+use App\Http\Controllers\Admin\BrandSectionController;
 use App\Http\Controllers\Admin\CertificateBuilderController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseLevelController;
@@ -176,13 +177,14 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::post('/certificate-builder/store', [CertificateBuilderController::class, 'store'])->name('certificate-builder.store');
     Route::post('/certificate-builder/update-position', [CertificateBuilderController::class, 'updatePosition'])->name('certificate-builder.update-position');
 
-    // admin.homepage-sections.*
+
     Route::resource('/hero', HeroController::class);
     Route::resource('/features', FeatureController::class);
     Route::resource('/about-section', AboutUsSectionController::class);
     Route::resource('/latest-courses', LatestCourseSectionController::class);
     Route::resource('/become-instructor', BecomeInstructorSectionController::class);
     Route::resource('/video-section', VideoSectionController::class);
+    Route::resource('/brand-section', BrandSectionController::class);
 
 
 
