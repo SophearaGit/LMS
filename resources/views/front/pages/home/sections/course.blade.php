@@ -515,7 +515,7 @@
                                     <div class="wsus__single_courses_3_footer">
                                         <a id="add_to_cart_btn_{{ $course->id }}"
                                             class="common_btn add_to_cart_btn" data-course-id="{{ $course->id }}"
-                                            href="#">Add to cart<i class="far fa-arrow-right"
+                                            href="">Add to cart<i class="far fa-arrow-right"
                                                 aria-hidden="true"></i></a>
                                         <p>
                                             @if ($course->price == 0)
@@ -549,6 +549,8 @@
         </div>
     </div>
 </section>
+<script src="/front/js/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
     $(document).ready(function() {
         $('[data-tilt]').tilt({
@@ -562,6 +564,48 @@
             reset: true, // If the tilt effect has to be reset on exit.
             glare: false, // Enables glare effect
             maxGlare: 1 // From 0 - 1.
+        });
+    });
+
+    const notyf = new Notyf({
+        duration: 5000,
+        dismissible: true,
+        position: {
+            x: 'right',
+            y: 'bottom',
+        },
+    });
+
+    function add_to_cart(course_id) {
+        $.ajax({
+            method: 'POST',
+            url: base_url + `/cart/${course_id}/store`,
+            data: {
+                _token: csrf_token,
+
+            },
+            beforeSend: function() {
+                $(`#add_to_cart_btn_${course_id}`).html('<i class="fas fa-spinner fa-spin"></i>Adding...');
+            },
+            success: function(data) {
+                notyf.success(data.message);
+                $(`#add_to_cart_btn_${course_id}`).html('Add to cart');
+            },
+            error: function(xhr, status, error) {
+                let errors = xhr.responseJSON;
+                $.each(errors, function(key, value) {
+                    notyf.error(value);
+                });
+                $(`#add_to_cart_btn_${course_id}`).html('Add to cart');
+            },
+        })
+    }
+
+    $(function() {
+        $('.add_to_cart_btn').on('click', function(e) {
+            e.preventDefault();
+            let course_id = $(this).data('course-id');
+            add_to_cart(course_id)
         });
     });
 </script>

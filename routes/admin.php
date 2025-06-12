@@ -28,7 +28,9 @@ use App\Http\Controllers\Admin\PayoutGatewayController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\VideoSectionController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
+use App\Http\Controllers\Admin\FeaturedInstructorSectionController;
 use App\Http\Controllers\Frontend\HeroController;
+use App\Models\Feature;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => "guest:admin", "prefix" => "admin", "as" => "admin."], function () {
@@ -184,7 +186,10 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/latest-courses', LatestCourseSectionController::class);
     Route::resource('/become-instructor', BecomeInstructorSectionController::class);
     Route::resource('/video-section', VideoSectionController::class);
-    Route::resource('/brand-section', BrandSectionController::class);
+    Route::resource('/brand-section', controller: BrandSectionController::class);
+
+    Route::get('/get-instructor-courses/{instructor_id}', [FeaturedInstructorSectionController::class, 'getInstructorCourses'])->name('get_instructor_courses');
+    Route::resource('/featured-instructor-section', FeaturedInstructorSectionController::class);
 
 
 

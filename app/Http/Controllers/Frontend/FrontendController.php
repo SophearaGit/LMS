@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Feature;
+use App\Models\FeaturedInstructorSection;
 use App\Models\Hero;
 use App\Models\LatestCourseSection;
 use App\Models\NewsLetter;
@@ -21,6 +22,8 @@ class FrontendController extends Controller
 {
     public function index()
     {
+        $featuredInstructorItems = FeaturedInstructorSection::first();
+
         $data = [
             'pageTitle' => 'CAITD | Homepage',
             'heroItems' => Hero::first(),
@@ -37,8 +40,14 @@ class FrontendController extends Controller
             'becomeInstructorSectionItems' => BecomeInstructorSection::first(),
             'videoSectionItems' => VideoSection::first(),
             'brandSecitonItems' => Brand::where('status', 1)->get(),
+            'featuredInstructorItems' => $featuredInstructorItems,
         ];
-        return view('front.pages.index', $data);
+
+        $featuredInstructorCourses = Course::whereIn('id', json_decode($featuredInstructorItems?->featured_courses))->get();
+
+        return view('front.pages.index', $data, compact(
+            'featuredInstructorCourses'
+        ));
     }
 
     public function subscribeNewsletter(Request $request)
