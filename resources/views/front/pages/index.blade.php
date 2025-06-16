@@ -7,11 +7,6 @@
     {{-- BANNER 3 END --}}
 
 
-    {{-- CATEGORY 4 START --}}
-    @include('front.pages.home.sections.category')
-    {{-- CATEGORY 4 END --}}
-
-
     {{-- ABOUT 3 START --}}
     @include('front.pages.home.sections.about')
     {{-- ABOUT 3 END --}}
@@ -48,12 +43,12 @@
 
 
     {{-- TESTIMONIAL START --}}
-    {{-- @include('front.pages.home.sections.testimonial') --}}
+    @include('front.pages.home.sections.testimonial')
     {{-- TESTIMONIAL END --}}
 
 
     {{-- BLOG 4 START --}}
-    {{-- @include('front.pages.home.sections.blog') --}}
+    @include('front.pages.home.sections.blog')
     {{-- BLOG 4 END --}}
 
 @endsection

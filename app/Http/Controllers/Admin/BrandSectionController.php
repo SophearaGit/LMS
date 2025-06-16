@@ -105,7 +105,7 @@ class BrandSectionController extends Controller
         try {
             $this->deleteIfImageExist($brand->image);
             $brand->delete();
-            notyf()->success('Brand deleted successfully.');
+            notyf()->success('Contact deleted successfully.');
             return response([
                 'message' => 'Deleted Successfully!'
             ], 200);

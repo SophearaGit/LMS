@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
 use App\Http\Controllers\Frontend\EnrolledCourseController;
+use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\OrderController;
@@ -25,6 +26,11 @@ Schedule::command('telescope:prune --hours=48')->daily();
  *————————————————————————————————————————————————————————————————————————————————
  */
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/about', [FrontendController::class, 'getAboutUs'])->name('home.about');
+Route::get('/contact-us', [FrontendContactController::class, 'getContactUs'])->name('home.contact_us');
+Route::post('/contact-us', [FrontendContactController::class, 'sendMail'])->name('send.contact');
+
+
 
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
@@ -54,6 +60,8 @@ Route::get('/order-success', [PaymentController::class, 'orderSuccess'])->name('
 Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.fail');
 
 Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
+
+// ABOUT PAGE START
 
 /**
  *————————————————————————————————————————————————————————————————————————————————
