@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BecomeInstructorSectionController;
 use App\Http\Controllers\Admin\BrandSectionController;
 use App\Http\Controllers\Admin\CertificateBuilderController;
+use App\Http\Controllers\Admin\ContactSettingController;
+use App\Http\Controllers\Admin\ContactUsController;
+use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseLevelController;
 use App\Http\Controllers\Admin\CourseCategoryController;
@@ -29,8 +32,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\VideoSectionController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\FeaturedInstructorSectionController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Frontend\HeroController;
-use App\Models\Feature;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => "guest:admin", "prefix" => "admin", "as" => "admin."], function () {
@@ -168,6 +171,9 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     // commission settings
     Route::get('/commission-settings', [SettingController::class, 'commissionSettings'])->name('site-settings.commission-settings');
     Route::post('/update-commission-settings', [SettingController::class, 'updateCommissionSettings'])->name('site-settings.update-commission-settings');
+    // smtp-settings
+    Route::get('/smtp-settings', [SettingController::class, 'smtpSettings'])->name('site-settings.smtp-settings');
+    Route::post('/update-smtp-settings', [SettingController::class, 'updateSmtpSettings'])->name('site-settings.update-smtp-settings');
     // payout settings resource
     Route::resource('payout-gateways', PayoutGatewayController::class);
     // withdraw request
@@ -190,6 +196,11 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
 
     Route::get('/get-instructor-courses/{instructor_id}', [FeaturedInstructorSectionController::class, 'getInstructorCourses'])->name('get_instructor_courses');
     Route::resource('/featured-instructor-section', FeaturedInstructorSectionController::class);
+    Route::resource('/testimonial-section', TestimonialController::class);
+    Route::resource('/counter-section', CounterController::class);
+    Route::resource('/contact-us', ContactUsController::class);
+    Route::resource('/contact-setting', ContactSettingController::class);
+
 
 
 

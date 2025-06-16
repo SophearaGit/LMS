@@ -10,113 +10,30 @@
         </div>
     </div>
     <div class="row testimonial_slider">
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_testimonial">
-                <p class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </p>
-                <p class="description">Duis ullamcorper arcu egestas nisl luctus, sit amet lobortis lorem gravida
-                    Phasellus u mauris sodales hendre phasellus interdum lacinia diam bibendum nisi elementum
-                    urna.Morbi molestie purus egestas aliquam euismod utrum eget dapibus fames ac ante orci ut
-                    lectus.</p>
-                <div class="testimonial_logo">
-                    <img src="/front/images/testimonial_logo.png" alt="Testimonial" class="img-fluid">
-                </div>
-                <div class="wsus__testimonial_footer">
-                    <div class="img">
-                        <img src="/front/images/testimonial_user_1.png" alt="user" class="img-fluid">
+        @foreach ($testimonials as $testimonial)
+            <div class="col-xl-4 wow fadeInUp">
+                <div class="wsus__single_testimonial">
+                    <p class="rating">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= $testimonial->rating)
+                                <i class="fas fa-star star-filled"></i>
+                            @else
+                                <i class="far fa-star text-secondary star-outline"></i>
+                            @endif
+                        @endfor
+                    </p>
+                    <p class="description">{!! $testimonial->review !!}</p>
+                    <div class="wsus__testimonial_footer">
+                        <div class="img">
+                            <img src="{{ asset($testimonial->user_image) }}" alt="user" class="img-fluid">
+                        </div>
+                        <h3>
+                            {{ $testimonial->user_name }}
+                            <span>{{ $testimonial->user_title }}</span>
+                        </h3>
                     </div>
-                    <h3>
-                        Spruce Springclean
-                        <span>Computer Engineer</span>
-                    </h3>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_testimonial">
-                <p class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </p>
-                <p class="description">Duis ullamcorper arcu egestas nisl luctus, sit amet lobortis lorem gravida
-                    Phasellus u mauris sodales hendre phasellus interdum lacinia diam bibendum nisi elementum
-                    urna.Morbi molestie purus egestas aliquam euismod utrum eget dapibus fames ac ante orci ut
-                    lectus.</p>
-                <div class="testimonial_logo">
-                    <img src="/front/images/testimonial_logo_2.png" alt="Testimonial" class="img-fluid">
-                </div>
-                <div class="wsus__testimonial_footer">
-                    <div class="img">
-                        <img src="/front/images/testimonial_user_2.png" alt="user" class="img-fluid">
-                    </div>
-                    <h3>
-                        Ravi O'Leigh
-                        <span>IT Director at Cognizant</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_testimonial">
-                <p class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </p>
-                <p class="description">Duis ullamcorper arcu egestas nisl luctus, sit amet lobortis lorem gravida
-                    Phasellus u mauris sodales hendre phasellus interdum lacinia diam bibendum nisi elementum
-                    urna.Morbi molestie purus egestas aliquam euismod utrum eget dapibus fames ac ante orci ut
-                    lectus.</p>
-                <div class="testimonial_logo">
-                    <img src="/front/images/testimonial_logo_3.png" alt="Testimonial" class="img-fluid">
-                </div>
-                <div class="wsus__testimonial_footer">
-                    <div class="img">
-                        <img src="/front/images/testimonial_user_3.png" alt="user" class="img-fluid">
-                    </div>
-                    <h3>
-                        Hanson Deck
-                        <span>UX Design Lead</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_testimonial">
-                <p class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </p>
-                <p class="description">Duis ullamcorper arcu egestas nisl luctus, sit amet lobortis lorem gravida
-                    Phasellus u mauris sodales hendre phasellus interdum lacinia diam bibendum nisi elementum
-                    urna.Morbi molestie purus egestas aliquam euismod utrum eget dapibus fames ac ante orci ut
-                    lectus.</p>
-                <div class="testimonial_logo">
-                    <img src="/front/images/testimonial_logo_2.png" alt="Testimonial" class="img-fluid">
-                </div>
-                <div class="wsus__testimonial_footer">
-                    <div class="img">
-                        <img src="/front/images/testimonial_user_2.png" alt="user" class="img-fluid">
-                    </div>
-                    <h3>
-                        Spruce Springclean
-                        <span>Computer Engineer</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>

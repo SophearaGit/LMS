@@ -38,6 +38,9 @@ class DatabaseSeeder extends Seeder
             VideoSectionSeeder::class,
             BrandSeeder::class,
             FeaturedInstructorSectionSeeder::class,
+            TestimonialSeeder::class,
+            ContactSeeder::class,
+            ContactSettingSeeder::class,
         ]);
     }
 }
