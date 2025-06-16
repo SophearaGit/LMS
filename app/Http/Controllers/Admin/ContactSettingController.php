@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BecomeInstructorSectionUpdateRequest;
-use App\Models\BecomeInstructorSection;
+use App\Models\ContactSetting;
 use App\Traites\FileUpload;
 use Illuminate\Http\Request;
 
-class BecomeInstructorSectionController extends Controller
+class ContactSettingController extends Controller
 {
     use FileUpload;
     /**
@@ -17,10 +16,10 @@ class BecomeInstructorSectionController extends Controller
     public function index()
     {
         $data = [
-            'pageTitle' => 'CAITD | Become Instructor Section',
-            'sectionItems' => BecomeInstructorSection::first(),
+            'pageTitle' => 'CAITD | Contact Settings',
+            'contactSetting' => ContactSetting::first(),
         ];
-        return view('admin.pages.section.becomeInstructor.index', $data);
+        return view('admin.pages.contact-us.contact-setting.index', $data);
     }
 
     /**
@@ -34,22 +33,28 @@ class BecomeInstructorSectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BecomeInstructorSectionUpdateRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $validatedData = $request->validate([
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:3000',
+            'map_url' => 'required|url',
+        ]);
 
-        if ($request->hasFile('img')) {
-            $img = $this->uploadFile($request->file('img'));
-            if (!$request->old_img == '') {
-                $this->deleteIfImageExist($request->old_img);
+        if ($request->hasFile('image')) {
+            $imagePath = $this->uploadFile($request->file('image'));
+            if ($request->old_image) {
+                $this->deleteIfImageExist($request->old_image);
             }
-            $data['img'] = $img;
+            $validatedData['image'] = $imagePath;
         }
 
-        BecomeInstructorSection::updateOrCreate(['id' => 1], $data);
+        ContactSetting::updateOrCreate(
+            ['id' => 1],
+            $validatedData
+        );
 
-        notyf()->success('Become Instructor Section updated successfully.');
-        return redirect()->back();
+        notyf()->success('Contact settings updated successfully.');
+        return redirect()->route('admin.contact-setting.index');
     }
 
     /**
@@ -65,7 +70,7 @@ class BecomeInstructorSectionController extends Controller
      */
     public function edit(string $id)
     {
-
+        //
     }
 
     /**

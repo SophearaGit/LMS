@@ -15,6 +15,10 @@
                                 Payment Success!
                             @elseif (Route::is('order.fail'))
                                 Payment Cancelled!
+                            @elseif (Route::is('home.about'))
+                                How We Work
+                            @elseif (Route::is('home.contact_us'))
+                                Contact Us
                             @endif
                         </h1>
                         <ul>
@@ -30,6 +34,10 @@
                                     Payment Success!
                                 @elseif (Route::is('order.fail'))
                                     Payment Cancelled!
+                                @elseif (Route::is('home.about'))
+                                    About Us
+                                @elseif (Route::is('home.contact_us'))
+                                    Contact Us
                                 @endif
                             </li>
                         </ul>

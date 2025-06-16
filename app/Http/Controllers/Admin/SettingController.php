@@ -72,5 +72,32 @@ class SettingController extends Controller
         return redirect()->back();
     }
 
+    public function smtpSettings()
+    {
+        $data = [
+            'pageTitle' => 'CAIDT | SMTP Settings',
+        ];
+        return view('admin.pages.site-settings.components.smtp-settings', $data);
+    }
+
+    public function updateSmtpSettings(Request $request)
+    {
+        $validatedData = $request->validate([
+            'sender_email' => 'required|email|max:255',
+            'receiver_email' => 'required|email|max:255',
+        ]);
+
+        foreach ($validatedData as $key => $value) {
+            Setting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
+        }
+
+        Cache::forget('settings');
+
+        notyf()->success('Settings updated successfully.');
+        return redirect()->back();
+    }
 
 }
