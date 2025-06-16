@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Controller;
 use App\Models\AboutUsSection;
 use App\Models\BecomeInstructorSection;
 use App\Models\Brand;
+use App\Models\Counter;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Feature;
@@ -13,6 +15,7 @@ use App\Models\FeaturedInstructorSection;
 use App\Models\Hero;
 use App\Models\LatestCourseSection;
 use App\Models\NewsLetter;
+use App\Models\Testimonial;
 use App\Models\VideoSection;
 use Illuminate\Http\Request;
 
@@ -41,6 +44,7 @@ class FrontendController extends Controller
             'videoSectionItems' => VideoSection::first(),
             'brandSecitonItems' => Brand::where('status', 1)->get(),
             'featuredInstructorItems' => $featuredInstructorItems,
+            'testimonials' => Testimonial::all(),
         ];
 
         $featuredInstructorCourses = Course::whereIn('id', json_decode($featuredInstructorItems?->featured_courses))->get();
@@ -70,6 +74,17 @@ class FrontendController extends Controller
             'status' => 'success',
             'message' => 'You have successfully subscribed to our newsletter.',
         ]);
+    }
+
+    public function getAboutUs()
+    {
+        $data = [
+            'pageTitle' => 'CAITD | About Us',
+            'aboutUsSectionItems' => AboutUsSection::first(),
+            'testimonials' => Testimonial::all(),
+            'counterItems' => Counter::first(),
+        ];
+        return view('front.pages.about-us', $data);
     }
 
 }

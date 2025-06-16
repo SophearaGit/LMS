@@ -20,7 +20,9 @@ class SettingSeeder extends Seeder
             ['key' => 'site_address', 'value' => 'Phnom Penh, Cambodia'],
             ['key' => 'site_currency', 'value' => 'USD'],
             ['key' => 'site_currency_icon', 'value' => '$'],
+            ['key' => 'sender_email', 'value' => 'miek@gmail.com'],
+            ['key' => 'receiver_email', 'value' => 'seth@gmail.com'],
         ];
-        Setting::insert($settings );
+        Setting::insert($settings);
     }
 }

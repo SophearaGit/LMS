@@ -336,9 +336,9 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') ? 'show' : '' }}"
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') || Route::is('admin.testimonial-section.*') || Route::is('admin.counter-section.*') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
-                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') ? 'true' : 'false' }}">
+                        aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') || Route::is('admin.testimonial-section.*') || Route::is('admin.counter-section.*') ? 'true' : 'false' }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-versions" style="font-size: 20px;"></i>
                         </span>
@@ -346,8 +346,8 @@
                             Sections
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') ? 'show' : '' }}"
-                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') ? 'data-bs-popper="static"' : '' }}>
+                    <div class="dropdown-menu {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') || Route::is('admin.testimonial-section.*') || Route::is('admin.counter-section.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') || Route::is('admin.testimonial-section.*') || Route::is('admin.counter-section.*') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ Route::is('admin.hero.index') ? 'active' : '' }} "
@@ -438,9 +438,69 @@
                                     </span>
                                 </a>
                             </div>
+                            {{-- testimonial --}}
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.testimonial-section.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.testimonial-section.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-message-2" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Testimonial Section
+                                    </span>
+                                </a>
+                            </div>
+                            {{-- counter section --}}
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.counter-section.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.counter-section.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-123" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span class="nav-link-title mt-1">
+                                        Counter Section
+                                    </span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </li>
+                {{-- contact us dropdown --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.contact-us.*') || Route::is('admin.contact-setting.*') ? 'show' : '' }}"
+                        href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.contact-us.*') || Route::is('admin.contact-setting.*') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-mail" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Contact Us
+                        </span>
+                    </a>
+                    <div class="dropdown-menu {{ Route::is('admin.contact-us.*') || Route::is('admin.contact-setting.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.contact-us.*') || Route::is('admin.contact-setting.*') ? 'data-bs-popper="static"' : '' }}>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.contact-us.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.contact-us.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-mail-opened" style="font-size: 20px;"></i>
+                                    </span>
+                                    Contact Card
+                                </a>
+                                <a class="dropdown-item {{ (Route::is('admin.contact-setting.index') || Route::is('admin.contact-setting.*')) ? 'active' : '' }} "
+                                    href="{{ route('admin.contact-setting.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-settings" style="font-size: 20px;"></i>
+                                    </span>
+                                    Contact Setting
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.certificate-builder.index') ? 'active' : '' }} "
                         href="{{ route('admin.certificate-builder.index') }}">

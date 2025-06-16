@@ -3,24 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BecomeInstructorSectionUpdateRequest;
-use App\Models\BecomeInstructorSection;
-use App\Traites\FileUpload;
+use App\Models\Counter;
 use Illuminate\Http\Request;
 
-class BecomeInstructorSectionController extends Controller
+class CounterController extends Controller
 {
-    use FileUpload;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $data = [
-            'pageTitle' => 'CAITD | Become Instructor Section',
-            'sectionItems' => BecomeInstructorSection::first(),
+            'pageTitle' => 'CAITD | Counter',
+            'counterItems' => Counter::first(),
         ];
-        return view('admin.pages.section.becomeInstructor.index', $data);
+        return view('admin.pages.section.counter.index', $data);
     }
 
     /**
@@ -34,21 +31,23 @@ class BecomeInstructorSectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BecomeInstructorSectionUpdateRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('img')) {
-            $img = $this->uploadFile($request->file('img'));
-            if (!$request->old_img == '') {
-                $this->deleteIfImageExist($request->old_img);
-            }
-            $data['img'] = $img;
-        }
-
-        BecomeInstructorSection::updateOrCreate(['id' => 1], $data);
-
-        notyf()->success('Become Instructor Section updated successfully.');
+        $validatedData = $request->validate([
+            'counter_one' => 'nullable|numeric',
+            'title_one' => 'nullable|string|max:255',
+            'counter_two' => 'nullable|numeric',
+            'title_two' => 'nullable|string|max:255',
+            'counter_three' => 'nullable|numeric',
+            'title_three' => 'nullable|string|max:255',
+            'counter_four' => 'nullable|numeric',
+            'title_four' => 'nullable|string|max:255',
+        ]);
+        Counter::updateOrCreate(
+            ['id' => 1], // Assuming you want to update the first record
+            $validatedData
+        );
+        notyf()->success('Counter section updated successfully.');
         return redirect()->back();
     }
 
@@ -65,7 +64,7 @@ class BecomeInstructorSectionController extends Controller
      */
     public function edit(string $id)
     {
-
+        //
     }
 
     /**
