@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\LatestCourseSectionController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\PayoutGatewayController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\VideoSectionController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
@@ -200,6 +201,7 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/counter-section', CounterController::class);
     Route::resource('/contact-us', ContactUsController::class);
     Route::resource('/contact-setting', ContactSettingController::class);
+    Route::resource('/review', ReviewController::class);
 
 
 

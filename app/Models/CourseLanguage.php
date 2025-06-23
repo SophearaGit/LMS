@@ -9,4 +9,10 @@ class CourseLanguage extends Model
 {
     /** @use HasFactory<\Database\Factories\CourseLanguageFactory> */
     use HasFactory;
+
+    // course language should have many courses
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'course_language_id');
+    }
 }

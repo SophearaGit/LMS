@@ -188,17 +188,25 @@
                         <b>06</b>
                     </a>
                 </li>
-                <li>
-                    <a class="admin" href="{{ route('admin.login') }}">
-                        <span>
-                            <img src="/front/images/user_icon_black.png" alt="user" class="img-fluid">
-                        </span>
-                        admin
-                    </a>
-                </li>
-                <li>
-                    <a class="common_btn" href="{{ route('login') }}">Sign In</a>
-                </li>
+                @auth
+                    @if (Auth::user()->role == 'student')
+                        <li>
+                            <a class="common_btn" href="{{ route('student.dashboard') }}">
+                                Student Dashboard
+                            </a>
+                        </li>
+                    @elseif (Auth::user()->role == 'instructor')
+                        <li>
+                            <a class="common_btn" href="{{ route('instructor.dashboard') }}">
+                                Teacher Dashboard
+                            </a>
+                        </li>
+                    @endif
+                @else
+                    <li>
+                        <a class="common_btn" href="{{ route('login') }}">Sign In</a>
+                    </li>
+                @endauth
             </ul>
         </div>
 
