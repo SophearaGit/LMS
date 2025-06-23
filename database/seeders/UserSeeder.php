@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'bio' => "I am a web developer",
                 'password' => bcrypt("23456789"),
                 'role' => 'student',
-                'approval_status' => 'pending',
+                'approval_status' => 'rejected',
                 'facebook' => 'https://www.facebook.com/sethsopheara',
                 'x' => 'https://www.facebook.com/sethsopheara',
                 'linkedin' => 'https://www.facebook.com/sethsopheara',

@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             FeaturedInstructorSectionSeeder::class,
             TestimonialSeeder::class,
+            CounterSeeder::class,
             ContactSeeder::class,
             ContactSettingSeeder::class,
         ]);

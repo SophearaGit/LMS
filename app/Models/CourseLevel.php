@@ -9,4 +9,11 @@ class CourseLevel extends Model
 {
     /** @use HasFactory<\Database\Factories\CourseLevelFactory> */
     use HasFactory;
+
+    // course level should have many courses
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'course_level_id');
+    }
+
 }
