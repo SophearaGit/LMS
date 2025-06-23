@@ -7,7 +7,64 @@
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="og:type" content="Course" />
 @endpush
+@push('stylesheets')
+    <style>
+        .wsus__no_reviews_animation {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f2f4f7;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: float 4s ease-in-out infinite;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .wsus__no_reviews_animation img {
+            max-width: 140px;
+            margin-bottom: 10px;
+            animation: floatImg 3s ease-in-out infinite;
+        }
+
+        .wsus__no_reviews_animation h4 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .wsus__no_reviews_animation p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes floatImg {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+    </style>
+@endpush
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     {{-- @include('front.pages.partials.bread-crumb') --}}
     <section class="wsus__breadcrumb course_details_breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">
         <div class="wsus__breadcrumb_overlay">
@@ -267,15 +324,14 @@
                                     <div class="row align-items-center mb_50">
                                         <div class="col-xl-4 col-md-6">
                                             <div class="total_review">
-                                                <h2>4.7</h2>
+                                                <h2>{{ number_format($course->reviews()->avg('rating'), 1) ?? 0 }}</h2>
                                                 <p>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    @for ($i = 1; $i <= number_format($course->reviews()->avg('rating'), 1) ?? 0; $i++)
+                                                        <i class="fas fa-star" aria-hidden="true"></i>
+                                                    @endfor
+
                                                 </p>
-                                                <h4>3 Ratings</h4>
+                                                <h4>{{ $course->reviews->count() }} Ratings</h4>
                                             </div>
                                         </div>
                                         <div class="col-xl-8 col-md-6">
@@ -290,7 +346,8 @@
                                                         <span class="fill" data-percentage="85"
                                                             style="background: rgb(22, 181, 151); width: 0px; transition: width 1s ease-in-out;"></span>
                                                     </div>
-                                                    <span class="qnty">87</span>
+                                                    <span
+                                                        class="qnty">{{ $course->reviews->where('rating', 5)->count() }}</span>
                                                 </div>
                                                 <div class="review_bar_single">
                                                     <p>4 <i class="fas fa-star" aria-hidden="true"></i></p>
@@ -302,7 +359,8 @@
                                                         <span class="fill" data-percentage="70"
                                                             style="background: rgb(22, 181, 151); width: 0px; transition: width 1s ease-in-out;"></span>
                                                     </div>
-                                                    <span class="qnty">69</span>
+                                                    <span
+                                                        class="qnty">{{ $course->reviews->where('rating', 4)->count() }}</span>
                                                 </div>
                                                 <div class="review_bar_single">
                                                     <p>3 <i class="fas fa-star" aria-hidden="true"></i></p>
@@ -314,7 +372,8 @@
                                                         <span class="fill" data-percentage="50"
                                                             style="background: rgb(22, 181, 151); width: 0px; transition: width 1s ease-in-out;"></span>
                                                     </div>
-                                                    <span class="qnty">44</span>
+                                                    <span
+                                                        class="qnty">{{ $course->reviews->where('rating', 3)->count() }}</span>
                                                 </div>
                                                 <div class="review_bar_single">
                                                     <p>2 <i class="fas fa-star" aria-hidden="true"></i></p>
@@ -326,7 +385,8 @@
                                                         <span class="fill" data-percentage="30"
                                                             style="background: rgb(22, 181, 151); width: 0px; transition: width 1s ease-in-out;"></span>
                                                     </div>
-                                                    <span class="qnty">29</span>
+                                                    <span
+                                                        class="qnty">{{ $course->reviews->where('rating', 2)->count() }}</span>
                                                 </div>
                                                 <div class="review_bar_single">
                                                     <p>1 <i class="fas fa-star" aria-hidden="true"></i></p>
@@ -338,96 +398,75 @@
                                                         <span class="fill" data-percentage="10"
                                                             style="background: rgb(22, 181, 151); width: 0px; transition: width 1s ease-in-out;"></span>
                                                     </div>
-                                                    <span class="qnty">12</span>
+                                                    <span
+                                                        class="qnty">{{ $course->reviews->where('rating', 1)->count() }}</span>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
                                     <h3>Reviews</h3>
-                                    <div class="wsus__course_single_reviews">
-                                        <div class="wsus__single_review_img">
-                                            <img src="/front/images/testimonial_user_1.png" alt="user"
-                                                class="img-fluid">
+                                    @forelse ($reviewsApproved as $reviewApproved)
+                                        <div class="wsus__course_single_reviews">
+                                            <div class="wsus__single_review_img">
+                                                <img src="{{ asset($reviewApproved->user->image) }}" alt="user"
+                                                    class="img-fluid">
+                                            </div>
+                                            <div class="wsus__single_review_text">
+                                                <h4>{{ $reviewApproved->user->name }}</h4>
+                                                <h6> {{ $reviewApproved->created_at->format('F d, Y \a\t h:i a') }} /
+                                                    {{ $reviewApproved->created_at->diffForHumans() }}
+                                                    <span>
+                                                        @for ($i = 1; $i <= $reviewApproved->rating; $i++)
+                                                            <i class="fas fa-star" aria-hidden="true"></i>
+                                                        @endfor
+                                                    </span>
+                                                </h6>
+                                                <p>{{ $reviewApproved->review }}</p>
+                                            </div>
                                         </div>
-                                        <div class="wsus__single_review_text">
-                                            <h4>Dominic L. Ement</h4>
-                                            <h6> March 23,2024 at 8:37 pm
-                                                <span>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                </span>
-                                            </h6>
-                                            <p>Donec vel mauris at lectus iaculis elementum vel vel
-                                                lacus. Sed finibus velit vitae risus imperdiet placerat. Ut posuere eros
-                                                ut molestie rhoncus. Duis eget ex elementum, ultricies dolor sed,
-                                                hendrerit diam. Donec ut blandit nunc, et tempus lorem.</p>
+                                    @empty
+                                        <div class="wsus__no_reviews_animation">
+                                            <img src="{{ asset('/front/images/extra/empty_review.gif') }}"
+                                                alt="No Reviews" class="img-fluid" />
+                                            <h4>No Reviews Yet</h4>
+                                            <p>Be the first to leave a review and share your thoughts!</p>
                                         </div>
-                                    </div>
-                                    <div class="wsus__course_single_reviews">
-                                        <div class="wsus__single_review_img">
-                                            <img src="/front/images/testimonial_user_2.png" alt="user"
-                                                class="img-fluid">
-                                        </div>
-                                        <div class="wsus__single_review_text">
-                                            <h4>Smith jhon</h4>
-                                            <h6> March 23,2024 at 8:37 pm
-                                                <span>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                                </span>
-                                            </h6>
-                                            <p>Donec vel mauris at lectus iaculis elementum vel vel
-                                                lacus. Sed finibus velit vitae risus imperdiet placerat. Ut posuere eros
-                                                ut molestie rhoncus. Duis eget ex elementum, ultricies dolor sed,
-                                                hendrerit diam. Donec ut blandit nunc, et tempus lorem.</p>
-                                        </div>
+                                    @endforelse
+                                    <div class="">
+                                        {{ $reviewsApproved->links() }}
                                     </div>
                                 </div>
-                                <div class="wsus__courses_review_input box_area mt_40">
-                                    <h3>Write a Review</h3>
-                                    <p class="short_text">Your email address will not be published. Required fields are
-                                        marked *</p>
-                                    <div class="select_rating d-flex flex-wrap">Your Rating:
-                                        <ul id="starRating" data-stars="5" class="starrating-init">
-                                            <li class="star"><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li class="star"><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li class="star"><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li class="star"><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li class="star"><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        </ul>
-                                    </div>
-                                    <form action="#">
-                                        <div class="row">
-                                            <div class="col-xl-6">
-                                                <input type="text" placeholder="Name">
-                                            </div>
-                                            <div class="col-xl-6">
-                                                <input type="email" placeholder="Email">
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <textarea rows="7" placeholder="Comments"></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        Save my name, email, and website in this browser for the next
-                                                        time I comment.
-                                                    </label>
+                                @auth
+                                    <div class="wsus__courses_review_input box_area mt_40">
+                                        <h3>Write a Review</h3>
+                                        <p class="short_text">Your email address will not be published. Required fields are
+                                            marked *</p>
+                                        <div class="select_rating d-flex flex-wrap">Your Rating:
+                                            <ul id="starRating" data-stars="5"></ul>
+                                        </div>
+                                        <form action="{{ route('send.review') }}" method="POST">
+                                            @csrf
+                                            <div class="row">
+                                                <input type="hidden" name="course_id" value="{{ $course->id }}">
+                                                <input type="hidden" name="rating" value="" id="rating">
+                                                <div class="col-xl-12">
+                                                    <textarea rows="7" placeholder="Comments" name="comment"></textarea>
                                                 </div>
-                                                <a href="#" class="common_btn">Post Comment</a>
+                                                <div class="col-12 mt-2">
+                                                    <button type="submit" class="common_btn">Post Comment</button>
+                                                    {{-- <a href="javascript:;" class="common_btn" type="submit">Post Comment</a> --}}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
+                                @else
+                                    <div class="alert alert-info mt-3 text-center" role="alert">
+                                        Please <a href="{{ route('login') }}">Login</a> and purchase this course to write
+                                        a
+                                        review.
+                                    </div>
+                                @endauth
                             </div>
                         </div>
                     </div>
@@ -494,7 +533,8 @@
                                     aria-hidden="true"></i></a>
                         </div>
                         <div class="wsus__courses_sidebar_share_btn d-flex flex-wrap justify-content-between">
-                            <a href="#" class="common_btn"><i class="far fa-heart" aria-hidden="true"></i> Add to
+                            <a href="#" class="common_btn"><i class="far fa-heart" aria-hidden="true"></i> Add
+                                to
                                 Wishlist</a>
                         </div>
                         <div class="wsus__courses_sidebar_share_area">
@@ -532,7 +572,6 @@
                                     Course Lifetime Access
                                 </li>
                             </ul>
-
                         </div>
                         <div class="wsus__courses_sidebar_instructor">
                             <div class="image_area d-flex flex-wrap align-items-center">
@@ -566,3 +605,14 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script>
+        $(function() {
+            $('#starRating li').on('click', function() {
+                var starRating = $('#starRating').find('.active').length;
+                $('#rating').val(starRating);
+            });
+        });
+    </script>
+@endpush

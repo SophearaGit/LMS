@@ -40,4 +40,9 @@ class Course extends Model
         return $this->hasMany(CourseChapterLessons::class, 'course_id', 'id');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'course_id', 'id')->where('status', 1)->latest();
+    }
+
 }

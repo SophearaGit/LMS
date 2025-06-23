@@ -277,6 +277,18 @@
                         </span>
                     </a>
                 </li>
+                {{-- review --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.review.index') ? 'active' : '' }} "
+                        href="{{ route('admin.review.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-message" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Reviews
+                        </span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.payment-settings.index') ? 'active' : '' }} "
                         href="{{ route('admin.payment-settings.index') }}">
@@ -488,7 +500,7 @@
                                     </span>
                                     Contact Card
                                 </a>
-                                <a class="dropdown-item {{ (Route::is('admin.contact-setting.index') || Route::is('admin.contact-setting.*')) ? 'active' : '' }} "
+                                <a class="dropdown-item {{ Route::is('admin.contact-setting.index') || Route::is('admin.contact-setting.*') ? 'active' : '' }} "
                                     href="{{ route('admin.contact-setting.index') }}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <i class="ti ti-settings" style="font-size: 20px;"></i>
