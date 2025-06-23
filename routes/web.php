@@ -30,11 +30,10 @@ Route::get('/about', [FrontendController::class, 'getAboutUs'])->name('home.abou
 Route::get('/contact-us', [FrontendContactController::class, 'getContactUs'])->name('home.contact_us');
 Route::post('/contact-us', [FrontendContactController::class, 'sendMail'])->name('send.contact');
 
-
-
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
 Route::get('/courses/{slug}', [CoursePageController::class, 'getcoursedetailpage'])->name('courses.show');
+Route::post('/review', [CoursePageController::class, 'sendReview'])->name('send.review');
 
 // CART PAGE START
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
