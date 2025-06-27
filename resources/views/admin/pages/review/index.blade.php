@@ -106,8 +106,7 @@
                                                 </form>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.review.destroy', $review->id) }}"
-                                                    class="text-danger delete-review">
+                                                <a href="#" class="text-danger delete-item">
                                                     <i class="ti ti-trash"></i>
                                                 </a>
                                             </td>

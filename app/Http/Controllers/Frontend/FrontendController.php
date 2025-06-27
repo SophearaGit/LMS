@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AboutUsSection;
 use App\Models\BecomeInstructorSection;
 use App\Models\Brand;
+use App\Models\Cart;
 use App\Models\Counter;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -18,6 +19,7 @@ use App\Models\NewsLetter;
 use App\Models\Testimonial;
 use App\Models\VideoSection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function Pest\Laravel\json;
 

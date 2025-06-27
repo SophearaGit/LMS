@@ -272,8 +272,10 @@
                     $(`#add_to_cart_btn_${course_id}`).html('<i class="fas fa-spinner fa-spin"></i>Adding...');
                 },
                 success: function(data) {
+                    console.log(data);
                     notyf.success(data.message);
                     $(`#add_to_cart_btn_${course_id}`).html('Add to cart');
+                    $('#cart_count_badge').removeClass('d-none').text(data.cartCount);
                 },
                 error: function(xhr, status, error) {
                     let errors = xhr.responseJSON;
