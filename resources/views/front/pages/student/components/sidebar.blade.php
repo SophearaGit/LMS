@@ -37,6 +37,15 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('student.reviews.index') }}"
+                    class="{{ Route::is('student.reviews.index') ? 'active' : '' }}">
+                    <div class="img">
+                        <img src="/front/images/dash_icon_4.png" alt="icon" class="img-fluid w-100">
+                    </div>
+                    Reviews
+                </a>
+            </li>
+            <li>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" class="logoutForm">
                     @csrf

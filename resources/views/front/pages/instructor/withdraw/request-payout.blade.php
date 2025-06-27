@@ -76,7 +76,7 @@
                                         </p>
                                     </div>
                                     <div class="wsus__dashboard_contant_btn">
-                                        <a href="dashboard_profile_edit.html" class="common_btn">Edit Payout</a>
+                                        <a href="{{ route('instructor.profile') }}#payout_details" class="common_btn">Edit Payout</a>
                                     </div>
                                 </div>
                                 <ul class="wsus__dashboard_profile_info">
