@@ -71,6 +71,9 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefi
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/become-instructor', [StudentDashboardController::class, 'becomeInstructor'])->name('become_instructor');
     Route::post('/become-instructor/{user}', [StudentDashboardController::class, 'becomeInstructorUpdate'])->name('become_instructor_update');
+    Route::get('/reviews', [StudentDashboardController::class, 'getReview'])->name('reviews.index');
+    Route::delete('/reviews/{review}/delete', [StudentDashboardController::class, 'deleteReview'])->name('reviews.delete');
+
     // PROFIL UPDATE
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('prfile.update');
@@ -85,6 +88,11 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefi
     Route::get('/enroll-courses/{lesson_id}/download-file', [EnrolledCourseController::class, 'downloadFile'])->name('enroll_courses.download_file');
     // CERTIFICATE ROUTE
     Route::get('/certificate/{course}/download', [CertificateController::class, 'download'])->name('certificate.download');
+
+    // review
+
+
+
 
 
 

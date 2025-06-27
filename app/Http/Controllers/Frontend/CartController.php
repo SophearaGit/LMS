@@ -51,6 +51,7 @@ class CartController extends Controller
         return response(
             [
                 'message' => 'Course added to cart successfully.',
+                'cartCount' => Cart::where('user_id', Auth::guard('web')->user()->id)->count(),
             ],
             200
         );

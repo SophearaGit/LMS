@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use App\Models\User;
 use App\Traites\FileUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentDashboardController extends Controller
 {
@@ -52,5 +54,45 @@ class StudentDashboardController extends Controller
         ]);
         return redirect()->route('student.dashboard');
     }
+
+    public function getReview()
+    {
+        $data = [
+            'pageTitle' => 'CAITD | Review',
+            'reviews' => Review::where('user_id', Auth::id())
+                ->with(['course'])
+                ->latest()
+                ->paginate(10)
+        ];
+        return view('front.pages.student.reviews.index', data: $data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function deleteReview(Review $review)
+    {
+        try {
+            $review->delete();
+            notyf()->success('Review deleted successfully.');
+            return response([
+                'message' => 'Deleted Successfully!'
+            ], 200);
+
+        } catch (\Exception $e) {
+            logger($e);
+            notyf()->error('Something went wrong while deleting the review.');
+            return response([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
+    }
+
+
+
+
+
+
+
 }
 
