@@ -58,7 +58,7 @@
                                                                 <span>(5.0)</span>
                                                             </p>
                                                             <a class="title mb-1"
-                                                                href="{{ route('student.enroll_courses.course_videos', $enrolledCourse->course->slug) }}">{{ $enrolledCourse->course->title }}
+                                                                href="{{ route('courses.show', $enrolledCourse->course->slug) }}">{{ $enrolledCourse->course->title }}
                                                             </a>
                                                             <div class="text-muted">
                                                                 Instructor: {{ $enrolledCourse->course->instructor->name }}

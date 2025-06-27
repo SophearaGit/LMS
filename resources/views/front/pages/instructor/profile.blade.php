@@ -7,6 +7,10 @@
         .nice-select:focus {
             border-color: #ececee;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 @endpush
 @section('content')
@@ -149,7 +153,7 @@
                                                     <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6">
+                                            <div class="col-xl-6" id="payout_details">
                                                 <div class="wsus__dashboard_password_change_input">
                                                     <label for="password">New Password</label>
                                                     <input type="password" name="password" id="password"
