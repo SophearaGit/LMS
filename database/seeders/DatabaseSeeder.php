@@ -42,6 +42,11 @@ class DatabaseSeeder extends Seeder
             CounterSeeder::class,
             ContactSeeder::class,
             ContactSettingSeeder::class,
+            TopBarSeeder::class,
+            FooterSeeder::class,
+            SocialLinkSeeder::class,
+            FooterColumnOneSeeder::class,
+            FooterColumnTwoSeeder::class,
         ]);
     }
 }

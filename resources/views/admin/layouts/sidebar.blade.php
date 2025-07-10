@@ -477,7 +477,6 @@
                         </div>
                     </div>
                 </li>
-                {{-- contact us dropdown --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {{ Route::is('admin.contact-us.*') || Route::is('admin.contact-setting.*') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
@@ -511,8 +510,60 @@
                         </div>
                     </div>
                 </li>
-
-
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.topbar.*') || Route::is('admin.footer.*') || Route::is('admin.social-links.*') || Route::is('admin.column-one.*') || Route::is('admin.column-two.*') ? 'show' : '' }}"
+                        href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.topbar.*') || Route::is('admin.footer.*') || Route::is('admin.social-links.*') || Route::is('admin.column-one.*') || Route::is('admin.column-two.*') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-layout-navbar" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Header / Footer
+                        </span>
+                    </a>
+                    <div class="dropdown-menu {{ Route::is('admin.topbar.*') || Route::is('admin.footer.*') || Route::is('admin.social-links.*') || Route::is('admin.column-one.*') || Route::is('admin.column-two.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.topbar.*') || Route::is('admin.footer.*') || Route::is('admin.social-links.*') || Route::is('admin.column-one.*') || Route::is('admin.column-two.*') ? 'data-bs-popper="static"' : '' }}>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.topbar.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.topbar.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-layout-navbar-collapse" style="font-size: 20px;"></i>
+                                    </span>
+                                    Top Bar
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.footer.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.footer.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-layout-bottombar" style="font-size: 20px;"></i>
+                                    </span>
+                                    Footer
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.social-links.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.social-links.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-brand-telegram" style="font-size: 20px;"></i>
+                                    </span>
+                                    Social Links
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.column-one.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.column-one.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-box-multiple-1" style="font-size: 20px;"></i>
+                                    </span>
+                                    Column One
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.column-two.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.column-two.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-box-multiple-2" style="font-size: 20px;"></i>
+                                    </span>
+                                    Column Two
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.certificate-builder.index') ? 'active' : '' }} "
                         href="{{ route('admin.certificate-builder.index') }}">

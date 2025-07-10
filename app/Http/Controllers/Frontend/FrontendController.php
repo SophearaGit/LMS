@@ -17,6 +17,7 @@ use App\Models\Hero;
 use App\Models\LatestCourseSection;
 use App\Models\NewsLetter;
 use App\Models\Testimonial;
+use App\Models\TopBar;
 use App\Models\VideoSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,7 @@ class FrontendController extends Controller
             'brandSecitonItems' => Brand::where('status', 1)->get(),
             'featuredInstructorItems' => $featuredInstructorItems,
             'testimonials' => Testimonial::all(),
+            // 'topBarItems' => TopBar::first(),
         ];
 
         $featuredInstructorCourses = Course::whereIn('id', json_decode($featuredInstructorItems?->featured_courses))->get();

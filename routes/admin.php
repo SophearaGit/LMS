@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
+use App\Http\Controllers\Admin\FooterColumnOneController;
 use App\Http\Controllers\Admin\InstructorRequestController;
 use App\Http\Controllers\Admin\LatestCourseSectionController;
 use App\Http\Controllers\Admin\OrderController;
@@ -30,10 +31,14 @@ use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\PayoutGatewayController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\VideoSectionController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\FeaturedInstructorSectionController;
+use App\Http\Controllers\Admin\FooterColumnTwoController;
+use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TopBarController;
 use App\Http\Controllers\Frontend\HeroController;
 use Illuminate\Support\Facades\Route;
 
@@ -202,6 +207,13 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/contact-us', ContactUsController::class);
     Route::resource('/contact-setting', ContactSettingController::class);
     Route::resource('/review', ReviewController::class);
+    Route::resource('/topbar', TopBarController::class);
+    Route::resource('/footer', FooterController::class);
+    Route::resource('/social-links', SocialLinkController::class);
+    Route::resource('/column-one', FooterColumnOneController::class);
+    Route::resource('/column-two', FooterColumnTwoController::class);
+
+
 
 
 
