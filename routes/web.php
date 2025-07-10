@@ -36,9 +36,11 @@ Route::get('/courses/{slug}', [CoursePageController::class, 'getcoursedetailpage
 Route::post('/review', [CoursePageController::class, 'sendReview'])->name('send.review');
 
 // CART PAGE START
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/{course_id}/store', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart/{cart_id}/delete', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::group(['middleware' => ['auth', 'verified', 'check_role:student']], function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/{course_id}/store', [CartController::class, 'store'])->name('cart.store');
+    Route::get('/cart/{cart_id}/delete', [CartController::class, 'destroy'])->name('cart.destroy');
+});
 
 // CHECKOUT PAGE START
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -67,7 +69,7 @@ Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsl
  * STUDENT ROUTE
  *————————————————————————————————————————————————————————————————————————————————
  */
-Route::group(["middleware" => ['auth', 'verified', 'check_role:student'], "prefix" => "student", "as" => "student."], function () {
+Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" => "student."], function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/become-instructor', [StudentDashboardController::class, 'becomeInstructor'])->name('become_instructor');
     Route::post('/become-instructor/{user}', [StudentDashboardController::class, 'becomeInstructorUpdate'])->name('become_instructor_update');
