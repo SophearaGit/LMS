@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BecomeInstructorSectionController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BrandSectionController;
 use App\Http\Controllers\Admin\CertificateBuilderController;
 use App\Http\Controllers\Admin\ContactSettingController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseContentController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
+use App\Http\Controllers\Admin\CustomPageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\FooterColumnOneController;
@@ -212,6 +214,9 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/social-links', SocialLinkController::class);
     Route::resource('/column-one', FooterColumnOneController::class);
     Route::resource('/column-two', FooterColumnTwoController::class);
+    Route::resource('/custom-page', CustomPageController::class);
+    Route::resource('/blog-category',BlogCategoryController::class);
+
 
 
 

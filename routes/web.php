@@ -29,6 +29,7 @@ Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/about', [FrontendController::class, 'getAboutUs'])->name('home.about');
 Route::get('/contact-us', [FrontendContactController::class, 'getContactUs'])->name('home.contact_us');
 Route::post('/contact-us', [FrontendContactController::class, 'sendMail'])->name('send.contact');
+Route::get('/page/{slug}', [FrontendController::class, 'customPage'])->name('custom_page');
 
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
