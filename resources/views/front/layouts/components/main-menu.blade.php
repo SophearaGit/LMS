@@ -2,9 +2,13 @@
     $categories = \App\Models\CourseCategory::whereNull('parent_id')
         ->where('show_at_trending', 1)
         ->where('status', 1)
-        ->limit(10)
+        ->whereHas('subCategories', function ($query) {
+            $query->where('status', 1);
+        })
+        ->limit(2)
         ->latest()
         ->get();
+    $customPages = \App\Models\CustomPage::where('status', 1)->where('show_at_nav', 1)->limit(2)->latest()->get();
 @endphp
 
 <nav class="navbar navbar-expand-lg main_menu main_menu_3">
@@ -60,6 +64,14 @@
                     href="{{ route('home.contact_us') }}">Contact
                     Us</a>
             </li>
+            @foreach ($customPages as $customPage)
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('home.contact_us') ? 'active' : '' }}"
+                        href="{{ route('custom_page', $customPage->slug) }}">
+                        {{ Str::limit($customPage->title, 20, '...') }}
+                    </a>
+                </li>
+            @endforeach
         </ul>
         <div class="right_menu">
             <div class="menu_search_btn">

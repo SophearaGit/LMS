@@ -11,6 +11,7 @@ use App\Models\Cart;
 use App\Models\Counter;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\CustomPage;
 use App\Models\Feature;
 use App\Models\FeaturedInstructorSection;
 use App\Models\Hero;
@@ -89,6 +90,18 @@ class FrontendController extends Controller
             'counterItems' => Counter::first(),
         ];
         return view('front.pages.about-us', $data);
+    }
+
+    public function customPage(string $slug)
+    {
+        $data = [
+            'pageTitle' => 'CAITD | Custom Page',
+            'customPage' => CustomPage::where('slug', $slug)
+            ->where('status', 1)
+            ->where('show_at_nav', 1)
+            ->firstOrFail(),
+        ];
+        return view('front.pages.custom-page', $data);
     }
 
 }

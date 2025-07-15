@@ -22,7 +22,7 @@
                             @endif
                         </h1>
                         <ul>
-                            <li><a href="#">Home</a></li>
+                            <li><a href="{{ url('/') }}">Home</a></li>
                             <li>
                                 @if (Route::is('courses'))
                                     Our Courses
