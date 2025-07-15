@@ -348,6 +348,32 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.blog-category.*') ? 'show' : '' }}"
+                        href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.blog-category.*') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-notebook" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Content Management
+                        </span>
+                    </a>
+                    <div class="dropdown-menu {{ Route::is('admin.blog-category.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.blog-category.*') ? 'data-bs-popper="static"' : '' }}>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.blog-category.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.blog-category.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-category" style="font-size: 20px;"></i>
+                                    </span>
+                                    Blog Categories
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') || Route::is('admin.testimonial-section.*') || Route::is('admin.counter-section.*') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
                         aria-expanded="{{ Route::is('admin.hero.*') || Route::is('admin.features.*') || Route::is('admin.about-section.*') || Route::is('admin.latest-courses.*') || Route::is('admin.become-instructor.*') || Route::is('admin.video-section.*') || Route::is('admin.brand-section.*') || Route::is('admin.featured-instructor-section.*') || Route::is('admin.testimonial-section.*') || Route::is('admin.counter-section.*') ? 'true' : 'false' }}">
@@ -563,6 +589,17 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.custom-page.*') ? 'active' : '' }} "
+                        href="{{ route('admin.custom-page.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-template" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Custom Pages
+                        </span>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.certificate-builder.index') ? 'active' : '' }} "
