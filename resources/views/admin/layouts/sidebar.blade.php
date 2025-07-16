@@ -348,9 +348,9 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Route::is('admin.blog-category.*') ? 'show' : '' }}"
+                    <a class="nav-link dropdown-toggle {{ Route::is('admin.blog-category.*') || Route::is('admin.blog.*') ? 'show' : '' }}"
                         href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
-                        aria-expanded="{{ Route::is('admin.blog-category.*') ? 'true' : 'false' }}">
+                        aria-expanded="{{ Route::is('admin.blog-category.*') || Route::is('admin.blog.*') ? 'true' : 'false' }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-notebook" style="font-size: 20px;"></i>
                         </span>
@@ -358,10 +358,17 @@
                             Content Management
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Route::is('admin.blog-category.*') ? 'show' : '' }}"
-                        {{ Route::is('admin.blog-category.*') ? 'data-bs-popper="static"' : '' }}>
+                    <div class="dropdown-menu {{ Route::is('admin.blog-category.*') || Route::is('admin.blog.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.blog-category.*') || Route::is('admin.blog.*') ? 'data-bs-popper="static"' : '' }}>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.blog.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.blog.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-article" style="font-size: 20px;"></i>
+                                    </span>
+                                    Blog
+                                </a>
                                 <a class="dropdown-item {{ Route::is('admin.blog-category.index') ? 'active' : '' }} "
                                     href="{{ route('admin.blog-category.index') }}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
