@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Setting;
-use Faker\Provider\ar_EG\Payment;
+// use App\Models\BlogCategory;
+// use App\Models\Setting;
+// use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -47,6 +48,8 @@ class DatabaseSeeder extends Seeder
             SocialLinkSeeder::class,
             FooterColumnOneSeeder::class,
             FooterColumnTwoSeeder::class,
+            BlogCategorySeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

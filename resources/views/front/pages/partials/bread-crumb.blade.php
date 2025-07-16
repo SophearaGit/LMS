@@ -19,6 +19,10 @@
                                 How We Work
                             @elseif (Route::is('home.contact_us'))
                                 Contact Us
+                            @elseif (Route::is('blog.index'))
+                                Blogs
+                            @elseif (Route::is('blog.detail'))
+                                Blog details
                             @endif
                         </h1>
                         <ul>
@@ -38,6 +42,10 @@
                                     About Us
                                 @elseif (Route::is('home.contact_us'))
                                     Contact Us
+                                @elseif (Route::is('blog.index'))
+                                    Blogs
+                                @elseif (Route::is('blog.detail'))
+                                    Blog details
                                 @endif
                             </li>
                         </ul>
