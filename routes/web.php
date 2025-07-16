@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
@@ -30,6 +31,8 @@ Route::get('/about', [FrontendController::class, 'getAboutUs'])->name('home.abou
 Route::get('/contact-us', [FrontendContactController::class, 'getContactUs'])->name('home.contact_us');
 Route::post('/contact-us', [FrontendContactController::class, 'sendMail'])->name('send.contact');
 Route::get('/page/{slug}', [FrontendController::class, 'customPage'])->name('custom_page');
+Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'getBlogDetail'])->name('blog.detail');
 
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
