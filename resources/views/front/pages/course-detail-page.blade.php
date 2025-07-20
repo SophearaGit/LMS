@@ -606,13 +606,5 @@
     </section>
 @endsection
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-    <script>
-        $(function() {
-            $('#starRating li').on('click', function() {
-                var starRating = $('#starRating').find('.active').length;
-                $('#rating').val(starRating);
-            });
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
 @endpush

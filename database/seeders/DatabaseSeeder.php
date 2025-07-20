@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
             FooterColumnTwoSeeder::class,
             BlogCategorySeeder::class,
             BlogSeeder::class,
+            BlogCommentSeeder::class,
         ]);
     }
 }
