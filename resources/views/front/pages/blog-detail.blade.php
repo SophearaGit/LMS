@@ -1,5 +1,12 @@
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
+@push('meta')
+    <meta property="og:title" content="{{ $blog->title }}" />
+    <meta property="og:description" content="{{ $blog->description }}" />
+    <meta property="og:image" content="{{ $blog->image }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:type" content="Blog" />
+@endpush
 @section('content')
     @include('front.pages.partials.bread-crumb')
     <section class="wsus__blog_details mt_120 xs_mt_100 pb_120 xs_pb_100">
@@ -38,7 +45,7 @@
                                         <img src="{{ asset('/front/images/comment_icon_gray.png') }}" alt="bookmark"
                                             class="img-fluid">
                                     </span>
-                                    3 Comments
+                                    {{ count($blog->comments) ?? 0 }} Comments
                                 </li>
                             </ul>
                             <h2>
@@ -85,10 +92,20 @@
                             </ul> --}}
                             <ul class="share d-flex flex-wrap align-items-center">
                                 <li><span>share:</span></li>
-                                <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                                {{-- <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li> --}}
+
+                                <li class="ez-facebook"><a href=""><i class="fab fa-facebook-f"
+                                            aria-hidden="true"></i></a></li>
+                                <li class="ez-linkedin"><a href=""><i class="fab fa-linkedin-in"
+                                            aria-hidden="true"></i></a></li>
+                                <li class="ez-x"><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="javascript:;"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li class="ez-reddit"><a href="#"><i class="fab fa-reddit" aria-hidden="true"></i></a>
+                                </li>
                             </ul>
                         </div>
                         <div class="wsus__blog_det_author">
@@ -111,38 +128,34 @@
                         </div>
                         <div class="wsus__blog_comment_area mt_75">
                             <h2>Comments</h2>
-                            <div class="wsus__blog_single_comment">
-                                <div class="img">
-                                    <img src="/front/images/testimonial_user_1.png" alt="Comments" class="img-fluid">
+                            @auth
+                                @if ($blog->comments->count() > 0)
+                                    @foreach ($blog->comments()->latest()->get() as $comment)
+                                        <div class="wsus__blog_single_comment">
+                                            <div class="img">
+                                                <img src="{{ asset($comment->user->image) }}" alt="Comments" class="img-fluid">
+                                            </div>
+                                            <div class="text">
+                                                <h4>{{ $comment->user->name }}</h4>
+                                                <h6>{{ $comment->created_at->format('F d, Y \a\t h:i a') }} <a
+                                                        href="#"><i class="fas fa-reply" aria-hidden="true"></i></a></h6>
+                                                <p>{!! $comment->comment !!}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="details_quot_text">
+                                        <h2>No Comments Found</h2>
+                                        <p>Be the first to comment on this blog.</p>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="details_quot_text">
+                                    <p class="text-center alert alert-info font-extrabold text-uppercase">Please <a href="{{ route('login') }}">login</a> to see a
+                                        comment.</p>
                                 </div>
-                                <div class="text">
-                                    <h4>Ravi O'Leigh</h4>
-                                    <h6>March 23, 2024 at 12:30 pm <a href="#"><i class="fas fa-reply"
-                                                aria-hidden="true"></i></a></h6>
-                                    <p>Nulla a ipsum nibh. Fusce purus elit, tristique vitae enim sed, auctor placerat
-                                        est. Maecenas consequat nibh consequat malesuada fringilla, mauris lorem dapibus
-                                        metus, non imperdiet nunc erat ultricies est. Praesent ames nec lorem sit amet
-                                        leo consequat rutrum non nibh sem eget metus.</p>
-                                </div>
-                            </div>
-                            <div class="wsus__blog_single_comment single_comment_reply">
-                                <div class="img">
-                                    <img src="/front/images/testimonial_user_2.png" alt="Comments" class="img-fluid">
-                                </div>
-                                <div class="text">
-                                    <h4>Doug Lyphe</h4>
-                                    <h6>June 25, 2024 at 08:45 pm <a href="#"><i class="fas fa-reply"
-                                                aria-hidden="true"></i></a></h6>
-                                    <p>Nulla a ipsum nibh. Fusce purus elit, tristique vitae enim sed, auctor placerat
-                                        est. Maecenas consequat nibh consequat malesuada fringilla, mauris lorem dapibus
-                                        metus, non imperdiet nunc erat ultricies est. Praesent ames nec lorem sit amet
-                                        leo consequat rutrum non nibh sem eget metus.</p>
-                                </div>
-                            </div>
-                            <div class="wsus__blog_single_comment">
-                                <div class="img">
-                                    <img src="/front/images/testimonial_user_3.png" alt="Comments" class="img-fluid">
-                                </div>
+                            @endauth
+                            {{-- <div class="wsus__blog_single_comment single_comment_reply">
                                 <div class="text">
                                     <h4>Doug Lyphe</h4>
                                     <h6>June 25, 2024 at 08:45 pm <a href="#"><i class="fas fa-reply"
@@ -152,117 +165,83 @@
                                         metus, non imperdiet nunc erat ultricies est. Praesent ames nec lorem sit amet
                                         leo consequat rutrum non nibh sem eget metus.</p>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="wsus__blog_comment_input_area mt_75">
                             <h2>Post a Comment</h2>
-                            <p>Your email address will not be published. Required fields are marked *</p>
-                            <form action="#">
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <input type="email" placeholder="Email">
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <textarea rows="5" placeholder="Leave a reply"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Save my name, email, and website in this browser for the next time I
-                                                comment.
-                                            </label>
+                            @auth
+                                <p>
+                                    Say something about this post.
+                                </p>
+                                <form action="{{ route('blog.comment.store', $blog->id) }}" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-xl-12 mb-4">
+                                            <textarea rows="5" placeholder="Leave a comment...." name="comment"></textarea>
                                         </div>
-                                        <button type="submit" class="common_btn">Post Comment</button>
+                                        <div class="col-12">
+                                            <button type="submit" class="common_btn">Post Comment</button>
+                                        </div>
                                     </div>
+                                </form>
+                            @else
+                                <div class="details_quot_text">
+                                    <p class="text-center alert alert-info font-extrabold text-uppercase">Please <a href="{{ route('login') }}">login</a> to post a
+                                        comment.</p>
                                 </div>
-                            </form>
+                            @endauth
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;">
                     <div class="wsus__blog_sidebar wsus__sidebar">
-                        <form action="#" class="wsus__sidebar_search">
-                            <input type="text" placeholder="Search Here...">
+
+                        <form action="{{ route('blog.index') }}" class="wsus__sidebar_search">
+                            <input type="text" placeholder="Search Here..." name="search">
                             <button type="submit">
-                                <img src="/front/images/search_icon.png" alt="Search" class="img-fluid">
+                                <img src="{{ asset('/front/images/search_icon.png') }}" alt="Search"
+                                    class="img-fluid">
                             </button>
                         </form>
+
                         <div class="wsus__sidebar_recent_post">
                             <h3>Recent Posts</h3>
                             <ul class="d-flex flex-wrap">
-                                <li>
-                                    <a href="#" class="img">
-                                        <img src="/front/images/blog_4_img_1.jpg" alt="Blog" class="img-fluid">
-                                    </a>
-                                    <div class="text">
-                                        <p>
-                                            <span>
-                                                <img src="/front/images/calendar_blue.png" alt="Clander"
-                                                    class="img-fluid">
-                                            </span>
-                                            March 23, 2024
-                                        </p>
-                                        <a href="#" class="title">Launch into UI Design with Tips For Efficient
-                                            Progress</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="img">
-                                        <img src="/front/images/blog_4_img_2.jpg" alt="Blog" class="img-fluid">
-                                    </div>
-                                    <div class="text">
-                                        <p>
-                                            <span>
-                                                <img src="/front/images/calendar_blue.png" alt="Clander"
-                                                    class="img-fluid">
-                                            </span>
-                                            June 15, 2024
-                                        </p>
-                                        <a href="#" class="title">Simplified Approach to Realistic Lip Drawing in 7
-                                            Steps.</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="img">
-                                        <img src="/front/images/blog_4_img_3.jpg" alt="Blog" class="img-fluid">
-                                    </div>
-                                    <div class="text">
-                                        <p>
-                                            <span>
-                                                <img src="/front/images/calendar_blue.png" alt="Clander"
-                                                    class="img-fluid">
-                                            </span>
-                                            October 27, 2024
-                                        </p>
-                                        <a href="#" class="title">Exploring the GREP Command For File Discovery in
-                                            Linux.</a>
-                                    </div>
-                                </li>
+                                @forelse ($recentBlogPosts as $recentBlogPost)
+                                    <li>
+                                        <a href="{{ route('blog.detail', $recentBlogPost->slug) }}" class="img">
+                                            <img src="{{ asset($recentBlogPost->image) }}" alt="Blog"
+                                                class="img-fluid">
+                                        </a>
+                                        <div class="text">
+                                            <p>
+                                                <span>
+                                                    <img src="{{ asset('/front/images/calendar_blue.png') }}"
+                                                        alt="Clander" class="img-fluid">
+                                                </span>
+                                                {{ $recentBlogPost->created_at->format('F d, Y') }}
+                                            </p>
+                                            <a href="{{ route('blog.detail', $recentBlogPost->slug) }}" class="title">
+                                                {{ Str::limit($recentBlogPost->title, 50) }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <li>No recent posts available.</li>
+                                @endforelse
                             </ul>
                         </div>
                         <div class="wsus__sidebar_blog_category">
                             <h3>Categories</h3>
                             <ul>
-                                <li>
-                                    <a href="#">Business <span>(07)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Data Science <span>(14)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Marketing <span>(27)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Health &amp; Fitness <span>(31)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Finance <span>(12)</span></a>
-                                </li>
+                                @forelse ($blogCategories as $blogCategorie)
+                                    <li>
+                                        <a href="{{ route('blog.index', ['category' => $blogCategorie->slug]) }}">{{ $blogCategorie->name }}
+                                            <span>({{ $blogCategorie->blogs_count }})</span></a>
+                                    </li>
+                                @empty
+                                    <li>No categories available.</li>
+                                @endforelse
                             </ul>
                         </div>
                         <div class="wsus__sidebar_blog_tags">

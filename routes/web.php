@@ -33,6 +33,7 @@ Route::post('/contact-us', [FrontendContactController::class, 'sendMail'])->name
 Route::get('/page/{slug}', [FrontendController::class, 'customPage'])->name('custom_page');
 Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'getBlogDetail'])->name('blog.detail');
+Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment.store');
 
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
