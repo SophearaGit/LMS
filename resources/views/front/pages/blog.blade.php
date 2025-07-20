@@ -22,12 +22,12 @@
                                     <li>
                                         <span><img src="{{ asset('/front/images/comment_icon_black.png') }}" alt="Comment"
                                                 class="img-fluid"></span>
-                                        3 Comments
+                                        {{ count($blog->comments) ?? 0 }} Comments
                                     </li>
                                 </ul>
                                 <a href="{{ route('blog.detail', $blog->slug) }}" class="title">{{ $blog->title }}</a>
                                 <article>
-                                    <p>{{ Str::limit(strip_tags($blog->description), 130, '...') }}</p>
+                                    <p>{{ Str::limit(strip_tags($blog->description), 120, '...') }}</p>
                                 </article>
                                 <a href="{{ route('blog.detail', $blog->slug) }}" class="common_btn">Read More <i
                                         class="far fa-arrow-right" aria-hidden="true"></i></a>

@@ -60,6 +60,10 @@
                     href="{{ route('courses') }}">Courses</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ Route::is('blog.index') ? 'active' : '' }} "
+                    href="{{ route('blog.index') }}">Blogs</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ Route::is('home.contact_us') ? 'active' : '' }}"
                     href="{{ route('home.contact_us') }}">Contact
                     Us</a>
