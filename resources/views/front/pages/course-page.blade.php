@@ -13,10 +13,10 @@
                                 <input type="text" placeholder="Search Course" name="search"
                                     value="{{ request()->search ?? '' }}">
                                 <button type="submit">
-                                    <img src="/front/images/search_icon.png" alt="Search" class="img-fluid">
+                                    <img src="{{ asset('/front/images/search_icon.png') }}" alt="Search"
+                                        class="img-fluid">
                                 </button>
                             </div>
-
                             <div class="wsus__sidebar_category">
                                 <h3>Categories</h3>
                                 <ul class="categoty_list">
@@ -29,18 +29,20 @@
                                                 {{ $category->name }}
                                                 <div class="wsus__sidebar_sub_category">
                                                     @foreach ($category->subCategories as $subCategory)
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                value="{{ $subCategory->id }}"
-                                                                id="sub-cat-{{ $subCategory->id }}" name="category[]"
-                                                                @checked(is_array(request()->category)
-                                                                        ? in_array($subCategory->id, request()->category ?? [])
-                                                                        : request()->category == $subCategory->id)>
-                                                            <label class="form-check-label"
-                                                                for="sub-cat-{{ $subCategory->id }}">
-                                                                {{ $subCategory->name }}
-                                                            </label>
-                                                        </div>
+                                                        @if ($subCategory->courses->count() > 0)
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    value="{{ $subCategory->id }}"
+                                                                    id="sub-cat-{{ $subCategory->id }}" name="category[]"
+                                                                    @checked(is_array(request()->category)
+                                                                            ? in_array($subCategory->id, request()->category ?? [])
+                                                                            : request()->category == $subCategory->id)>
+                                                                <label class="form-check-label"
+                                                                    for="sub-cat-{{ $subCategory->id }}">
+                                                                    {{ $subCategory->name }}
+                                                                </label>
+                                                            </div>
+                                                        @endif
                                                     @endforeach
                                                 </div>
                                             </li>
@@ -48,7 +50,6 @@
                                     @endforeach
                                 </ul>
                             </div>
-
                             <div class="wsus__sidebar_course_lavel">
                                 <h3>Difficulty Level</h3>
                                 @foreach ($levels as $level)
@@ -63,7 +64,6 @@
                                     @endif
                                 @endforeach
                             </div>
-
                             {{-- <div class="wsus__sidebar_course_lavel rating">
                                 <h3>Rating</h3>
                                 <div class="form-check">
@@ -97,7 +97,6 @@
                                     </label>
                                 </div>
                             </div> --}}
-
                             <div class="wsus__sidebar_course_lavel duration">
                                 <h3>Language</h3>
                                 @foreach ($languages as $language)
@@ -113,7 +112,6 @@
                                     @endif
                                 @endforeach
                             </div>
-
                             <div class="wsus__sidebar_rating">
                                 <h3>Price Range</h3>
                                 <div class="range_slider">
@@ -126,7 +124,6 @@
                             <div class="row">
                                 <button type="submit" class="common_btn">Search</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -150,24 +147,24 @@
                                 style="visibility: visible; animation-name: fadeInUp;" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Courses" class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/love_icon_black.png" alt="Love"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                        alt="Love" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/compare_icon_black.png" alt="Compare"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
+                                                        alt="Compare" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/cart_icon_black_2.png" alt="Cart"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
+                                                        alt="Cart" class="img-fluid">
                                                 </a>
                                             </li>
                                         </ul>
@@ -186,8 +183,9 @@
                                                 <span>(4.8 Rating)</span>
                                             </p>
                                         </div>
-                                        <a class="title"
-                                            href="{{ route('courses.show', $course->slug) }}">{{ $course->title }}</a>
+                                        <a class="title" href="{{ route('courses.show', $course->slug) }}">
+                                            {{ Str::limit($course->title, 20, '...') }}
+                                        </a>
                                         <ul>
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>38 Student</li>
@@ -225,7 +223,6 @@
                             </div>
                         @empty
                         @endforelse
-
                     </div>
                     <div class="wsus__pagination mt_50 wow fadeInUp" style="visibility: hidden; animation-name: none;">
                         <nav aria-label="Page navigation example">
@@ -237,7 +234,6 @@
         </div>
     </section>
 @endsection
-
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -278,6 +274,7 @@
                     notyf.success(data.message);
                     $(`#add_to_cart_btn_${course_id}`).html('Add to cart');
                     $('#cart_count_badge').removeClass('d-none').text(data.cartCount);
+                    $('#mobile_cart_count_badge').removeClass('d-none').text(data.cartCount);
                 },
                 error: function(xhr, status, error) {
                     let errors = xhr.responseJSON;

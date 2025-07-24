@@ -8,32 +8,34 @@
     <meta name="base_url" content="{{ url('') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('meta')
-    <title>@yield('pageTitle')</title>
-    <link rel="icon" type="image/png" href="/front/images/preloader.png">
-    <link rel="stylesheet" href="/front/css/all.min.css">
-    <link rel="stylesheet" href="/front/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/front/css/animated_barfiller.css">
-    <link rel="stylesheet" href="/front/css/slick.css">
-    <link rel="stylesheet" href="/front/css/venobox.min.css">
-    <link rel="stylesheet" href="/front/css/scroll_button.css">
-    <link rel="stylesheet" href="/front/css/nice-select.css">
-    <link rel="stylesheet" href="/front/css/pointer.css">
-    <link rel="stylesheet" href="/front/css/jquery.calendar.css">
-    <link rel="stylesheet" href="/front/css/range_slider.css">
-    <link rel="stylesheet" href="/front/css/startRating.css">
-    <link rel="stylesheet" href="/front/css/video_player.css">
-    <link rel="stylesheet" href="/front/css/jquery.simple-bar-graph.min.css">
-    <link rel="stylesheet" href="/front/css/select2.min.css">
-    <link rel="stylesheet" href="/front/css/sticky_menu.css">
-    <link rel="stylesheet" href="/front/css/animate.css">
+    @if (config('settings.site_favicon'))
+        <link rel="icon" type="image/png" href="{{ asset(config('settings.site_favicon')) }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('front/images/preloader.png') }}">
+    @endif
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <link rel="stylesheet" href="/front/css/jquery-ui.min.css">
-    <link rel=" stylesheet" href="/front/css/spacing.css">
-    <link rel="stylesheet" href="/front/css/style.css">
-    <link rel="stylesheet" href="/front/css/responsive.css">
-    {{-- <link rel="stylesheet" href="/front/css/tabler.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
-
+    <link rel="stylesheet" href="{{ asset('front/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/animated_barfiller.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/venobox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/scroll_button.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/pointer.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/jquery.calendar.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/range_slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/startRating.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/video_player.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/jquery.simple-bar-graph.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/sticky_menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/spacing.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
+    <title>@yield('pageTitle')</title>
     @stack('stylesheets')
 </head>
 

@@ -1,4 +1,7 @@
-<section class="wsus__breadcrumb" style="background: url(/front/images/breadcrumb_bg.jpg);">
+<section class="wsus__breadcrumb"
+    @if (config('settings.site_breadcrumb')) style="background: url({{ asset(config('settings.site_breadcrumb')) }})"
+@else
+    style="background: url({{ asset('/front/images/breadcrumb_bg.jpg') }})" @endif>
     <div class="wsus__breadcrumb_overlay">
         <div class="container">
             <div class="row">

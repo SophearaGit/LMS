@@ -10,101 +10,40 @@
         </div>
     </div>
     <div class="row blog_4_slider">
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_blog_4">
-                <a href="#" class="wsus__single_blog_4_img">
-                    <img src="/front/images/blog_4_img_1.jpg" alt="Blog" class="img-fluid">
-                    <span class="date">March 23, 2024</span>
-                </a>
-                <div class="wsus__single_blog_4_text">
-                    <ul>
-                        <li>
-                            <span><img src="/front/images/user_icon_black.png" alt="User" class="img-fluid"></span>
-                            By Richard Tea
-                        </li>
-                        <li>
-                            <span><img src="/front/images/comment_icon_black.png" alt="Comment"
-                                    class="img-fluid"></span>
-                            3 Comments
-                        </li>
-                    </ul>
-                    <a href="#" class="title">Exploring Learning Landscapes in Academic.</a>
-                    <p>Suspends dictum sed sem allium convallis Proin dictum ipsum.</p>
-                    <a href="#" class="common_btn">Read More <i class="far fa-arrow-right"></i></a>
+        @forelse ($blogs as $blog)
+            <div class="col-xl-4 wow fadeInUp">
+                <div class="wsus__single_blog_4">
+                    <a href="{{ route('blog.detail', $blog->slug) }}" class="wsus__single_blog_4_img">
+                        <img src="{{ asset($blog->image) }}" alt="Blog" class="img-fluid">
+                        <span class="date">
+                            {{ $blog->created_at->format('F d, Y') }}
+                        </span>
+                    </a>
+                    <div class="wsus__single_blog_4_text">
+                        <ul>
+                            <li>
+                                <span><img src="{{ asset('/front/images/user_icon_black.png') }}" alt="User"
+                                        class="img-fluid"></span>
+                                By {{ $blog->blog_author->name }}
+                            </li>
+                            <li>
+                                <span><img src="{{ asset('/front/images/comment_icon_black.png') }}" alt="Comment"
+                                        class="img-fluid"></span>
+                                {{ count($blog->comments) ?? 0 }} Comments
+                            </li>
+                        </ul>
+                        <a href="{{ route('blog.detail', $blog->slug) }}" class="title">
+                            {{ $blog->title }}
+                        </a>
+                        <article>
+                            <p>{{ Str::limit(strip_tags($blog->description), 80, '...') }}</p>
+                        </article>
+                        <a href="{{ route('blog.detail', $blog->slug) }}" class="common_btn">Read More <i
+                                class="far fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_blog_4">
-                <a href="#" class="wsus__single_blog_4_img">
-                    <img src="/front/images/blog_4_img_2.jpg" alt="Blog" class="img-fluid">
-                    <span class="date">April 28, 2024</span>
-                </a>
-                <div class="wsus__single_blog_4_text">
-                    <ul>
-                        <li>
-                            <span><img src="/front/images/user_icon_black.png" alt="User" class="img-fluid"></span>
-                            By Doug Lyphe
-                        </li>
-                        <li>
-                            <span><img src="/front/images/comment_icon_black.png" alt="Comment"
-                                    class="img-fluid"></span>
-                            21 Comments
-                        </li>
-                    </ul>
-                    <a href="#" class="title">Uncovering Learning Opportunities in Academia.</a>
-                    <p>Suspends dictum sed sem allium convallis Proin dictum ipsum.</p>
-                    <a href="#" class="common_btn">Read More <i class="far fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_blog_4">
-                <a href="#" class="wsus__single_blog_4_img">
-                    <img src="/front/images/blog_4_img_3.jpg" alt="Blog" class="img-fluid">
-                    <span class="date">Jan 12, 2024</span>
-                </a>
-                <div class="wsus__single_blog_4_text">
-                    <ul>
-                        <li>
-                            <span><img src="/front/images/user_icon_black.png" alt="User" class="img-fluid"></span>
-                            By Eleanor Fant
-                        </li>
-                        <li>
-                            <span><img src="/front/images/comment_icon_black.png" alt="Comment"
-                                    class="img-fluid"></span>
-                            48 Comments
-                        </li>
-                    </ul>
-                    <a href="#" class="title">Internationally Distinguished Skillful Educators.</a>
-                    <p>Suspends dictum sed sem allium convallis Proin dictum ipsum.</p>
-                    <a href="#" class="common_btn">Read More <i class="far fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 wow fadeInUp">
-            <div class="wsus__single_blog_4">
-                <a href="#" class="wsus__single_blog_4_img">
-                    <img src="/front/images/blog_4_img_4.jpg" alt="Blog" class="img-fluid">
-                    <span class="date">April 28, 2024</span>
-                </a>
-                <div class="wsus__single_blog_4_text">
-                    <ul>
-                        <li>
-                            <span><img src="/front/images/user_icon_black.png" alt="User" class="img-fluid"></span>
-                            By Doug Lyphe
-                        </li>
-                        <li>
-                            <span><img src="/front/images/comment_icon_black.png" alt="Comment"
-                                    class="img-fluid"></span>
-                            21 Comments
-                        </li>
-                    </ul>
-                    <a href="#" class="title">Uncovering Learning Opportunities in Academia.</a>
-                    <p>Suspends dictum sed sem allium convallis Proin dictum ipsum.</p>
-                    <a href="#" class="common_btn">Read More <i class="far fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
+        @empty
+        @endforelse
     </div>
 </section>
