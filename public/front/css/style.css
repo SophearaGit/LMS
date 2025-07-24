@@ -2588,6 +2588,7 @@ header .wsus__header_right li .nice-select .list {
     position: relative;
     /* background: var(--colorLightBg); */
     padding: 0px 25px;
+    margin-bottom: 120px;
 }
 
 .wsus__single_testimonial {

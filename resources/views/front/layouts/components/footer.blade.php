@@ -13,7 +13,13 @@
                     <div class="col-lg-3 wow fadeInUp">
                         <div class="wsus__footer_3_logo_area">
                             <a class="logo" href="{{ asset('index.html') }}">
-                                <img src="{{ asset('front/images/footer_logo.png') }}" alt="CAITD" class="img-fluid">
+                                @if (config('settings.site_footer_logo'))
+                                    <img src="{{ asset(config('settings.site_footer_logo')) }}" alt="CAITD"
+                                        class="img-fluid">
+                                @else
+                                    <img src="{{ asset('front/images/footer_logo.png') }}" alt="CAITD"
+                                        class="img-fluid">
+                                @endif
                             </a>
                             <p>
                                 {{ $footer?->description }}
