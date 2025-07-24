@@ -22,6 +22,13 @@ class SettingSeeder extends Seeder
             ['key' => 'site_currency_icon', 'value' => '$'],
             ['key' => 'sender_email', 'value' => 'miek@gmail.com'],
             ['key' => 'receiver_email', 'value' => 'seth@gmail.com'],
+            ['key' => 'mail_mailer', 'value' => 'smtp'],
+            ['key' => 'mail_host', 'value' => 'smtp.mailtrap.io'],
+            ['key' => 'mail_port', 'value' => '2525'],
+            ['key' => 'mail_username', 'value' => '4196afde51c60b'],
+            ['key' => 'mail_password', 'value' => '1d723a9e09694e'],
+            ['key' => 'mail_queue', 'value' => 'true'],
+            ['key' => 'mail_encryption', 'value' => 'tls'],
         ];
         Setting::insert($settings);
     }

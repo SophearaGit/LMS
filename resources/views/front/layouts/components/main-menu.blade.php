@@ -1,11 +1,19 @@
 @php
-    $categories = \App\Models\CourseCategory::whereNull('parent_id')
+    $categories = \App\Models\CourseCategory::with([
+        'subCategories' => function ($query) {
+            $query->where('status', 1)->whereHas('courses', function ($q) {
+                $q->where('is_approved', 'approved')->where('status', 'active');
+            });
+        },
+    ])
+        ->whereNull('parent_id')
         ->where('show_at_trending', 1)
         ->where('status', 1)
         ->whereHas('subCategories', function ($query) {
-            $query->where('status', 1);
+            $query->where('status', 1)->whereHas('courses', function ($q) {
+                $q->where('is_approved', 'approved')->where('status', 'active');
+            });
         })
-        ->limit(2)
         ->latest()
         ->get();
     $customPages = \App\Models\CustomPage::where('status', 1)->where('show_at_nav', 1)->limit(2)->latest()->get();
@@ -13,7 +21,11 @@
 
 <nav class="navbar navbar-expand-lg main_menu main_menu_3">
     <a class="navbar-brand" href="index_3.html">
-        <img src="/front/images/logo.png" alt="CAITD" class="img-fluid">
+        @if (config('settings.site_logo'))
+            <img src="{{ asset(config('settings.site_logo')) }}" alt="CAITD" class="img-fluid">
+        @else
+            <img src="{{ asset('/front/images/logo.png') }}" alt="CAITD" class="img">
+        @endif
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,31 +40,35 @@
             <ul>
                 @foreach ($categories as $category)
                     <li>
-                        <a href="#">
+                        <a href="javascript:void(0);">
                             <span>
                                 <img src="{{ $category->image }}" alt="{{ $category->slug }}" class="img-fluid">
                             </span>
                             {{ $category->name }}
                         </a>
-                        <ul class="category_sub_menu">
-                            @foreach ($category->subCategories as $subCategory)
-                                <li>
-                                    <a href="{{ route('courses', ['category' => $subCategory->id]) }}">
-                                        {{ $subCategory->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
+                        @if ($category->subCategories->count() > 0)
+                            <ul class="category_sub_menu">
+                                @foreach ($category->subCategories as $subCategory)
+                                    <li>
+                                        <a href="{{ route('courses', ['category' => $subCategory->id]) }}">
+                                            {{ $subCategory->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </li>
                 @endforeach
             </ul>
         </div>
+
         <ul class="navbar-nav m-auto">
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('home.about') ? 'active' : '' }}" href="{{ route('home.about') }}">About
+                <a class="nav-link {{ Route::is('home.about') ? 'active' : '' }}"
+                    href="{{ route('home.about') }}">About
                     Us</a>
             </li>
             <li class="nav-item">
@@ -77,6 +93,11 @@
                 </li>
             @endforeach
         </ul>
+
+
+
+
+
         <div class="right_menu">
             <div class="menu_search_btn">
                 <img src="/front/images/search_icon.png" alt="Search" class="img-fluid">
@@ -111,6 +132,8 @@
                     </li>
                 @endauth
             </ul>
+
+
         </div>
     </div>
 </nav>

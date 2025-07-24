@@ -8,7 +8,6 @@
 
 <section class="wsus__courses_3 pt_120 xs_pt_100 mt_120 xs_mt_90 pb_120 xs_pb_100">
     <div class="container">
-
         <div class="row">
             <div class="col-xl-6 m-auto wow fadeInUp">
                 <div class="wsus__section_heading mb_45">
@@ -17,7 +16,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row wow fadeInUp">
             <div class="col-xxl-6 col-xl-8 m-auto">
                 <div class="wsus__filter_area mb_15">
@@ -74,7 +72,6 @@
                 </div>
             </div>
         </div>
-
         <div class="tab-content" id="pills-tabContent">
             @if ($categoryOne)
                 <div class="tab-pane fade show active" id="pills-{{ $categoryOne->id }}" role="tabpanel"
@@ -84,24 +81,25 @@
                             <div class="col-xl-3 col-md-6 col-lg-4" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}"
+                                            class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/love_icon_black.png" alt="Love"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                        alt="Love" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/compare_icon_black.png" alt="Compare"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
+                                                        alt="Compare" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/cart_icon_black_2.png" alt="Cart"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
+                                                        alt="Cart" class="img-fluid">
                                                 </a>
                                             </li>
                                         </ul>
@@ -120,9 +118,8 @@
                                                 <span>(4.8 Rating)</span>
                                             </p>
                                         </div>
-
                                         <a class="title" href="{{ route('courses.show', $course->slug) }}">
-                                            {{ $course->title }}
+                                            {{ Str::limit($course->title, 20, '...') }}
                                         </a>
                                         <ul>
                                             <li>{{ $course->lessons->count() }} Lessons</li>
@@ -130,7 +127,7 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ $course->instructor->image }}" alt="Author"
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
                                                     class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
@@ -178,24 +175,24 @@
                             <div class="col-xl-3 col-md-6 col-lg-4" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Courses" class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/love_icon_black.png" alt="Love"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                        alt="Love" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/compare_icon_black.png" alt="Compare"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
+                                                        alt="Compare" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/cart_icon_black_2.png" alt="Cart"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
+                                                        alt="Cart" class="img-fluid">
                                                 </a>
                                             </li>
                                         </ul>
@@ -214,9 +211,8 @@
                                                 <span>(4.8 Rating)</span>
                                             </p>
                                         </div>
-
                                         <a class="title" href="{{ route('courses.show', $course->slug) }}">
-                                            {{ $course->title }}
+                                            {{ Str::limit($course->title, 20, '...') }}
                                         </a>
                                         <ul>
                                             <li>{{ $course->lessons->count() }} Lessons</li>
@@ -224,7 +220,7 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ $course->instructor->image }}" alt="Author"
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
                                                     class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
@@ -272,24 +268,24 @@
                             <div class="col-xl-3 col-md-6 col-lg-4" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Courses" class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/love_icon_black.png" alt="Love"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                        alt="Love" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/compare_icon_black.png" alt="Compare"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
+                                                        alt="Compare" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/cart_icon_black_2.png" alt="Cart"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
+                                                        alt="Cart" class="img-fluid">
                                                 </a>
                                             </li>
                                         </ul>
@@ -318,7 +314,7 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ $course->instructor->image }}" alt="Author"
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
                                                     class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
@@ -366,24 +362,24 @@
                             <div class="col-xl-3 col-md-6 col-lg-4" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Courses" class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/love_icon_black.png" alt="Love"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                        alt="Love" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/compare_icon_black.png" alt="Compare"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
+                                                        alt="Compare" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/cart_icon_black_2.png" alt="Cart"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
+                                                        alt="Cart" class="img-fluid">
                                                 </a>
                                             </li>
                                         </ul>
@@ -412,7 +408,7 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ $course->instructor->image }}" alt="Author"
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
                                                     class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
@@ -460,24 +456,24 @@
                             <div class="col-xl-3 col-md-6 col-lg-4" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ $course->thumbnail }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Courses" class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/love_icon_black.png" alt="Love"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                        alt="Love" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/compare_icon_black.png" alt="Compare"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
+                                                        alt="Compare" class="img-fluid">
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <img src="/front/images/cart_icon_black_2.png" alt="Cart"
-                                                        class="img-fluid">
+                                                <a href="javascript:void(0);">
+                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
+                                                        alt="Cart" class="img-fluid">
                                                 </a>
                                             </li>
                                         </ul>
@@ -506,7 +502,7 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ $course->instructor->image }}" alt="Author"
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
                                                     class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>

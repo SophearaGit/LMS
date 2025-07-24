@@ -12,11 +12,16 @@
                 <i class="ti ti-businessplan mb-1"></i>
                 <span class="ms-2">Commission Settings</span>
             </a>
-            {{-- smtp settings --}}
             <a href="{{ route('admin.site-settings.smtp-settings') }}"
                 class="list-group-item list-group-item-action d-flex align-items-center {{ $pageTitle == 'CAIDT | SMTP Settings' ? 'active' : '' }}">
                 <i class="ti ti-mail mb-1"></i>
                 <span class="ms-2">SMTP Settings</span>
+            </a>
+            {{-- Logo Favicon & Settings --}}
+            <a href="{{ route('admin.site-settings.logo-favicon-settings') }}"
+                class="list-group-item list-group-item-action d-flex align-items-center {{ $pageTitle == 'CAIDT | Logo & Favicon Settings' ? 'active' : '' }}">
+                <i class="ti ti-brand-apple mb-1"></i>
+                <span class="ms-2">Logo & Favicon Settings</span>
             </a>
 
             {{-- <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Connected

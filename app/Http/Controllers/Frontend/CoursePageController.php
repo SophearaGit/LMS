@@ -40,13 +40,29 @@ class CoursePageController extends Controller
                 ->when($request->has('from') && $request->has('to') && $request->filled('from') && $request->filled('to'), function ($query) use ($request) {
                     $query->whereBetween('price', [$request->from, $request->to]);
                 })
-                // order_by=asc
                 ->orderBy('id', $request->filled('order_by') ? $request->order_by : 'desc')
                 ->paginate(12),
-            'categories' => CourseCategory::with('subCategories')
-                ->where('status', 1)
+            // 'categories' => CourseCategory::with('subCategories')
+            //     ->where('status', 1)
+            //     ->whereNull('parent_id')
+            //     ->latest()->get(),
+            'categories' => CourseCategory::with([
+                'subCategories' => function ($query) {
+                    $query->where('status', 1)->whereHas('courses', function ($q) {
+                        $q->where('is_approved', 'approved')->where('status', 'active');
+                    });
+                },
+            ])
                 ->whereNull('parent_id')
-                ->latest()->get(),
+                ->where('show_at_trending', 1)
+                ->where('status', 1)
+                ->whereHas('subCategories', function ($query) {
+                    $query->where('status', 1)->whereHas('courses', function ($q) {
+                        $q->where('is_approved', 'approved')->where('status', 'active');
+                    });
+                })
+                ->latest()
+                ->get(),
             'levels' => CourseLevel::with('courses')->get(),
             'languages' => CourseLanguage::with('courses')->get(),
         ];
