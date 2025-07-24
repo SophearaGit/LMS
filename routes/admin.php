@@ -183,6 +183,10 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     // smtp-settings
     Route::get('/smtp-settings', [SettingController::class, 'smtpSettings'])->name('site-settings.smtp-settings');
     Route::post('/update-smtp-settings', [SettingController::class, 'updateSmtpSettings'])->name('site-settings.update-smtp-settings');
+    // logo & favicon settings
+    Route::get('/logo-favicon-settings', [SettingController::class, 'logoFaviconSettings'])->name('site-settings.logo-favicon-settings');
+    Route::post('/update-logo-favicon-settings', [SettingController::class, 'updateLogoFaviconSettings'])->name('site-settings.update-logo-favicon-settings');
+
     // payout settings resource
     Route::resource('payout-gateways', PayoutGatewayController::class);
     // withdraw request

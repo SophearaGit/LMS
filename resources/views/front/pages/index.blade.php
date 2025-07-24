@@ -48,9 +48,7 @@
 
 
     {{-- BLOG 4 START --}}
-    {{-- @include('front.pages.home.sections.blog') --}}
+    @include('front.pages.home.sections.blog')
     {{-- BLOG 4 END --}}
 
 @endsection
-
-

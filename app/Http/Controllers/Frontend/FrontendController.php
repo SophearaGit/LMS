@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Controller;
 use App\Models\AboutUsSection;
 use App\Models\BecomeInstructorSection;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Counter;
@@ -27,7 +28,7 @@ use function Pest\Laravel\json;
 
 class FrontendController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $featuredInstructorItems = FeaturedInstructorSection::first();
 
@@ -49,7 +50,7 @@ class FrontendController extends Controller
             'brandSecitonItems' => Brand::where('status', 1)->get(),
             'featuredInstructorItems' => $featuredInstructorItems,
             'testimonials' => Testimonial::all(),
-            // 'topBarItems' => TopBar::first(),
+            'blogs' => Blog::where('status', 1)->latest()->get(),
         ];
 
         $featuredInstructorCourses = Course::whereIn('id', json_decode($featuredInstructorItems?->featured_courses))->get();
@@ -97,9 +98,9 @@ class FrontendController extends Controller
         $data = [
             'pageTitle' => 'CAITD | Custom Page',
             'customPage' => CustomPage::where('slug', $slug)
-            ->where('status', 1)
-            ->where('show_at_nav', 1)
-            ->firstOrFail(),
+                ->where('status', 1)
+                ->where('show_at_nav', 1)
+                ->firstOrFail(),
         ];
         return view('front.pages.custom-page', $data);
     }
