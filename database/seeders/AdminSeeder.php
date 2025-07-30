@@ -14,8 +14,10 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Admin::create([
-            'name' => "admin",
+            'name' => "Super Admin",
             'email' => "admin@gmail.com",
+            'bio' => "This is the super admin account.",
+            'image' => '/default-images/avatar/admin.jpg',
             'password' => bcrypt("12345678"),
         ]);
     }
