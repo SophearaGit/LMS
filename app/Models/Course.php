@@ -45,4 +45,12 @@ class Course extends Model
         return $this->hasMany(Review::class, 'course_id', 'id')->where('status', 1)->latest();
     }
 
+    // hasmany enrollments
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollments::class, 'course_id', 'id');
+    }
+
+
+
 }

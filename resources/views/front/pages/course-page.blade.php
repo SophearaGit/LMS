@@ -1,3 +1,10 @@
+@php
+    $cart = \App\Models\Cart::where('user_id', auth()->id())->get();
+    // Get all enrolled course IDs for the current user
+    $enrolledCourseIds = \App\Models\Enrollments::where('user_id', auth()->id())
+        ->pluck('course_id')
+        ->toArray();
+@endphp
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @section('content')
@@ -147,7 +154,8 @@
                                 style="visibility: visible; animation-name: fadeInUp;" data-tilt>
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
-                                        <img src="{{ asset($course->thumbnail) }}" alt="Courses" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}"
+                                            class="img-fluid">
                                         <ul>
                                             <li>
                                                 <a href="javascript:void(0);">
@@ -168,19 +176,21 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <span class="time"><i class="far fa-clock" aria-hidden="true"></i>
+                                        <span class="time"><i class="far fa-clock"></i>
                                             {{ minToHours($course->duration) }}</span>
                                     </div>
                                     <div class="wsus__single_courses_text_3">
                                         <div class="rating_area">
-                                            <!-- <a href="#" class="category">Design</a> -->
                                             <p class="rating">
-                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                <span>(4.8 Rating)</span>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= round($course->reviews()->avg('rating')))
+                                                        <i class="fas fa-star"></i>
+                                                    @else
+                                                        <i class="far fa-star"></i>
+                                                    @endif
+                                                @endfor
+                                                <span>({{ number_format($course->reviews()->avg('rating') ?? 0, 1) }}
+                                                    Rating)</span>
                                             </p>
                                         </div>
                                         <a class="title" href="{{ route('courses.show', $course->slug) }}">
@@ -188,36 +198,50 @@
                                         </a>
                                         <ul>
                                             <li>{{ $course->lessons->count() }} Lessons</li>
-                                            <li>38 Student</li>
+                                            <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ $course->instructor->image }}" alt="Author"
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
                                                     class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
                                     </div>
                                     <div class="wsus__single_courses_3_footer">
-                                        <a id="add_to_cart_btn_{{ $course->id }}" class="common_btn add_to_cart_btn"
-                                            data-course-id="{{ $course->id }}" href="#">Add to cart<i
-                                                class="far fa-arrow-right" aria-hidden="true"></i></a>
-                                        <p>
-                                            @if ($course->price == 0)
-                                                Free
-                                            @else
-                                                @if ($course->discount > 0)
-                                                    <del>
-                                                        <small>
-                                                            ${{ number_format($course->price, 2) }}
-                                                        </small>
-                                                    </del>
-                                                    ${{ number_format($course->price - ($course->price * $course->discount) / 100, 2) }}
+                                        @if (in_array($course->id, $enrolledCourseIds))
+                                            <a class="common_btn btn-primary"
+                                                href="{{ route('student.enroll_courses.course_videos', $course->slug) }}"
+                                                style="background-color: #D0F0FD !important;">
+                                                Watch Now<i class="fas fa-eye"></i>
+                                            </a>
+                                        @else
+                                            <a id="add_to_cart_btn_{{ $course->id }}"
+                                                class="common_btn add_to_cart_btn" data-course-id="{{ $course->id }}"
+                                                href="javascript:void(0);">
+                                                @if ($cart->contains('course_id', $course->id))
+                                                    In cart<i class="fas fa-check"></i>
                                                 @else
-                                                    ${{ number_format($course->price, 2) }}
+                                                    Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
                                                 @endif
-                                            @endif
-                                        </p>
+                                            </a>
+                                            <p>
+                                                @if ($course->price == 0)
+                                                    Free
+                                                @else
+                                                    @if ($course->discount > 0)
+                                                        <del>
+                                                            <small>
+                                                                ${{ number_format($course->price, 2) }}
+                                                            </small>
+                                                        </del>
+                                                        ${{ number_format($course->price - ($course->price * $course->discount) / 100, 2) }}
+                                                    @else
+                                                        ${{ number_format($course->price, 2) }}
+                                                    @endif
+                                                @endif
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -243,55 +267,6 @@
                     dynamicHeight += $(this).outerHeight(true);
                 });
                 $(this).css("height", dynamicHeight + "px");
-            });
-        });
-
-        // Variables.
-        const base_url = $(`meta[name="base_url"]`).attr('content');
-        const notyf = new Notyf({
-            duration: 5000,
-            dismissible: true,
-            position: {
-                x: 'right',
-                y: 'bottom',
-            },
-        });
-
-        // Reuseable functions.
-        function add_to_cart(course_id) {
-            $.ajax({
-                method: 'POST',
-                url: base_url + `/cart/${course_id}/store`,
-                data: {
-                    _token: csrf_token,
-
-                },
-                beforeSend: function() {
-                    $(`#add_to_cart_btn_${course_id}`).html('<i class="fas fa-spinner fa-spin"></i>Adding...');
-                },
-                success: function(data) {
-                    console.log(data);
-                    notyf.success(data.message);
-                    $(`#add_to_cart_btn_${course_id}`).html('Add to cart');
-                    $('#cart_count_badge').removeClass('d-none').text(data.cartCount);
-                    $('#mobile_cart_count_badge').removeClass('d-none').text(data.cartCount);
-                },
-                error: function(xhr, status, error) {
-                    let errors = xhr.responseJSON;
-                    $.each(errors, function(key, value) {
-                        notyf.error(value);
-                    });
-                    $(`#add_to_cart_btn_${course_id}`).html('Add to cart');
-                },
-            })
-        }
-
-        // On DOM load.
-        $(function() {
-            $('.add_to_cart_btn').on('click', function(e) {
-                e.preventDefault();
-                let course_id = $(this).data('course-id');
-                add_to_cart(course_id)
             });
         });
     </script>

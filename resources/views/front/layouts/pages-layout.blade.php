@@ -139,6 +139,17 @@
     @stack('scripts')
 
     <script>
+        const csrf_token = $('meta[name="csrf-token"]').attr('content');
+        const base_url = $('meta[name="base_url"]').attr('content');
+        const notyf = new Notyf({
+            duration: 5000,
+            dismissible: true,
+            position: {
+                x: 'right',
+                y: 'bottom',
+            },
+        });
+
         @if ($errors->any())
             const notyf = new Notyf({
                 duration: 8000,
@@ -152,9 +163,6 @@
                 notyf.error("{{ $error }}");
             @endforeach
         @endif
-
-        // DYNAMIC DELETE MODAL
-        const csrf_token = $('meta[name="csrf-token"]').attr('content');
 
         $(function() {
             $('.btn_dynamic_delete').on('click', function(e) {
@@ -170,11 +178,6 @@
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Swal.fire({
-                        //     title: "Deleted!",
-                        //     text: "Your file has been deleted.",
-                        //     icon: "success"
-                        // });
                         $.ajax({
                             method: 'DELETE',
                             url: url,
@@ -192,12 +195,53 @@
                 });
             })
         })
-        // EZSHARE pluggin for sharing course.
+
         document.addEventListener("DOMContentLoaded", function() {
             ezShare.execute();
         });
-    </script>
 
+        function add_to_cart(course_id) {
+            let addToCartBtn = $(`#add_to_cart_btn_${course_id}`);
+            let loading = '<i class="fas fa-spinner fa-spin"></i>Adding...';
+            let checked = 'In cart<i class="fas fa-check"></i>';
+            let unchecked = 'Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>';
+            $.ajax({
+                method: 'POST',
+                url: base_url + `/cart/${course_id}/store`,
+                data: {
+                    _token: csrf_token,
+                },
+                beforeSend: function() {
+                    addToCartBtn.html(loading);
+                },
+                success: function(data) {
+                    notyf.success(data.message);
+                    addToCartBtn.html(checked);
+                    $('#cart_count_badge').removeClass('d-none').text(data.cartCount);
+                    $('#mobile_cart_count_badge').removeClass('d-none').text(data.cartCount);
+                },
+                error: function(xhr, status, error) {
+                    let errors = xhr.responseJSON;
+                    $.each(errors, function(key, value) {
+                        notyf.error(value);
+                    });
+                    if (errors.message == 'Course already added to cart.') {
+                        addToCartBtn.html(checked);
+                    } else if (errors.message == 'Unauthenticated.') {
+                        addToCartBtn.html(unchecked);
+                    }
+                },
+            })
+        }
+
+        $(function() {
+            $('.add_to_cart_btn').on('click', function(e) {
+                e.preventDefault();
+                let course_id = $(this).data('course-id');
+                add_to_cart(course_id)
+            });
+        });
+    </script>
 </body>
 
 </html>
