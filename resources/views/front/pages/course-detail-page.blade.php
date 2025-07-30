@@ -1,3 +1,9 @@
+@php
+    $cart = \App\Models\Cart::where('user_id', auth()->id())->get();
+    $isEnrolled = \App\Models\Enrollments::where('user_id', auth()->id())
+        ->where('course_id', $course->id)
+        ->exists();
+@endphp
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @push('meta')
@@ -8,6 +14,17 @@
     <meta property="og:type" content="Course" />
 @endpush
 @push('stylesheets')
+    <script src="/front/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#starRating').on('click', function(e) {
+                let activeCount = $(this).children('.active').length;
+                $('#rating').val(activeCount);
+                // console.log(ratingVal);
+
+            });
+        });
+    </script>
     <style>
         .wsus__no_reviews_animation {
             text-align: center;
@@ -73,12 +90,14 @@
                     <div class="col-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                         <div class="wsus__breadcrumb_text">
                             <p class="rating">
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <span>(4 Reviews)</span>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= round($course->reviews()->avg('rating')))
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+                                <span>({{ number_format($course->reviews()->avg('rating'), 1) ?? 0 }})</span>
                             </p>
                             <h1>{{ $course->title }}</h1>
                             <ul class="list">
@@ -108,7 +127,6 @@
             <div class="row">
                 <div class="col-lg-8 wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
                     <div class="wsus__courses_details_area mt_40">
-
                         <ul class="nav nav-pills mb_40" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
@@ -216,8 +234,22 @@
                                                 <h4>{{ $course->instructor->name }}</h4>
                                                 <p class="designation">{{ $course->instructor->headline }}</p>
                                                 <ul class="list">
-                                                    <li><i class="fas fa-star" aria-hidden="true"></i> <b>74,537
-                                                            Reviews</b></li>
+                                                    <li>
+                                                        <i class="fas fa-star" aria-hidden="true"></i>
+                                                        <b>
+                                                            @php
+                                                                $coursesId = $course->instructor
+                                                                    ->courses()
+                                                                    ->pluck('id')
+                                                                    ->toArray();
+                                                                $reviewsCount = \App\Models\Review::whereIn(
+                                                                    'course_id',
+                                                                    $coursesId,
+                                                                )->count();
+                                                            @endphp
+                                                            {{ $reviewsCount }} Reviews
+                                                        </b>
+                                                    </li>
                                                     <li><strong>4.7 Rating</strong></li>
                                                     <li>
                                                         <span><img src="/front/images/book_icon.png" alt="book"
@@ -227,7 +259,7 @@
                                                     <li>
                                                         <span><img src="/front/images/user_icon_gray.png" alt="user"
                                                                 class="img-fluid"></span>
-                                                        32 Students
+                                                        {{ $course->instructor->students()->count() }} Students
                                                     </li>
                                                 </ul>
                                                 <ul class="badge d-flex flex-wrap">
@@ -326,10 +358,13 @@
                                             <div class="total_review">
                                                 <h2>{{ number_format($course->reviews()->avg('rating'), 1) ?? 0 }}</h2>
                                                 <p>
-                                                    @for ($i = 1; $i <= number_format($course->reviews()->avg('rating'), 1) ?? 0; $i++)
-                                                        <i class="fas fa-star" aria-hidden="true"></i>
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= round($course->reviews()->avg('rating')))
+                                                            <i class="fas fa-star"></i>
+                                                        @else
+                                                            <i class="far fa-star"></i>
+                                                        @endif
                                                     @endfor
-
                                                 </p>
                                                 <h4>{{ $course->reviews->count() }} Ratings</h4>
                                             </div>
@@ -417,8 +452,12 @@
                                                 <h6> {{ $reviewApproved->created_at->format('F d, Y \a\t h:i a') }} /
                                                     {{ $reviewApproved->created_at->diffForHumans() }}
                                                     <span>
-                                                        @for ($i = 1; $i <= $reviewApproved->rating; $i++)
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= round($reviewApproved->rating))
+                                                                <i class="fas fa-star"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
                                                         @endfor
                                                     </span>
                                                 </h6>
@@ -455,7 +494,6 @@
                                                 </div>
                                                 <div class="col-12 mt-2">
                                                     <button type="submit" class="common_btn">Post Comment</button>
-                                                    {{-- <a href="javascript:;" class="common_btn" type="submit">Post Comment</a> --}}
                                                 </div>
                                             </div>
                                         </form>
@@ -518,7 +556,7 @@
                                                 class="img-fluid"></span>
                                         Student Enrolled
                                     </p>
-                                    47
+                                    {{ $course->enrollments()->count() }}
                                 </li>
                                 <li>
                                     <p>
@@ -529,13 +567,22 @@
                                     {{ $course->language->name }}
                                 </li>
                             </ul>
-                            <a class="common_btn" href="#">Enroll The Course <i class="far fa-arrow-right"
-                                    aria-hidden="true"></i></a>
-                        </div>
-                        <div class="wsus__courses_sidebar_share_btn d-flex flex-wrap justify-content-between">
-                            <a href="#" class="common_btn"><i class="far fa-heart" aria-hidden="true"></i> Add
-                                to
-                                Wishlist</a>
+                            @if ($isEnrolled)
+                                <a class="common_btn btn-primary"
+                                    href="{{ route('student.enroll_courses.course_videos', $course->slug) }}"
+                                    style="background-color: #D0F0FD !important;">
+                                    Watch Now<i class="fas fa-eye"></i>
+                                </a>
+                            @else
+                                <a id="add_to_cart_btn_{{ $course->id }}" class="common_btn add_to_cart_btn"
+                                    data-course-id="{{ $course->id }}" href="javascript:void(0);">
+                                    @if ($cart->contains('course_id', $course->id))
+                                        In cart<i class="fas fa-check"></i>
+                                    @else
+                                        Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
+                                    @endif
+                                </a>
+                            @endif
                         </div>
                         <div class="wsus__courses_sidebar_share_area">
                             <span>Share:</span>
@@ -580,24 +627,9 @@
                                 </div>
                                 <div class="text">
                                     <h3>{{ $course->instructor->name }}</h3>
-                                    <p><span>{{ $course->instructor->role }}</span> Level 2</p>
+                                    <p><span>{{ $course->instructor->role }}</span></p>
                                 </div>
                             </div>
-                            <ul class="d-flex flex-wrap">
-                                <li data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Exclusive Author">
-                                    <img src="/front/images/badge_1.png" alt="Badge" class="img-fluid">
-                                </li>
-                                <li data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Top Earning"><img
-                                        src="/front/images/badge_2.png" alt="Badge" class="img-fluid"></li>
-                                <li data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trending"><img
-                                        src="/front/images/badge_3.png" alt="Badge" class="img-fluid"></li>
-                                <li data-bs-toggle="tooltip" data-bs-placement="top"
-                                    data-bs-title="2 Years of Membership"><img src="/front/images/badge_4.png"
-                                        alt="Badge" class="img-fluid"></li>
-                                <li data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Collector Lavel 1">
-                                    <img src="/front/images/badge_5.png" alt="Badge" class="img-fluid">
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,7 @@
 @endphp
 
 <nav class="navbar navbar-expand-lg main_menu main_menu_3">
-    <a class="navbar-brand" href="index_3.html">
+    <a class="navbar-brand" href="{{ url('/') }}">
         @if (config('settings.site_logo'))
             <img src="{{ asset(config('settings.site_logo')) }}" alt="CAITD" class="img-fluid">
         @else
