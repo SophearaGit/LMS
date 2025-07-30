@@ -190,13 +190,13 @@
                     <span class="avatar avatar-sm"
                         style="background-image: url(/admin/assets/static/avatars/000m.jpg)"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>Paweł Kuna</div>
+                        <div>Paweł Kunak</div>
                         <div class="mt-1 small text-secondary">UI Designer</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="./profile.html" class="dropdown-item">Profile</a>
+                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>
@@ -329,18 +329,29 @@
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ Route::is('admin.courses.index') ? 'active' : '' }} "
                                     href="{{ route('admin.courses.index') }}">
-                                    Courses
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-book" style="font-size: 20px;"></i>
+                                        Courses
                                 </a>
                                 <a class="dropdown-item {{ Route::is('admin.course-languages.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-languages.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-language" style="font-size: 20px;"></i>
+                                    </span>
                                     Course Languages
                                 </a>
                                 <a class="dropdown-item {{ Route::is('admin.course-levels.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-levels.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-clipboard-list" style="font-size: 20px;"></i>
+                                    </span>
                                     Course Levels
                                 </a>
                                 <a class="dropdown-item {{ Route::is('admin.course-categories.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-categories.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="ti ti-category" style="font-size: 20px;"></i>
+                                    </span>
                                     Course Categories
                                 </a>
                             </div>

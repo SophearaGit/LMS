@@ -40,6 +40,7 @@ use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\FeaturedInstructorSectionController;
 use App\Http\Controllers\Admin\FooterColumnTwoController;
 use App\Http\Controllers\Admin\FooterController;
+use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TopBarController;
 use App\Http\Controllers\Frontend\HeroController;
@@ -220,8 +221,14 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/column-one', FooterColumnOneController::class);
     Route::resource('/column-two', FooterColumnTwoController::class);
     Route::resource('/custom-page', CustomPageController::class);
-    Route::resource('/blog-category',BlogCategoryController::class);
-    Route::resource('/blog',BlogController::class);
+    Route::resource('/blog-category', BlogCategoryController::class);
+    Route::resource('/blog', BlogController::class);
+
+    // profile
+    Route::get('/profile', [ProfileUpdateController::class, 'profile'])->name('profile.index');
+    Route::post('/profile', [ProfileUpdateController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [ProfileUpdateController::class, 'updatePassword'])->name('profile.password.update');
+
 
 
 

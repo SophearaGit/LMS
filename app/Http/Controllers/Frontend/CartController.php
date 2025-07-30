@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,16 @@ class CartController extends Controller
             );
         }
 
+        if (Auth::guard('web')->user()->enrollments()->where(['course_id' => $course_id])->exists()) {
+            return response(
+                [
+                    'message' => 'You are already enrolled in this course!',
+                ],
+                409
+            );
+        }
+
+
         if (Cart::where('user_id', Auth::guard('web')->user()->id)->where('course_id', $course_id)->exists()) {
             return response(
                 [
@@ -40,18 +51,18 @@ class CartController extends Controller
             );
         }
 
+
         $course = Course::findOrFail($course_id);
         $cart = new Cart();
         $cart->user_id = Auth::guard('web')->user()->id;
         $cart->course_id = $course->id;
         $cart->save();
-        $data = [
-            'pageTitle' => 'CAITD | Cart',
-        ];
+
         return response(
             [
                 'message' => 'Course added to cart successfully.',
                 'cartCount' => Cart::where('user_id', Auth::guard('web')->user()->id)->count(),
+                'pageTitle' => 'CAITD | Cart',
             ],
             200
         );
