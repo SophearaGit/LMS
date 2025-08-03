@@ -27,12 +27,6 @@
                         <h3 class="card-title text-capitalize mb-0">
                             customize features section (homepage)
                         </h3>
-                        <div class="card-actions">
-                            <a href="{{ route('admin.course-levels.index') }}" class="btn btn-primary">
-                                <i class="ti ti-chevrons-left"></i>
-                                <span class="mt-1">Back</span>
-                            </a>
-                        </div>
                     </div>
                     <div class="card-body">
                         @foreach ($featureItems as $featureItem)

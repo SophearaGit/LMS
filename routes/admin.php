@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\CustomPageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DatabaseClearController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\FooterColumnOneController;
 use App\Http\Controllers\Admin\InstructorRequestController;
@@ -228,6 +229,13 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::get('/profile', [ProfileUpdateController::class, 'profile'])->name('profile.index');
     Route::post('/profile', [ProfileUpdateController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileUpdateController::class, 'updatePassword'])->name('profile.password.update');
+
+    // admin.database.clear
+    Route::get('/database-clear', [DatabaseClearController::class, 'databaceClearIndex'])->name('database_clear.index');
+    Route::delete('/database-clear', [DatabaseClearController::class, 'databaceClear'])->name('database_clear.clear');
+
+
+
 
 
 

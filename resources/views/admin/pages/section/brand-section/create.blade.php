@@ -23,6 +23,10 @@
                     <div class="card-header">
                         <h3 class="card-title text-capitalize">create brand</h3>
                         <div class="card-actions">
+                            <a href="{{ route('admin.brand-section.index') }}" class="btn btn-primary">
+                                <i class="ti ti-chevrons-left"></i>
+                                <span class="mt-1">Back</span>
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">

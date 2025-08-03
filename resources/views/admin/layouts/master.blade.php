@@ -67,10 +67,11 @@
         </div>
     </div>
     <!-- Modals -->
-    <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn_cancel" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-status bg-danger"></div>
                 <div class="modal-body text-center py-4">
                     <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
@@ -85,16 +86,20 @@
                         <path d="M12 17h.01"></path>
                     </svg>
                     <h3>Are you sure?</h3>
-                    <div class="text-secondary">Do you really want to remove this record? What you've done cannot be
+                    <div class="text-secondary" id="del_msg">Do you really want to remove this record? What you've
+                        done cannot be
                         undone.
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="w-100">
                         <div class="row">
-                            <div class="col"><a href="#" class="btn w-100">
+                            <div class="col col_boh_cancel">
+                                <a type="button" href="" class="btn w-100 btn_cancel" data-bs-dismiss="modal"
+                                    aria-label="Close">
                                     Cancel
-                                </a></div>
+                                </a>
+                            </div>
                             <div class="col"><a href="#" class="btn btn-danger w-100 delete-confirm-btn">
                                     Delete
                                 </a></div>

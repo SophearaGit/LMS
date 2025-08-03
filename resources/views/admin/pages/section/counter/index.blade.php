@@ -22,12 +22,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-capitalize">create testimonial</h3>
-                        <div class="card-actions">
-                            <a href="{{ route('admin.testimonial-section.index') }}" class="btn btn-primary">
-                                <i class="ti ti-arrow-left"></i>&nbsp;
-                                <span>Back to List</span>
-                            </a>
-                        </div>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('admin.counter-section.store') }}" method="POST">
