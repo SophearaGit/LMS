@@ -68,9 +68,9 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                    @empty text-primary
+                                    @empty
                                         <tr>
-                                            <td colspan="6" class="text-center text-danger">No orders found</td>
+                                            <td colspan="8" class="text-center">No orders found</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

@@ -62,6 +62,8 @@
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <= $testimonial?->rating)
                                                         <i class="ti ti-star text-warning"></i>
+                                                    @else
+                                                        <i class="ti ti-star"></i>
                                                     @endif
                                                 @endfor
                                             </td>

@@ -22,12 +22,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-capitalize">customize hero section (homepage)</h3>
-                        <div class="card-actions">
-                            <a href="{{ route('admin.course-levels.index') }}" class="btn btn-primary">
-                                <i class="ti ti-chevrons-left"></i>&nbsp;
-                                Back
-                            </a>
-                        </div>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('admin.hero.store') }}" method="POST" enctype="multipart/form-data">

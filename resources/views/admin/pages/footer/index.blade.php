@@ -22,12 +22,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Customize Footer (Homepage)</h3>
-                        <div class="card-actions">
-                            <a href="{{ route('admin.course-levels.index') }}" class="btn btn-primary">
-                                <i class="ti ti-chevrons-left"></i>&nbsp;
-                                Back
-                            </a>
-                        </div>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('admin.footer.store') }}" method="POST">
@@ -73,10 +67,10 @@
                                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 text-end">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="ti ti-device-floppy"></i>&nbsp;
-                                        Save
+                                        Update Footer
                                     </button>
                                 </div>
                             </div>
