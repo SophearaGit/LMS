@@ -209,21 +209,10 @@
                                         </a>
                                     </div>
                                     <div class="wsus__single_courses_3_footer">
-                                        @if (in_array($course->id, $enrolledCourseIds))
+                                        @if (Auth::user()?->role == 'instructor')
                                             <a class="common_btn btn-primary"
-                                                href="{{ route('student.enroll_courses.course_videos', $course->slug) }}"
-                                                style="background-color: #D0F0FD !important;">
-                                                Watch Now<i class="fas fa-eye"></i>
-                                            </a>
-                                        @else
-                                            <a id="add_to_cart_btn_{{ $course->id }}"
-                                                class="common_btn add_to_cart_btn" data-course-id="{{ $course->id }}"
-                                                href="javascript:void(0);">
-                                                @if ($cart->contains('course_id', $course->id))
-                                                    In cart<i class="fas fa-check"></i>
-                                                @else
-                                                    Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
-                                                @endif
+                                                href="{{ route('courses.show', $course->slug) }}">
+                                                Details<i class="fas fa-eye"></i>
                                             </a>
                                             <p>
                                                 @if ($course->price == 0)
@@ -241,6 +230,40 @@
                                                     @endif
                                                 @endif
                                             </p>
+                                        @else
+                                            @if (in_array($course->id, $enrolledCourseIds))
+                                                <a class="common_btn btn-primary"
+                                                    href="{{ route('student.enroll_courses.course_videos', $course->slug) }}"
+                                                    style="background-color: #D0F0FD !important;">
+                                                    Watch Now<i class="fas fa-eye"></i>
+                                                </a>
+                                            @else
+                                                <a id="add_to_cart_btn_{{ $course->id }}"
+                                                    class="common_btn add_to_cart_btn"
+                                                    data-course-id="{{ $course->id }}" href="javascript:void(0);">
+                                                    @if ($cart->contains('course_id', $course->id))
+                                                        In cart<i class="fas fa-check"></i>
+                                                    @else
+                                                        Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
+                                                    @endif
+                                                </a>
+                                                <p>
+                                                    @if ($course->price == 0)
+                                                        Free
+                                                    @else
+                                                        @if ($course->discount > 0)
+                                                            <del>
+                                                                <small>
+                                                                    ${{ number_format($course->price, 2) }}
+                                                                </small>
+                                                            </del>
+                                                            ${{ number_format($course->price - ($course->price * $course->discount) / 100, 2) }}
+                                                        @else
+                                                            ${{ number_format($course->price, 2) }}
+                                                        @endif
+                                                    @endif
+                                                </p>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>

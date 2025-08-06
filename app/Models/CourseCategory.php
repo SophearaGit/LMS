@@ -15,6 +15,11 @@ class CourseCategory extends Model
         return $this->hasMany(CourseCategory::class, 'parent_id');
     }
 
+    public function parentCategory()
+    {
+        return $this->belongsTo(CourseCategory::class, 'parent_id');
+    }
+
     // course count
     public function courses()
     {
