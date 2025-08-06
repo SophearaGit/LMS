@@ -1,5 +1,8 @@
 @php
     $cart = \App\Models\Cart::where('user_id', auth()->id())->get();
+    $enrolledCourseIds = \App\Models\Enrollments::where('user_id', auth()->id())
+        ->pluck('course_id')
+        ->toArray();
 @endphp
 <section class="wsus__quality_courses mt_120 xs_mt_100">
     <div class="row quality_course_slider">
@@ -85,14 +88,9 @@
                                             </a>
                                         </div>
                                         <div class="wsus__single_courses_3_footer">
-                                            <a id="add_to_cart_btn_{{ $course->id }}"
-                                                class="common_btn add_to_cart_btn" data-course-id="{{ $course->id }}"
-                                                href="javascript:void(0);">
-                                                @if ($cart->contains('course_id', $course->id))
-                                                    In cart<i class="fas fa-check"></i>
-                                                @else
-                                                    Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
-                                                @endif
+                                            <a class="common_btn btn-primary"
+                                                href="{{ route('courses.show', $course->slug) }}">
+                                                Details<i class="fas fa-eye"></i>
                                             </a>
                                             <p>
                                                 @if ($course->price == 0)

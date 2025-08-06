@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Course;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -23,6 +23,7 @@ class CartController extends Controller
     }
     public function store(Request $request, int $course_id)
     {
+
         if (!Auth::guard('web')->check()) {
             return response(
                 [
@@ -41,7 +42,6 @@ class CartController extends Controller
             );
         }
 
-
         if (Cart::where('user_id', Auth::guard('web')->user()->id)->where('course_id', $course_id)->exists()) {
             return response(
                 [
@@ -51,6 +51,14 @@ class CartController extends Controller
             );
         }
 
+        if (Auth::user()->role == 'instructor') {
+            return response(
+                [
+                    'message' => 'Instructors cannot add courses to cart.',
+                ],
+                403
+            );
+        }
 
         $course = Course::findOrFail($course_id);
         $cart = new Cart();

@@ -172,7 +172,6 @@ class CourseController extends Controller
                     'redirect' => route('admin.courses.edit_basic_info', ['id' => $course->id, 'step' => $request->next_step])
                 ]);
             case '2':
-                // dd($request->all());
                 $request->validate([
                     'capacity' => 'nullable|numeric',
                     'duration' => 'required|numeric',

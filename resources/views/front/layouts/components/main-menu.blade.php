@@ -40,7 +40,7 @@
             <ul>
                 @foreach ($categories as $category)
                     <li>
-                        <a href="javascript:void(0);">
+                        <a href="{{ route('courses', ['main_category' => $category->slug]) }}">
                             <span>
                                 <img src="{{ $category->image }}" alt="{{ $category->slug }}" class="img-fluid">
                             </span>
