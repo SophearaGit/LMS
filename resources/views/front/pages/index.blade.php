@@ -6,6 +6,9 @@
     @include('front.pages.home.sections.banner')
     {{-- BANNER 3 END --}}
 
+    {{-- EXPLORE CATEGORIES START --}}
+    @include('front.pages.home.sections.explore')
+    {{-- EXPLORE CATEGORIES END --}}
 
     {{-- ABOUT 3 START --}}
     @include('front.pages.home.sections.about')

@@ -4,7 +4,7 @@
     <style>
         .wsus__dash_course_table .image img {
             /* width: 160px !important;
-            border-radius: 10px; */
+                                        border-radius: 10px; */
             height: 120px !important;
             object-fit: cover !important;
         }
@@ -44,7 +44,7 @@
                                 <a class="common_btn" href="{{ route('instructor.courses.create') }}">+ add course</a>
                             </div>
                         </div>
-                        <form action="#" class="wsus__dash_course_searchbox">
+                        {{-- <form action="#" class="wsus__dash_course_searchbox">
                             <div class="input">
                                 <input type="text" placeholder="Search our Courses">
                                 <button><i class="far fa-search" aria-hidden="true"></i></button>
@@ -56,7 +56,7 @@
                                     <option value="">Choose 2</option>
                                 </select>
                             </div>
-                        </form>
+                        </form> --}}
 
                         <div class="wsus__dash_course_table">
                             <div class="row">
@@ -91,17 +91,20 @@
                                                         </td>
                                                         <td class="details">
                                                             <p class="rating">
-                                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                                                <i class="far fa-star" aria-hidden="true"></i>
-                                                                <span>(5.0)</span>
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    @if ($i <= round($item->reviews()->avg('rating')))
+                                                                        <i class="fas fa-star"></i>
+                                                                    @else
+                                                                        <i class="far fa-star"></i>
+                                                                    @endif
+                                                                @endfor
+                                                                <span>({{ number_format($item->reviews()->avg('rating') ?? 0, 1) }})</span>
                                                             </p>
-                                                            <a class="title" href="#">{{ $item->title }}</a>
+                                                            <a class="title"
+                                                                href="{{ route('courses.show', $item->slug) }}">{{ $item->title }}</a>
                                                         </td>
                                                         <td class="sale">
-                                                            <p>3400</p>
+                                                            <p>{{ $item->enrollments()->count() }}</p>
                                                         </td>
                                                         <td class="status">
                                                             <p class="active">{{ $item->status }}</p>

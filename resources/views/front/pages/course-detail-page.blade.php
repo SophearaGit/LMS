@@ -574,14 +574,17 @@
                                     Watch Now<i class="fas fa-eye"></i>
                                 </a>
                             @else
-                                <a id="add_to_cart_btn_{{ $course->id }}" class="common_btn add_to_cart_btn"
-                                    data-course-id="{{ $course->id }}" href="javascript:void(0);">
-                                    @if ($cart->contains('course_id', $course->id))
-                                        In cart<i class="fas fa-check"></i>
-                                    @else
-                                        Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
-                                    @endif
-                                </a>
+                                @if (Auth::user()?->role == 'student')
+                                    <a id="add_to_cart_btn_{{ $course->id }}" class="common_btn add_to_cart_btn"
+                                        data-course-id="{{ $course->id }}" href="javascript:void(0);">
+                                        @if ($cart->contains('course_id', $course->id))
+                                            In cart<i class="fas fa-check"></i>
+                                        @else
+                                            Add to cart<i class="far fa-arrow-right" aria-hidden="true"></i>
+                                        @endif
+                                    </a>
+                                @else
+                                @endif
                             @endif
                         </div>
                         <div class="wsus__courses_sidebar_share_area">

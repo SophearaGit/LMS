@@ -318,7 +318,7 @@
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.latest-courses.index') ? 'text-white' : '' }}">
-                                        Latest Courses
+                                        Latest Course
                                     </span>
                                 </a>
                             </div>
@@ -344,7 +344,7 @@
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.video-section.index') ? 'text-white' : '' }}">
-                                        Video Section
+                                        Video
                                     </span>
                                 </a>
                             </div>
@@ -357,7 +357,7 @@
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.brand-section.*') ? 'text-white' : '' }}">
-                                        Brand Section
+                                        Brand
                                     </span>
                                 </a>
                             </div>
@@ -383,7 +383,7 @@
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.testimonial-section.*') ? 'text-white' : '' }}">
-                                        Testimonial Section
+                                        Testimonial
                                     </span>
                                 </a>
                             </div>
@@ -396,7 +396,7 @@
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.counter-section.index') ? 'text-white' : '' }}">
-                                        Counter Section
+                                        Counter
                                     </span>
                                 </a>
                             </div>
@@ -423,7 +423,7 @@
                                     href="{{ route('admin.contact-us.index') }}">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.contact-us.*') ? 'text-white' : '' }}">
-                                        <i class="ti ti-mail-opened" style="font-size: 20px;"></i>
+                                        <i sclass="ti ti-mail-opened" style="font-size: 20px;"></i>
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.contact-us.*') ? 'text-white' : '' }}">

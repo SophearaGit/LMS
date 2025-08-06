@@ -125,14 +125,14 @@
                                                 <div class="col-xl-6">
                                                     <div class="add_course_basic_info_imput">
                                                         <label for="#">Discount Price</label>
-                                                        <input type="text" placeholder="Price" name="discount" value="{{ $course->discount }}">
+                                                        <input type="text" placeholder="Price" name="discount"
+                                                            value="{{ $course->discount }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-12">
                                                     <div class="add_course_basic_info_imput mb-0">
                                                         <label for="#">Description</label>
-                                                        <textarea rows="8" placeholder="Description" name="description">{!! $course->description !!}
-                                                        </textarea>
+                                                        <textarea rows="8" placeholder="Description" name="description" class="editor">{!! $course->description !!}</textarea>
                                                         <button type="submit" class="common_btn mt_20">Update</button>
                                                     </div>
                                                 </div>
@@ -151,11 +151,19 @@
 @endsection
 @push('scripts')
     <script>
+        $(function() {
+            tinymce.init({
+                selector: 'textarea.editor'
+            });
+        });
         const base_url = $('meta[name="base_url"]').attr('content');
         const update_url = base_url + '/instructor/courses/update-more-info';
 
         $('.edit_basic_info_form').on('submit', function(e) {
             e.preventDefault();
+            if (typeof tinymce !== 'undefined') {
+                tinymce.triggerSave();
+            }
             let formData = new FormData(this);
             $.ajax({
                 method: 'POST',
@@ -185,9 +193,6 @@
                         notyf.error(value[0])
                     })
                 },
-                complete: function() {
-
-                }
             });
         });
 

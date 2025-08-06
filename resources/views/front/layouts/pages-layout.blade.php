@@ -42,7 +42,7 @@
 <body class="home_3">
 
     {{-- PRELOADER START --}}
-    @include('front.layouts.components.preloader')
+    {{-- @include('front.layouts.components.preloader') --}}
     {{-- PRELOADER START --}}
 
 
@@ -130,17 +130,19 @@
     <script src="/front/js/video_player_youtube.js"></script>
     <!--wow js-->
     <script src="/front/js/wow.min.js"></script>
-    {{-- <script src="/front/js/tabler.min.js"></script> --}}
-
     <!--main/custom js-->
     <script src="/front/js/main.js"></script>
+    {{-- ez-share --}}
     <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
+    {{-- tinymce --}}
+    <script src="/admin/assets/dist/libs/tinymce/tinymce.min.js"></script>
 
     @stack('scripts')
 
     <script>
         const csrf_token = $('meta[name="csrf-token"]').attr('content');
         const base_url = $('meta[name="base_url"]').attr('content');
+
         const notyf = new Notyf({
             duration: 5000,
             dismissible: true,
@@ -163,6 +165,8 @@
                 notyf.error("{{ $error }}");
             @endforeach
         @endif
+
+
 
         $(function() {
             $('.btn_dynamic_delete').on('click', function(e) {
@@ -210,6 +214,9 @@
                 url: base_url + `/cart/${course_id}/store`,
                 data: {
                     _token: csrf_token,
+                },
+                xhrFields: {
+                    withCredentials: true
                 },
                 beforeSend: function() {
                     addToCartBtn.html(loading);
