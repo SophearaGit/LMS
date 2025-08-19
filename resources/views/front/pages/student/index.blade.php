@@ -27,24 +27,122 @@
                             </div>
                         </div>
                         <div class="col-xl-4 col-sm-6 wow fadeInUp">
-                            <div class="wsus__dash_earning">
-                                <h6>REVENUE</h6>
-                                <h3>$2456.34</h3>
-                                <p>Earning this month</p>
+                            <div class="wsus__dash_earning" style="background-color:#e6eef6;">
+                                <h6><span class="fw-semibold" style="color: #0054a6;">Enrolled Courses</span>
+                                    <small>Count</small>
+                                </h6>
+                                <h3>
+                                    {{ $enrolledCoursesCount }}
+                                </h3>
                             </div>
                         </div>
                         <div class="col-xl-4 col-sm-6 wow fadeInUp">
-                            <div class="wsus__dash_earning">
-                                <h6>STUDENTS ENROLLMENTS</h6>
-                                <h3>16,450</h3>
-                                <p>Progress this month</p>
+                            <div class="wsus__dash_earning" style="background-color:#e6eef6;">
+                                <h6><span class="fw-semibold" style="color: #0054a6;">Reviews</span>
+                                    <small>Count</small>
+                                </h6>
+                                <h3>
+                                    {{ $reviewsCount }}
+                                </h3>
                             </div>
                         </div>
                         <div class="col-xl-4 col-sm-6 wow fadeInUp">
-                            <div class="wsus__dash_earning">
-                                <h6>COURSES RATING</h6>
-                                <h3>4.70</h3>
-                                <p>Rating this month</p>
+                            <div class="wsus__dash_earning" style="background-color:#e6eef6;">
+                                <h6><span class="fw-semibold" style="color: #0054a6;">Orders</span>
+                                    <small>Count</small>
+                                </h6>
+                                <h3>
+                                    {{ $ordersCount }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-sm-12 wow fadeInUp">
+                            <div class="wsus__dashboard_contant">
+                                <div class="wsus__dashboard_contant_top">
+                                    <div class="wsus__dashboard_heading wow fadeInUp"
+                                        style="visibility: visible; animation-name: fadeInUp;">
+                                        <h5>Orders</h5>
+                                        <p>
+                                            Manage your orders and their details like invoice, status, and action.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="wsus__dash_course_table wow fadeInUp"
+                                    style="visibility: visible; animation-name: fadeInUp;">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="no.">
+                                                                No.
+                                                            </th>
+                                                            <th class="invoice">
+                                                                INVOICE
+                                                            </th>
+                                                            <th class="amount">
+                                                                Amount
+                                                            </th>
+                                                            <th class="date">
+                                                                DATE
+                                                            </th>
+                                                            <th class="method">
+                                                                METHOD
+                                                            </th>
+                                                            <th class="status">
+                                                                STATUS
+                                                            </th>
+                                                            <th class="icon">
+
+                                                            </th>
+                                                        </tr>
+                                                        @forelse ($orders as $order)
+                                                            <tr>
+                                                                <td class="no.">
+                                                                    {{ $loop->iteration }}
+                                                                </td>
+                                                                <td class="invoice">
+                                                                    #{{ $order->invoice_id }}
+                                                                </td>
+                                                                <td class="amount">
+                                                                    {{ $order->total_amount }} {{ $order->currency }}
+                                                                </td>
+                                                                <td class="date">
+                                                                    {{ \Carbon\Carbon::parse($order->created_at)->format('m / d / Y') }}
+                                                                </td>
+                                                                <td class="method">
+                                                                    {{ $order->payment_method }}
+                                                                </td>
+                                                                <td class="status">
+                                                                    @if ($order->status === 'pending')
+                                                                        <p class="pending">Pending</p>
+                                                                    @elseif($order->status === 'approved')
+                                                                        <p class="active">Approved</p>
+                                                                    @endif
+                                                                </td>
+                                                                <td class="icon">
+                                                                    <a
+                                                                        href="{{ route('student.orders.invoice', $order->id) }}">
+                                                                        <img src="{{ asset('/front/images/eye1.png') }}"
+                                                                            alt="eye" class="img-fluid"
+                                                                            style="width: 50px !important; height: auto !important;">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="6" class="text-center">
+                                                                    <p class="text-muted">No data found.</p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
