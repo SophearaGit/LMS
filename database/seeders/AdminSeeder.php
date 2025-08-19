@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
             'name' => "Super Admin",
             'email' => "admin@gmail.com",
             'bio' => "This is the super admin account.",
-            'image' => '/default-images/avatar/admin.jpg',
+            'image' => '/default-images/avatar/admin.png',
             'password' => bcrypt("12345678"),
         ]);
     }

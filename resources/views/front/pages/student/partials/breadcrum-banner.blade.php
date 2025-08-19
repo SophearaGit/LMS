@@ -13,6 +13,10 @@
                                 My Courses
                             @elseif (Route::is('student.become_instructor'))
                                 Become An Instructor
+                            @elseif (Route::is('student.orders.index'))
+                                Orders
+                            @elseif (Route::is('student.reviews.index'))
+                                Reviews
                             @endif
                         </h1>
                         <ul>
@@ -26,6 +30,10 @@
                                     My Courses
                                 @elseif (Route::is('student.become_instructor'))
                                     Become An Instructor
+                                @elseif (Route::is('student.orders.index'))
+                                    Orders
+                                @elseif (Route::is('student.reviews.index'))
+                                    Reviews
                                 @endif
                             </li>
                         </ul>

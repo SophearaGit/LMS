@@ -37,6 +37,15 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('student.orders.index') }}"
+                    class="{{ Route::is('student.orders.index') || Route::is('student.orders.invoice') ? 'active' : '' }}">
+                    <div class="img">
+                        <img src="/front/images/dash_icon_5.png" alt="icon" class="img-fluid w-100">
+                    </div>
+                    Orders
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('student.reviews.index') }}"
                     class="{{ Route::is('student.reviews.index') ? 'active' : '' }}">
                     <div class="img">

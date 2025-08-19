@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
+use App\Http\Controllers\Frontend\StudentOrderController;
 use App\Http\Controllers\Frontend\WithdrawController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schedule;
@@ -96,7 +97,9 @@ Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" 
     // CERTIFICATE ROUTE
     Route::get('/certificate/{course}/download', [CertificateController::class, 'download'])->name('certificate.download');
 
-    // review
+    // ORDERS ROUTE
+    Route::get('/orders', [StudentOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}/invoice', [StudentOrderController::class, 'invoice'])->name('orders.invoice');
 
 
 

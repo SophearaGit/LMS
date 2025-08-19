@@ -109,6 +109,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="wsus__pagination mt_50 wow fadeInUp" style="visibility: hidden; animation-name: none;">
+                        <nav aria-label="Page navigation example">
+                            {{ $enrolledCourses->withQueryString()->links('vendor.pagination.front.custom') }}
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
