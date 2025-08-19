@@ -18,7 +18,7 @@ class EnrolledCourseController extends Controller
     {
         $data = [
             'pageTitle' => 'CAIDT | Enrolled Course',
-            'enrolledCourses' => Enrollments::with('course')->where('user_id', Auth::user()->id)->get(),
+            'enrolledCourses' => Enrollments::with('course')->where('user_id', Auth::user()->id)->latest()->paginate(5),
         ];
         return view('front.pages.student.enrolled-courses.index', $data);
     }

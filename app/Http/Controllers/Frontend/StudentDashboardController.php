@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Review;
 use App\Models\User;
 use App\Traites\FileUpload;
@@ -17,8 +19,13 @@ class StudentDashboardController extends Controller
     public function index()
     {
         $date = [
-            'pageTitle' => 'CAITD | Student-Dashboard'
+            'pageTitle' => 'CAITD | Student-Dashboard',
+            'enrolledCoursesCount' => Auth::user()->enrollments->count(),
+            'reviewsCount' => Review::where('user_id', Auth::id())->count(),
+            'ordersCount' => Order::where('buyer_id', Auth::id())->count(),
+            'orders' => Order::where('buyer_id', Auth::id())->take(10)->get(),
         ];
+        // dd($date);
         return view('front.pages.student.index', $date);
     }
 
