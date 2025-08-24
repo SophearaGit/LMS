@@ -4,7 +4,7 @@
     <style>
         .wsus__dash_course_table .image img {
             /* width: 160px !important;
-                                        border-radius: 10px; */
+                                                                border-radius: 10px; */
             height: 120px !important;
             object-fit: cover !important;
         }
@@ -133,6 +133,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="wsus__pagination mt_50 wow fadeInUp" style="visibility: hidden; animation-name: none;">
+                        <nav aria-label="Page navigation example">
+                            {{ $courses->withQueryString()->links('vendor.pagination.front.custom') }}
+                        </nav>
                     </div>
                 </div>
             </div>

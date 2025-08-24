@@ -25,7 +25,7 @@ class CourseController extends Controller
     {
         $data = [
             'pageTitle' => 'CAITD | Courses',
-            'courses' => Course::where('instructor_id', Auth::guard('web')->user()->id)->latest()->get(),
+            'courses' => Course::where('instructor_id', Auth::guard('web')->user()->id)->latest()->paginate(6),
         ];
         return view('front.pages.instructor.course.index', $data);
     }

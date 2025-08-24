@@ -36,7 +36,7 @@
                                                     <th class="details">
                                                         Title
                                                     </th>
-                                                    <th class="action">
+                                                    <th class="action text-center">
                                                         ACTION
                                                     </th>
                                                 </tr>
@@ -48,18 +48,20 @@
                                                                     alt="img" class="img-fluid w-100">
                                                             </div>
                                                         </td>
+
                                                         <td class="details">
                                                             <p class="rating">
-                                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                                <i class="fas fa-star" aria-hidden="true"></i>
-                                                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                                                <i class="far fa-star" aria-hidden="true"></i>
-                                                                <span>(5.0)</span>
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    @if ($i <= round($enrolledCourse->course->reviews()->avg('rating')))
+                                                                        <i class="fas fa-star"></i>
+                                                                    @else
+                                                                        <i class="far fa-star"></i>
+                                                                    @endif
+                                                                @endfor
+                                                                <span>({{ number_format($enrolledCourse->course->reviews()->avg('rating') ?? 0, 1) }})</span>
                                                             </p>
-                                                            <a class="title mb-1"
-                                                                href="{{ route('courses.show', $enrolledCourse->course->slug) }}">{{ $enrolledCourse->course->title }}
-                                                            </a>
+                                                            <a class="title"
+                                                                href="{{ route('courses.show', $enrolledCourse->course->slug) }}">{{ $enrolledCourse->course->title }}</a>
                                                             <div class="text-muted">
                                                                 Instructor: {{ $enrolledCourse->course->instructor->name }}
                                                             </div>
@@ -85,7 +87,7 @@
                                                                 </a>
                                                             @endif
                                                         </td>
-                                                        <td class="">
+                                                        <td class="text-center">
                                                             <a class="common_btn"
                                                                 href="{{ route('student.enroll_courses.course_videos', $enrolledCourse->course->slug) }}">
                                                                 <i class="far fa-eye mb-1" aria-hidden="true"></i>&nbsp;

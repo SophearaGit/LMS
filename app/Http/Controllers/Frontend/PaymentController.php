@@ -16,11 +16,13 @@ class PaymentController extends Controller
 {
     public function orderSuccess()
     {
-        return view('front.pages.order-success');
+        notyf()->success('Your order has been placed successfully.');
+        return view('front.pages.order-success', );
     }
 
     public function orderFail()
     {
+        notyf()->error('Your order has failed. Please try again.');
         return view('front.pages.order-fail');
     }
 
@@ -103,7 +105,7 @@ class PaymentController extends Controller
                     'paypal'
                 );
 
-                return redirect()->route('order.success')->with('success', 'Payment successful');
+                return redirect()->route('order.success');
             } catch (\Throwable $e) {
                 throw $e;
             }
