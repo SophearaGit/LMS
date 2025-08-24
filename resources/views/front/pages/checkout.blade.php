@@ -16,21 +16,20 @@
                                 </a>
                             </div>
                             {{-- STRIPE --}}
-                            <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
+                            {{-- <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
                                 <a href="{{ route('stripe.payment') }}" class="payment_mathod">
                                     <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
                                 </a>
-                            </div>
+                            </div> --}}
                             {{-- RAZORPAY --}}
-                            <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
+                            {{-- <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
                                 <a href="{{ route('razorpay.redirect') }}" class="payment_mathod">
-                                    {{-- <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100"> --}}
+                                    <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
                                     <h2>Razorpay</h2>
                                 </a>
-                            </div>
-
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -38,9 +37,9 @@
                     <div class="total_payment_price">
                         <h4>Total Cart <span>(0{{ cartTotalCourseCount() }})</span></h4>
                         <ul>
-                            <li>Total :<span>${{ cartTotalPrice() }}</span></li>
+                            <li>Total price:<span>${{ cartTotalPrice() }}</span></li>
                         </ul>
-                        <a href="#" class="common_btn">now payment</a>
+                        {{-- <a href="#" class="common_btn">now payment</a> --}}
                     </div>
                 </div>
             </div>
