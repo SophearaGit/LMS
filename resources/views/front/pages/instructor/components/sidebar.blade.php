@@ -40,7 +40,7 @@
             </li>
             <li>
                 <a href="{{ route('instructor.orders.index') }}"
-                    class="{{ Route::is('instructor.orders.index') ? 'active' : '' }}">
+                    class="{{ Route::is('instructor.orders.index') || Route::is('instructor.orders.invoice') ? 'active' : '' }}">
                     <div class="img">
                         <img src="/front/images/dash_icon_5.png" alt="icon" class="img-fluid w-100">
                     </div>

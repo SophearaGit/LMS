@@ -37,7 +37,7 @@
     <!--============ PRELOADER START ===========-->
     <div id="preloader">
         <div class="preloader_icon">
-            <img src="/front/images/preloader.png" alt="Preloader" class="img-fluid">
+            <img src="{{ asset('/front/images/preloader.png') }}" alt="Preloader" class="img-fluid">
         </div>
     </div>
     <!--============ PRELOADER START ===========-->
@@ -50,7 +50,7 @@
         <div class="col-12">
             <div class="wsus__course_header">
                 <a href="{{ route('student.enroll_courses.index') }}"><i class="fas fa-angle-left"></i>
-                    {{ $course->title }}</a>
+                    Go Back</a>
                 <p>Your Progress: {{ $lessonCount }} of {{ $finishCount }}
                     ({{ round(($finishCount / $lessonCount) * 100) }}%)
                 </p>
@@ -121,7 +121,7 @@
                                                     <label class="form-check-label">
                                                         1_Setting up Environment (Part - 1)
                                                         <span>
-                                                            <img src="/front/images/video_icon_black_2.png"
+                                                            <img src="{{ asset('/front/images/video_icon_black_2.png') }}"
                                                                 alt="video" class="img-fluid">
                                                             06.03
                                                         </span>

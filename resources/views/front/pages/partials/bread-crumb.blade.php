@@ -9,7 +9,7 @@
                     <div class="wsus__breadcrumb_text">
                         <h1>
                             @if (Route::is('courses'))
-                                Our Courses
+                                Courses
                             @elseif (Route::is('cart.index'))
                                 Shopping Cart
                             @elseif (Route::is('checkout.index'))
@@ -32,7 +32,7 @@
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li>
                                 @if (Route::is('courses'))
-                                    Our Courses
+                                    Courses
                                 @elseif (Route::is('cart.index'))
                                     Shopping Cart
                                 @elseif (Route::is('checkout.index'))

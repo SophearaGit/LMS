@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Controller;
 use App\Models\AboutUsSection;
 use App\Models\BecomeInstructorSection;
 use App\Models\Blog;
 use App\Models\Brand;
-use App\Models\Cart;
 use App\Models\Counter;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -19,12 +17,9 @@ use App\Models\Hero;
 use App\Models\LatestCourseSection;
 use App\Models\NewsLetter;
 use App\Models\Testimonial;
-use App\Models\TopBar;
 use App\Models\VideoSection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-use function Pest\Laravel\json;
 
 class FrontendController extends Controller
 {
@@ -87,7 +82,7 @@ class FrontendController extends Controller
         $data = [
             'pageTitle' => 'CAITD | About Us',
             'aboutUsSectionItems' => AboutUsSection::first(),
-            'testimonials' => Testimonial::all(),
+            'testimonials' => Testimonial::limit(5)->get(),
             'counterItems' => Counter::first(),
         ];
         return view('front.pages.about-us', $data);

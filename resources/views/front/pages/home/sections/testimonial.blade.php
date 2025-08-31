@@ -22,7 +22,8 @@
                             @endif
                         @endfor
                     </p>
-                    <p class="description">{!! $testimonial->review !!}</p>
+                    <p class="description" title="{{ $testimonial->review }}">
+                        {{ \Illuminate\Support\Str::limit($testimonial->review, 50) }}</p>
                     <div class="wsus__testimonial_footer">
                         <div class="img">
                             <img src="{{ asset($testimonial->user_image) }}" alt="user" class="img-fluid">
