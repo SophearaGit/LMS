@@ -165,6 +165,8 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
      * ————————————————————————————————————————————————————————————————————————————————
      */
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}/invoice/{orderItem}', [OrderController::class, 'invoice'])->name('orders.invoice');
+
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * WITHDRAW ROUTE
