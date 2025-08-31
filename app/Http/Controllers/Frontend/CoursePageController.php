@@ -83,7 +83,17 @@ class CoursePageController extends Controller
                 ->where('is_approved', 'approved')
                 ->where('status', 'active')
                 ->firstOrFail(),
-            'reviewsApproved' => Review::where('status', 1)->latest()->paginate(10),
+            'reviewsApproved' => Review::where('status', 1)
+                ->where('status', 1)
+                ->where('course_id', function ($query) use ($slug) {
+                    $query->select('id')
+                        ->from('courses')
+                        ->where('slug', $slug)
+                        ->where('is_approved', 'approved')
+                        ->where('status', 'active');
+                })
+                ->latest()
+                ->paginate(10),
         ];
         return view('front.pages.course-detail-page', $data);
     }

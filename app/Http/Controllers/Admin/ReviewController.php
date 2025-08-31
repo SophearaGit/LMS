@@ -65,7 +65,6 @@ class ReviewController extends Controller
 
         notyf()->success('Review status updated successfully.');
         return redirect()->back();
-
     }
 
     /**

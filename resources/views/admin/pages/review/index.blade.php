@@ -76,9 +76,10 @@
                                                     @endif
                                                 @endfor
                                             </td>
-                                            <td>
+                                            <td title="{{ $review->review }}" class="cursor-pointer">
                                                 {{ Str::limit($review->review, 30) }}
                                             </td>
+
                                             <td>
                                                 @if ($review->status == 0)
                                                     <span class="badge bg-red-lt">
@@ -106,7 +107,8 @@
                                                 </form>
                                             </td>
                                             <td>
-                                                <a href="#" class="text-danger delete-item">
+                                                <a href="{{ route('admin.review.destroy', $review->id) }}"
+                                                    class="text-danger delete-review">
                                                     <i class="ti ti-trash"></i>
                                                 </a>
                                             </td>

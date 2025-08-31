@@ -13,8 +13,8 @@
     @else
         <link rel="icon" type="image/png" href="{{ asset('front/images/preloader.png') }}">
     @endif
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <link rel="stylesheet" href="{{ asset('front/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/animated_barfiller.css') }}">

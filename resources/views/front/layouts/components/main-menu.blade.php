@@ -34,7 +34,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="menu_category">
             <div class="icon">
-                <img src="/front/images/grid_icon.png" alt="Category" class="img-fluid">
+                <img src="{{ asset('/front/images/grid_icon.png') }}" alt="Category" class="img-fluid">
             </div>
             Course Categories
             <ul>
@@ -72,7 +72,7 @@
                     Us</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('courses') ? 'active' : '' }} "
+                <a class="nav-link {{ Route::is('courses') || Route::is('courses.show') ? 'active' : '' }} "
                     href="{{ route('courses') }}">Courses</a>
             </li>
             <li class="nav-item">
@@ -93,20 +93,16 @@
                 </li>
             @endforeach
         </ul>
-
-
-
-
-
         <div class="right_menu">
             <div class="menu_search_btn">
-                <img src="/front/images/search_icon.png" alt="Search" class="img-fluid">
+                <img src="{{ asset('/front/images/search_icon.png') }}" alt="Search" class="img-fluid">
             </div>
             <ul>
                 <li>
                     <a class="menu_signin" href="{{ route('cart.index') }}">
                         <span>
-                            <img src="/front/images/cart_icon_black.png" alt="user" class="img-fluid">
+                            <img src="{{ asset('/front/images/cart_icon_black.png') }}" alt="user"
+                                class="img-fluid">
                         </span>
                         <b id="cart_count_badge"
                             class="{{ cartTotalCourseCount() > 0 ? '' : 'd-none' }}">{{ cartTotalCourseCount() }}</b>

@@ -19,7 +19,7 @@
                     <div class="wsus__dashboard_contant">
                         <div class="wsus__dashboard_contant_top">
                             <div class="wsus__dashboard_heading relative">
-                                <h5>Courses</h5>
+                                <h5>Enrolled Courses</h5>
                                 <p>Manage your courses and its update like live, draft and insight.</p>
                             </div>
                         </div>
@@ -90,8 +90,10 @@
                                                         <td class="text-center">
                                                             <a class="common_btn"
                                                                 href="{{ route('student.enroll_courses.course_videos', $enrolledCourse->course->slug) }}">
-                                                                <i class="far fa-eye mb-1" aria-hidden="true"></i>&nbsp;
-                                                                Watch Course
+                                                                Watch
+                                                                <img src="{{ asset('./front/images/eye1.png') }}"
+                                                                    alt="eye" class="img-fluid mb-1"
+                                                                    style="width: 50px !important; height: auto !important;">
                                                             </a>
                                                         </td>
                                                     </tr>
