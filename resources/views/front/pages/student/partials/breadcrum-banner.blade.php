@@ -6,11 +6,11 @@
                     <div class="wsus__breadcrumb_text">
                         <h1 class="text-uppercase">
                             @if (Route::is('student.dashboard'))
-                                Student Dashboard
+                                Dashboard
                             @elseif (Route::is('student.profile'))
                                 Profile
                             @elseif (Route::is('student.enroll_courses.index'))
-                                My Courses
+                                Enrolled Courses
                             @elseif (Route::is('student.become_instructor'))
                                 Become An Instructor
                             @elseif (Route::is('student.orders.index'))
@@ -23,11 +23,11 @@
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li>
                                 @if (Route::is('student.dashboard'))
-                                    Student Dashboard
+                                    Dashboard
                                 @elseif (Route::is('student.profile'))
                                     Profile
                                 @elseif (Route::is('student.enroll_courses.index'))
-                                    My Courses
+                                    Enrolled Courses
                                 @elseif (Route::is('student.become_instructor'))
                                     Become An Instructor
                                 @elseif (Route::is('student.orders.index'))

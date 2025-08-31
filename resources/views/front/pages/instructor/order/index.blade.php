@@ -10,25 +10,7 @@
     </style>
 @endpush
 @section('content')
-
-    <section class="wsus__breadcrumb" style="background: url(/front//front/images/breadcrumb_bg.jpg);">
-        <div class="wsus__breadcrumb_overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 wow fadeInUp">
-                        <div class="wsus__breadcrumb_text">
-                            <h1>instructor Profile</h1>
-                            <ul>
-                                <li><a href="{{ url('/') }}">Home</a></li>
-                                <li>instructor Profile</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    @include('front.pages.instructor.components.breadcrum-banner')
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -90,20 +72,24 @@
                                                                     <p>{{ $orderItem->order->customer->name }}</p>
                                                                 </td>
                                                                 <td class="invoice">
-                                                                    <p>{{ $orderItem->price }}$</p>
+                                                                    <p>{{ $orderItem->price }}
+                                                                        {{ $orderItem->order->currency }}</p>
                                                                 </td>
                                                                 <td class="date">
                                                                     <p>{{ $orderItem->commission_rate ?? 0 }}%</p>
                                                                 </td>
                                                                 <td class="method">
                                                                     <p>
-                                                                        {{ calculateCommission($orderItem->price, $orderItem->commission_rate) }} {{ $orderItem->order->currency }}
+                                                                        {{ number_format(calculateCommission($orderItem->price, $orderItem->commission_rate), 2) }}
+                                                                        {{ $orderItem->order->currency }}
                                                                     </p>
                                                                 </td>
-                                                                <td class="icon">
-                                                                    <a href="dashboard_invoice.html">
-                                                                        <img src="/front/images/eye.png" alt="eye"
-                                                                            class="img-fluid w-100">
+                                                                <td>
+                                                                    <a
+                                                                        href="{{ route('instructor.orders.invoice', [$orderItem->order->id, $orderItem->id]) }}">
+                                                                        <img src="{{ asset('/front/images/eye1.png') }}"
+                                                                            alt="eye" class="img-fluid"
+                                                                            style="width: 50px !important; height: auto !important;">
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -129,5 +115,7 @@
         $(document).ready(function() {
             $('select').niceSelect();
         });
+
+        
     </script>
 @endpush
