@@ -79,10 +79,10 @@
                                                             </option>
                                                             <option @selected($course->demo_video_storage == 'youtube') value="youtube">Youtube
                                                             </option>
-                                                            <option @selected($course->demo_video_storage == 'vimeo') value="vimeo">Vimeo
+                                                            {{-- <option @selected($course->demo_video_storage == 'vimeo') value="vimeo">Vimeo
                                                             </option>
                                                             <option @selected($course->demo_video_storage == 'external_link') value="external_link">
-                                                                External Link</option>
+                                                                External Link</option> --}}
                                                         </select>
                                                     </div>
                                                 </div>

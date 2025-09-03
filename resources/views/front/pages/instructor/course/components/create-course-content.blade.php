@@ -32,8 +32,8 @@
                             <option value=""> Please Select </option>
                             <option value="upload">Upload</option>
                             <option value="youtube">Youtube</option>
-                            <option value="vimeo">Vimeo</option>
-                            <option value="external_link">External Link</option>
+                            {{-- <option value="vimeo">Vimeo</option>
+                            <option value="external_link">External Link</option> --}}
                         </select>
                     </div>
                 </div>
