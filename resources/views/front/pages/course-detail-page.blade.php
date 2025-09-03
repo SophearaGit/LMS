@@ -20,8 +20,6 @@
             $('#starRating').on('click', function(e) {
                 let activeCount = $(this).children('.active').length;
                 $('#rating').val(activeCount);
-                // console.log(ratingVal);
-
             });
         });
     </script>
@@ -514,10 +512,39 @@
                         <div class="wsus__courses_sidebar_video">
                             <img src="{{ $course->thumbnail }}" alt="Video" class="img-fluid">
                             @if ($course->demo_video_source != null)
-                                <a class="play_btn venobox vbox-item" data-autoplay="true" data-vbtype="video"
-                                    href="{{ $course->demo_video_source }}">
-                                    <img src="/front/images/play_icon_white.png" alt="Play" class="img-fluid">
-                                </a>
+                                @if ($course->demo_video_storage == 'youtube')
+                                    <a class="play_btn venobox vbox-item" data-autoplay="true" data-vbtype="video"
+                                        href="{{ $course->demo_video_source }}">
+                                        <img src="/front/images/play_icon_white.png" alt="Play" class="img-fluid">
+                                    </a>
+                                @else
+                                    <!-- Button -->
+                                    <a id="btn_play" class="play_btn">
+                                        <img src="/front/images/play_icon_white.png" alt="Play" class="img-fluid">
+                                    </a>
+                                    <!-- Custom Video Overlay -->
+                                    <div id="videoOverlay"
+                                        style="
+                                        display: none;
+                                        position: fixed;
+                                        top: 0; left: 0;
+                                        width: 100%; height: 100%;
+                                        background: rgba(0,0,0,0.85);
+                                        z-index: 999999;
+                                        justify-content: center;
+                                        align-items: center;
+                                        opacity: 0;
+                                        transition: opacity 0.3s ease; /* Smooth fade */
+                                    ">
+                                        <div style="width: 80%; max-width: 900px; position: relative;">
+                                            <video id="demoVideo" controls autoplay muted
+                                                style="width: 100%; height: auto;">
+                                                <source src="{{ $course->demo_video_source }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    </div>
+                                @endif
                             @endif
                         </div>
                         <h3 class="wsus__courses_sidebar_price">
@@ -642,4 +669,46 @@
 @endsection
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
+    <script>
+        function openOverlay() {
+            let overlay = $('#videoOverlay');
+            let video = $('#demoVideo');
+
+            overlay.css('display', 'flex');
+
+            // Small delay to trigger CSS transition
+            setTimeout(() => {
+                overlay.css('opacity', '1');
+            }, 10);
+
+            // Autoplay MP4
+            if (video.is('video')) {
+                video.get(0).muted = false;
+                video.get(0).play();
+            }
+        }
+
+        function closeOverlay() {
+            let overlay = $('#videoOverlay');
+            let video = $('#demoVideo');
+            overlay.css('opacity', '0');
+            setTimeout(() => {
+                overlay.hide();
+                if (video.is('video')) {
+                    video.get(0).pause();
+                    video.get(0).currentTime = 0;
+                }
+            }, 300); // Matches transition duration
+        }
+
+        $('#btn_play').on('click', openOverlay);
+        $('#closeOverlay').on('click', closeOverlay);
+
+        // Close if clicking outside the video
+        $('#videoOverlay').on('click', function(e) {
+            if (e.target.id === 'videoOverlay') {
+                closeOverlay();
+            }
+        });
+    </script>
 @endpush

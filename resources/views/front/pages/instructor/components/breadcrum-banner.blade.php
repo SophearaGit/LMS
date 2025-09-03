@@ -9,6 +9,8 @@
                                 Invoice
                             @elseif(Route::is('instructor.orders.index'))
                                 Orders
+                            @elseif (Route::is('instructor.courses.index'))
+                                Courses
                             @endif
                         </h1>
                         <ul>
@@ -18,6 +20,8 @@
                                     Invoice
                                 @elseif(Route::is('instructor.orders.index'))
                                     Orders
+                                @elseif (Route::is('instructor.courses.index'))
+                                    Courses
                                 @endif
                             </li>
                         </ul>
