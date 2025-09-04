@@ -187,13 +187,50 @@
                                                                     class="{{ $lesson->is_preview == 1 ? 'active' : '' }}">
                                                                     <a href="">{{ $lesson->title }}</a>
                                                                     @if ($lesson->is_preview == 1)
-                                                                        <a class=" venobox vbox-item" data-autoplay="true"
-                                                                            data-vbtype="video"
-                                                                            href="{{ $lesson->file_path }}">
-                                                                            <span class="right_text">
-                                                                                Preview
-                                                                            </span>
-                                                                        </a>
+                                                                        @if ($lesson->storage == 'youtube')
+                                                                            <a class=" venobox vbox-item"
+                                                                                data-autoplay="true" data-vbtype="video"
+                                                                                href="{{ $lesson->file_path }}">
+                                                                                <span class="right_text">
+                                                                                    Preview
+                                                                                </span>
+                                                                            </a>
+                                                                        @else
+                                                                            <!-- Button -->
+                                                                            <a id="btn_play{{ $lesson->id }}">
+                                                                                <span class="right_text">
+                                                                                    Preview
+                                                                                </span>
+                                                                            </a>
+                                                                            <!-- Custom Video Overlay -->
+                                                                            <div id="videoOverlay{{ $lesson->id }}"
+                                                                                style="
+                                                                                    display: none;
+                                                                                    position: fixed;
+                                                                                    top: 0; left: 0;
+                                                                                    width: 100%; height: 100%;
+                                                                                    background: rgba(0,0,0,0.85);
+                                                                                    z-index: 999999;
+                                                                                    justify-content: center;
+                                                                                    align-items: center;
+                                                                                    opacity: 0;
+                                                                                    transition: opacity 0.3s ease; /* Smooth fade */
+                                                                                ">
+                                                                                <div
+                                                                                    style="width: 80%; max-width: 900px; position: relative;">
+                                                                                    <video
+                                                                                        id="demoVideo{{ $lesson->id }}"
+                                                                                        controls autoplay muted
+                                                                                        style="width: 100%; height: auto;">
+                                                                                        <source
+                                                                                            src="{{ $lesson->file_path }}"
+                                                                                            type="video/mp4">
+                                                                                        Your browser does not support the
+                                                                                        video tag.
+                                                                                    </video>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
                                                                     @else
                                                                         <span class="right_text">
                                                                             {{ minToHours($lesson->duration) }}
@@ -670,6 +707,54 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('[id^=btn_play]').each(function() {
+                const btn = $(this);
+                const lessonId = this.id.replace('btn_play', '');
+                const overlay = $('#videoOverlay' + lessonId);
+                const video = $('#demoVideo' + lessonId);
+
+                // Ensure video is always clickable & cursor shows
+                video.css({
+                    'z-index': '1000000',
+                    'position': 'relative',
+                    'pointer-events': 'auto',
+                    'cursor': 'pointer'
+                });
+                overlay.css({
+                    'pointer-events': 'auto'
+                });
+
+                // Show modal and play video
+                btn.on('click', function() {
+                    overlay.css('display', 'flex');
+                    setTimeout(() => overlay.css('opacity', '1'), 10);
+
+                    if (video.length) {
+                        const vid = video.get(0);
+                        vid.muted = false;
+                        vid.play();
+                    }
+                });
+
+                // Close modal when clicking overlay background
+                overlay.on('click', function(e) {
+                    if (e.target.id === 'videoOverlay' + lessonId) {
+                        overlay.css('opacity', '0');
+                        setTimeout(function() {
+                            overlay.hide();
+                            if (video.length) {
+                                const vid = video.get(0);
+                                vid.pause();
+                                vid.currentTime = 0;
+                            }
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+
         function openOverlay() {
             let overlay = $('#videoOverlay');
             let video = $('#demoVideo');
