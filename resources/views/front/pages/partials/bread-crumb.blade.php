@@ -19,7 +19,7 @@
                             @elseif (Route::is('order.fail'))
                                 Payment Cancelled!
                             @elseif (Route::is('home.about'))
-                                How We Work
+                                About Us
                             @elseif (Route::is('home.contact_us'))
                                 Contact Us
                             @elseif (Route::is('blog.index'))
