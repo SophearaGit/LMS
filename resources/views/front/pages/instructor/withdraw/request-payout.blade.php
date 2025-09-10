@@ -39,7 +39,9 @@
                                     style="visibility: visible; animation-name: fadeInUp;">
                                     <div class="wsus__dash_earning">
                                         <h6>CURRENT BALLANCE</h6>
-                                        <h3>{{ config('settings.site_currency_icon') }} {{ $currentBallance ?? 0 }}</h3>
+                                        <h3>{{ config('settings.site_currency_icon') }}
+                                            {{ number_format(floor(($currentBallance ?? 0) * 100) / 100, 2) }}
+                                        </h3>
                                         <p>
                                             Total amount available for withdrawal
                                         </p>
@@ -49,7 +51,9 @@
                                     style="visibility: visible; animation-name: fadeInUp;">
                                     <div class="wsus__dash_earning">
                                         <h6>PENDING BALLANCE</h6>
-                                        <h3>{{ config('settings.site_currency_icon') }} {{ $pendingBallance }}</h3>
+                                        <h3>{{ config('settings.site_currency_icon') }}
+                                            {{ number_format(floor(($pendingBallance ?? 0) * 100) / 100, 2) }}
+                                        </h3>
                                         <p>
                                             Earnings that are pending for withdrawal
                                         </p>
@@ -59,7 +63,9 @@
                                     style="visibility: visible; animation-name: fadeInUp;">
                                     <div class="wsus__dash_earning">
                                         <h6>TOTAL PAYOUT</h6>
-                                        <h3>{{ config('settings.site_currency_icon') }} {{ $totalPayout }}</h3>
+                                        <h3>{{ config('settings.site_currency_icon') }}
+                                            {{ number_format(floor(($totalPayout ?? 0) * 100) / 100, 2) }}
+                                        </h3>
                                         <p>
                                             Total amount paid to you
                                         </p>
@@ -76,7 +82,8 @@
                                         </p>
                                     </div>
                                     <div class="wsus__dashboard_contant_btn">
-                                        <a href="{{ route('instructor.profile') }}#payout_details" class="common_btn">Edit Payout</a>
+                                        <a href="{{ route('instructor.profile') }}#payout_details" class="common_btn">Edit
+                                            Payout</a>
                                     </div>
                                 </div>
                                 <ul class="wsus__dashboard_profile_info">

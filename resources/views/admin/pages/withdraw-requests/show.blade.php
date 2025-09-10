@@ -58,13 +58,17 @@
                                     <tr>
                                         <td>Current Wallet Balance</td>
                                         <td>
-                                            {{ config('settings.site_currency_icon') }} {{ $withdraw->instructor->wallet }}
+                                            {{ config('settings.site_currency_icon') }}
+                                            {{ number_format(floor(($withdraw->instructor->wallet ?? 0) * 100) / 100, 2) }}
+                                            {{-- {{ $withdraw->instructor->wallet }} --}}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Payout Amount</td>
                                         <td>
-                                            {{ config('settings.site_currency_icon') }} {{ $withdraw->amount }}
+                                            {{ config('settings.site_currency_icon') }}
+                                            {{-- {{ $withdraw->amount }} --}}
+                                            {{ number_format(floor(($withdraw->amount ?? 0) * 100) / 100, 2) }}
                                         </td>
                                     </tr>
                                     <tr>
