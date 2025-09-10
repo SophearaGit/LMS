@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Mail\InstructorRequestApprovedMail;
 use App\Mail\InstructorRequestRejectMail;
 use App\Models\User;
+use App\Traites\FileUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class InstructorRequestController extends Controller
 {
+    use FileUpload;
+
+
     /**
      * Display a listing of the resource.
      */
@@ -38,6 +43,7 @@ class InstructorRequestController extends Controller
      */
     public function update(Request $request, User $instructor_request)
     {
+
         $request->validate([
             'status' => ['required', 'in:pending,approved,rejected']
         ]);
@@ -53,6 +59,11 @@ class InstructorRequestController extends Controller
                 Mail::to($instructor_request->email)->send(new InstructorRequestApprovedMail($instructor_request));
             }
         } elseif ($instructor_request->approval_status === 'rejected') {
+            if ($instructor_request->document) {
+                $this->deleteIfImageExist($instructor_request->document);
+                $instructor_request->document = null;
+                $instructor_request->save();
+            }
             if (config('mail_queue.is_queue')) {
                 Mail::to($instructor_request->email)->queue(new InstructorRequestRejectMail($instructor_request));
             } else {
