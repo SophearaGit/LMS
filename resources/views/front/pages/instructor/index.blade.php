@@ -88,7 +88,6 @@
                                         <h5>Best Selling Courses</h5>
                                     </div>
                                 </div>
-
                                 <div class="wsus__dash_course_table wow fadeInUp"
                                     style="visibility: visible; animation-name: fadeInUp;">
                                     <div class="row">
@@ -98,10 +97,10 @@
                                                     <tbody>
                                                         <tr>
                                                             <th class="image">
-                                                                COURSES
+                                                                Image
                                                             </th>
                                                             <th class="details">
-
+                                                                Title
                                                             </th>
                                                             <th class="sale">
                                                                 SALES
@@ -110,7 +109,6 @@
                                                                 AMOUNT
                                                             </th>
                                                         </tr>
-
                                                         @forelse ($orderItems as $item)
                                                             <tr>
                                                                 <td class="image">
@@ -135,10 +133,16 @@
                                                                         href="{{ route('courses.show', $item->course->slug) }}">{{ $item->course->title }}</a>
                                                                 </td>
                                                                 <td class="sale">
-                                                                    <p>34</p>
+                                                                    <p>
+                                                                        {{ $item->course->enrollments()->count() }}
+                                                                        <i class="ti ti-user"></i>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="amount">
-                                                                    <p>$3,145.23</p>
+                                                                    <p>
+                                                                        {{ config('settings.site_currency_icon') }}
+                                                                        {{ number_format(floor(($item->price ?? 0) * 100) / 100, 2) }}
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                         @empty
@@ -155,6 +159,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="wsus__pagination mt_50 wow fadeInUp" style="visibility: hidden; animation-name: none;">
+                            <nav aria-label="Page navigation example">
+                                {{ $orderItems->withQueryString()->links('vendor.pagination.front.custom') }}
+                            </nav>
                         </div>
                     </div>
                 </div>

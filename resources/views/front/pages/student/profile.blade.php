@@ -206,9 +206,92 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="col-xl-12 col-sm-12 wow fadeInUp">
+                            <div class="wsus__dashboard_contant">
+                                <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                                    <div class="wsus__dashboard_heading">
+                                        <h5>
+                                            Request To Be Instructor?
+                                        </h5>
+                                        <p class="text-muted">
+                                            Interested in sharing your knowledge? Apply to become an instructor and start
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div
+                                    class="wsus__dash_earning d-flex align-items-center flex-wrap
+                                @if (auth()->user()->approval_status === 'pending') justify-content-between
+                                @else justify-content-end @endif">
+                                    @if (auth()->user()->approval_status === 'pending')
+                                        <div class="alert alert-primary m-0 {{ !auth()->user()->document ? 'col-8' : 'col-12 text-center' }}"
+                                            role="alert">
+                                            Your request to become an instructor has been submitted and is currently under
+                                            review. {{ !auth()->user()->document ? '<br>' : '' }} We'll notify you once
+                                            it's
+                                            approved!
+                                        </div>
+                                    @endif
+                                    @if (!auth()->user()->document)
+                                        <div class="col-3">
+                                            <a href="{{ route('student.become_instructor') }}" class="common_btn">
+                                                Become An Instructor?
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div> --}}
+
+                                <form action="{{ route('student.become_instructor_update', auth()->user()->id) }}"
+                                    method="POST" enctype="multipart/form-data" class="wsus__dashboard_social_profile">
+                                    @csrf
+                                    <div class="wsus__dashboard_social_profile_input">
+                                        @if (auth()->user()->approval_status === 'pending')
+                                            <div class="alert alert-primary m-0 text-center" role="alert">
+                                                <strong>
+                                                    Your request to become an instructor has been submitted and is currently
+                                                    under review, we going to email you once it's approved.
+                                                </strong>
+                                            </div>
+                                        @elseif(auth()->user()->approval_status === 'approved' && auth()->user()->document)
+                                            <div class="alert alert-success m-0 text-center" role="alert">
+                                                <strong>
+                                                    You are an instructor now. Thank you for sharing your knowledge with us.
+                                                </strong>
+                                                <div class="wsus__dashboard_social_profile_btn">
+                                                    <a type="submit" class="common_btn"
+                                                        href="{{ route('instructor.dashboard') }}">
+                                                        Go to Instructor Dashboard
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="forum_create_topic_input">
+                                                <label>Document</label>
+                                                <div class="file">
+                                                    <label for="select_file">
+                                                        <img src="{{ asset('/front/images/upload_icon.png') }}"
+                                                            alt="Upload" class="img-fluid">
+                                                    </label>
+                                                    <p>Choose an attachment</p>
+                                                    <input id="select_file" type="file" hidden=""
+                                                        placeholder="Provide your document here." id="document"
+                                                        name="document" value="" autofocus=""
+                                                        autocomplete="document">
+                                                </div>
+                                            </div>
+                                            <div class="wsus__dashboard_social_profile_btn">
+                                                <button type="submit" class="common_btn">Submit</button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
     {{-- DASHBOARD OVERVIEW END --}}
