@@ -29,7 +29,7 @@
                     <div class="col-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                         <div class="wsus__breadcrumb_text">
                             <h1>
-                                {{ Str::limit($customPage->title, 38, '...') }}
+                                {{ Str::limit($customPage->title, 100, '...') }}
                             </h1>
                             <ul>
                                 <li><a href="{{ url('/') }}">Home</a></li>

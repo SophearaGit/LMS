@@ -84,14 +84,22 @@
                     href="{{ route('home.contact_us') }}">Contact
                     Us</a>
             </li>
-            @foreach ($customPages as $customPage)
+            @if ($customPages->count() > 0)
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('home.contact_us') ? 'active' : '' }}"
-                        href="{{ route('custom_page', $customPage->slug) }}">
-                        {{ Str::limit($customPage->title, 20, '...') }}
-                    </a>
+                    <a class="nav-link {{ Route::is('custom_page') ? 'active' : '' }} " href="#">Knowledge
+                        Sharing Pages <i class="far fa-angle-down" aria-hidden="true"></i></a>
+                    <ul class="droap_menu">
+                        @foreach ($customPages as $customPage)
+                            <li>
+                                <a href="{{ route('custom_page', $customPage->slug) }}">
+                                    {{ Str::limit($customPage->title, 100, '...') }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
-            @endforeach
+            @endif
+
         </ul>
         <div class="right_menu">
             <div class="menu_search_btn">

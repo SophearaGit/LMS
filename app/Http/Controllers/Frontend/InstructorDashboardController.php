@@ -30,7 +30,7 @@ class InstructorDashboardController extends Controller
             ])->count(),
             'orderItems' => OrderItem::whereHas('course', function ($query) {
                 $query->where('instructor_id', Auth::user()->id);
-            })->latest()->limit(5)->get(),
+            })->latest()->paginate(5),
         ];
         return view('front.pages.instructor.index', $data);
     }
