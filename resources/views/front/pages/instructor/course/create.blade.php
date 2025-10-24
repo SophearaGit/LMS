@@ -58,7 +58,6 @@
     {{-- DASHBOARD OVERVIEW END --}}
 @endsection
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
         $(function() {
             tinymce.init({
