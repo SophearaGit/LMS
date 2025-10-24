@@ -150,14 +150,15 @@
     {{-- DASHBOARD OVERVIEW END --}}
 @endsection
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
         $(function() {
             tinymce.init({
                 selector: 'textarea.editor'
             });
         });
-        const base_url = $('meta[name="base_url"]').attr('content');
-        const update_url = base_url + '/instructor/courses/update-more-info';
+        const based_url = $('meta[name="base_url"]').attr('content');
+        const update_url = based_url + '/instructor/courses/update-more-info';
 
         $('.edit_basic_info_form').on('submit', function(e) {
             e.preventDefault();

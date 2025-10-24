@@ -40,7 +40,7 @@
                                         <th>Price</th>
                                         <th>Instructor</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th colspan="2" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,13 +65,13 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <select name="status" id="" class="update_approval_status"
+                                                <select name="status" id="" class="update_approval_status text-dark"
                                                     data-id="{{ $item->id }}">
                                                     <option @selected($item->is_approved === 'pending') value="pending">Pending
                                                     </option>
-                                                    <option @selected($item->is_approved === 'approved') value="approved">Approve
+                                                    <option @selected($item->is_approved === 'approved') value="approved">Approved
                                                     </option>
-                                                    <option @selected($item->is_approved === 'rejected') value="rejected">Reject
+                                                    <option @selected($item->is_approved === 'rejected') value="rejected">Rejected
                                                     </option>
                                                 </select>
                                             </td>

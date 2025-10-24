@@ -423,7 +423,20 @@
                                     href="{{ route('admin.contact-us.index') }}">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.contact-us.*') ? 'text-white' : '' }}">
-                                        <i sclass="ti ti-mail-opened" style="font-size: 20px;"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-address-book "
+                                            style="font-size: 20px;">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
+                                            <path d="M10 16h6" />
+                                            <path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                            <path d="M4 8h3" />
+                                            <path d="M4 12h3" />
+                                            <path d="M4 16h3" />
+                                        </svg>
                                     </span>
                                     <span
                                         class="nav-link-title mt-1 {{ Route::is('admin.contact-us.*') ? 'text-white' : '' }}">

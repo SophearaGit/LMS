@@ -88,9 +88,9 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/front/js/jquery-ui.min.js"></script>
     <script>
-        const base_url = $('meta[name="base_url"]').attr('content');
-        const get_course_content_url = base_url + `/instructor/course-content/:id/create-chapter`;
-        const update_url = base_url + '/instructor/courses/update-more-info';
+        const based_url = $('meta[name="base_url"]').attr('content');
+        const get_course_content_url = based_url + `/instructor/course-content/:id/create-chapter`;
+        const update_url = based_url + '/instructor/courses/update-more-info';
 
         let modalLoader = `
             <div class="modal-content">
