@@ -93,8 +93,8 @@
 </div>
 @push('scripts')
     <script>
-        const base_url = $('meta[name="base_url"]').attr('content');
-        const update_url = base_url + '/instructor/courses/update-more-info';
+        const based_url = $('meta[name="base_url"]').attr('content');
+        const update_url = based_url + '/instructor/courses/update-more-info';
 
         $('.more_info_form').on('submit', function(e) {
             e.preventDefault();

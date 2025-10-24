@@ -55,7 +55,7 @@ class SettingController extends Controller
     {
         $validated_data = $request->validate([
             'site_name' => 'required|string|max:255',
-            'site_phone' => 'nullable|numeric',
+            'site_phone' => 'nullable|string',
             'site_address' => 'nullable|string|max:255',
             'site_currency' => 'required|string|max:3',
             'site_currency_icon' => 'required|string|max:255',
