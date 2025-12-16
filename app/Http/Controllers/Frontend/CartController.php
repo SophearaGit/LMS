@@ -91,7 +91,5 @@ class CartController extends Controller
             'cart' => Cart::where(['id' => $cart_id, 'user_id' => Auth::guard('web')->user()->id])->first(),
         ];
         return view('front.pages.checkout', $data);
-
     }
-
 }
