@@ -171,6 +171,7 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::post('/payment-settings/paypal', [PaymentSettingController::class, 'paypal_store'])->name('payment-settings.paypal');
     Route::post('/payment-settings/stripe', [PaymentSettingController::class, 'stripe_store'])->name('payment-settings.stripe');
     Route::post('/payment-settings/razorpay', [PaymentSettingController::class, 'razorpay_store'])->name('payment-settings.razorpay');
+    Route::post('/payment-settings/aba', [PaymentSettingController::class, 'aba_store'])->name('payment-settings.aba');
 
     /**
      * ————————————————————————————————————————————————————————————————————————————————

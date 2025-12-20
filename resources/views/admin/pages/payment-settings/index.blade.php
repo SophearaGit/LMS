@@ -41,9 +41,16 @@
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a href="#razorpay-settings" class="nav-link active" data-bs-toggle="tab"
+                                        <a href="#razorpay-settings" class="nav-link" data-bs-toggle="tab"
                                             aria-selected="false" tabindex="-1" role="tab">
                                             <i class="ti ti-blade mb-1"></i>&nbsp; Razorpay Settings
+                                        </a>
+                                    </li>
+                                    {{-- aba payway --}}
+                                    <li class="nav-item" role="presentation">
+                                        <a href="#abapayway-settings" class="nav-link active" data-bs-toggle="tab"
+                                            aria-selected="false" tabindex="-1" role="tab">
+                                            <i class="ti ti-credit-card mb-1"></i>&nbsp; ABA Payway Settings
                                         </a>
                                     </li>
                                 </ul>
@@ -115,7 +122,8 @@
                                                 <div class="col-md-4">
                                                     <div class="mb-4">
                                                         <label class="form-label">App ID</label>
-                                                        <input type="text" class="form-control" name="paypal_live_app_id"
+                                                        <input type="text" class="form-control"
+                                                            name="paypal_live_app_id"
                                                             placeholder="Enter Paypal Live App ID Here."
                                                             value="{{ config('gateway_setting.paypal_live_app_id') }}">
                                                         <x-input-error :messages="$errors->get('paypal_live_app_id')" class="mt-2" />
@@ -205,7 +213,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane active show" id="razorpay-settings" role="tabpanel">
+                                    <div class="tab-pane " id="razorpay-settings" role="tabpanel">
                                         <form action="{{ route('admin.payment-settings.razorpay') }}" method="POST">
                                             @csrf
                                             <div class="row">
@@ -278,6 +286,99 @@
                                             </div>
                                         </form>
                                     </div>
+                                    <div class="tab-pane active show" id="abapayway-settings" role="tabpanel">
+                                        <form action="{{ route('admin.payment-settings.aba') }}" method="POST">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">
+                                                            ABA Status
+                                                        </label>
+                                                        <select class="form-select" name="aba_status">
+                                                            <option @selected(config('gateway_setting.aba_status') === 'active') value="active">
+                                                                Active
+                                                            </option>
+                                                            <option @selected(config('gateway_setting.aba_status') === 'inactive') value="inactive">
+                                                                Inactive
+                                                            </option>
+                                                        </select>
+                                                        <x-input-error :messages="$errors->get('aba_status')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Currency</label>
+                                                        <select class="form-select select2" name="aba_currency">
+                                                            <option value="">Please Select</option>
+                                                            @foreach (config('gateway_currencies.aba_currencies') as $key => $value)
+                                                                <option @selected(config('gateway_setting.aba_currency') === $value)
+                                                                    value="{{ $value }}">
+                                                                    {{ $value }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <x-input-error :messages="$errors->get('aba_currencies')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                                {{-- rate --}}
+                                                <div class="col-md-2">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Rate (USD)</label>
+                                                        <input type="text" class="form-control" name="aba_rate"
+                                                            placeholder="Enter ABA Payway Rate Here."
+                                                            value="{{ config('gateway_setting.aba_rate') }}">
+                                                        <x-input-error :messages="$errors->get('aba_rate')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                                {{-- aba_merchant_id --}}
+                                                <div class="col-md-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">ABA Merchant ID</label>
+                                                        <input type="text" class="form-control" name="aba_merchant_id"
+                                                            placeholder="Enter ABA Merchant ID Here."
+                                                            value="{{ config('gateway_setting.aba_merchant_id') }}">
+                                                        <x-input-error :messages="$errors->get('aba_merchant_id')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                                {{-- aba_public_key --}}
+                                                <div class="col-md-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">ABA Public Key</label>
+                                                        <input type="text" class="form-control" name="aba_public_key"
+                                                            placeholder="Enter ABA Public Key Here."
+                                                            value="{{ config('gateway_setting.aba_public_key') }}">
+                                                        <x-input-error :messages="$errors->get('aba_public_key')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                                {{-- aba_rsa_public_key --}}
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">ABA RSA Public Key</label>
+                                                        <textarea class="form-control" name="aba_rsa_public_key" rows="15"
+                                                            placeholder="Enter ABA RSA Public Key Here.">{{ config('gateway_setting.aba_rsa_public_key') }}</textarea>
+                                                        <x-input-error :messages="$errors->get('aba_rsa_public_key')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                                {{-- aba_rsa_secret_key --}}
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">ABA RSA Secret Key</label>
+                                                        <textarea class="form-control" name="aba_rsa_secret_key" rows="15"
+                                                            placeholder="Enter ABA RSA Secret Key Here.">{{ config('gateway_setting.aba_rsa_secret_key') }}</textarea>
+                                                        <x-input-error :messages="$errors->get('aba_rsa_secret_key')" class="mt-2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 text-end">
+                                                <div class="mb-3">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="ti ti-download mb-2"></i>&nbsp;Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -285,13 +386,12 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-@push('scripts')
-    <script src="/admin/assets/dist/libs/tom-select/dist/js/tom-select.base.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
-@endpush
+    @endsection
+    @push('scripts')
+        <script src="/admin/assets/dist/libs/tom-select/dist/js/tom-select.base.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+            });
+        </script>
+    @endpush

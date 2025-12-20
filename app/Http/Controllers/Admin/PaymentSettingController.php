@@ -89,4 +89,32 @@ class PaymentSettingController extends Controller
 
         return redirect()->back();
     }
+
+    // aba_store
+    public function aba_store(Request $request)
+    {
+        $validated_data = $request->validate([
+            'aba_status' => 'required|string|in:active,inactive',
+            'aba_currency' => 'required|string|max:3',
+            'aba_rate' => 'required|string',
+            'aba_merchant_id' => 'required|string',
+            'aba_public_key' => 'required|string',
+            'aba_rsa_public_key' => 'required|string',
+            'aba_rsa_secret_key' => 'required|string',
+        ]);
+
+        foreach ($validated_data as $key => $value) {
+            PaymentSetting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
+        }
+
+        Cache::forget('gatewaySettings');
+
+        notyf()->success('ABA settings updated successfully.');
+
+        return redirect()->back();
+    }
+
 }
