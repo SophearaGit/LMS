@@ -60,6 +60,11 @@ Route::get('/stripe/payment', [PaymentController::class, 'payWithStripe'])->name
 Route::get('/stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
 Route::get('/stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
 
+Route::post('/aba/payment', [PaymentController::class, 'payWithAba'])->name('aba.payment');
+Route::get('/aba/check-status/{tranId}', [PaymentController::class, 'checkAbaStatus']);
+
+
+
 Route::get('/razorpay/redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay.redirect');
 Route::post('/razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
 
@@ -69,7 +74,6 @@ Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.
 Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
 
 // ABOUT PAGE START
-
 /**
  *————————————————————————————————————————————————————————————————————————————————
  * STUDENT ROUTE

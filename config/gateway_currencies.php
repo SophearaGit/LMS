@@ -426,4 +426,8 @@ return [
         'SAR',
         'IDR',
     ],
+    'aba_currencies' => [
+        'USD',
+        'KHR',
+    ],
 ];
