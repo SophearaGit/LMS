@@ -63,8 +63,6 @@ Route::get('/stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('
 Route::post('/aba/payment', [PaymentController::class, 'payWithAba'])->name('aba.payment');
 Route::get('/aba/check-status/{tranId}', [PaymentController::class, 'checkAbaStatus']);
 
-
-
 Route::get('/razorpay/redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay.redirect');
 Route::post('/razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
 
