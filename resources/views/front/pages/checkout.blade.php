@@ -119,24 +119,24 @@
     </script> --}}
 
     <script>
+        let paymentCompleted = false;
+
         function startAbaPolling(tranId) {
             let interval = setInterval(function() {
+
                 $.get(base_url + '/aba/check-status/' + tranId, function(res) {
-                    if (res.status === 'paid') {
+
+                    if (res.status === 'paid' && !paymentCompleted) {
+                        paymentCompleted = true;
                         clearInterval(interval);
 
                         $('#aba_qr_modal').modal('hide');
-
-                        alert('✅ Payment successful');
-
-                        // Redirect / show success page
-                        window.location.href = base_url + '/payment/success';
+                        window.location.href =
+                            base_url + '/student/enroll-courses';
                     }
-                    if (res.status === 'failed') {
-                        clearInterval(interval);
-                        alert('❌ Payment failed');
-                    }
+
                 });
+
             }, 3000);
         }
 

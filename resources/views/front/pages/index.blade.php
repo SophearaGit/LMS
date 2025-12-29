@@ -103,6 +103,13 @@
                     $('#mobile_cart_count_badge').removeClass('d-none').text(data.cartCount);
                 },
                 error: function(xhr, status, error) {
+                    if (xhr.status === 401) {
+                        notyf.error('Please register first.');
+                        setTimeout(() => {
+                            window.location.href = '/login';
+                        }, 2000);
+                        return;
+                    }
                     let errors = xhr.responseJSON;
                     $.each(errors, function(key, value) {
                         notyf.error(value);
