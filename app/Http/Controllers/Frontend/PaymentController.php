@@ -243,8 +243,6 @@ class PaymentController extends Controller
             'email' => $email,
             // 'phone' => $phone,
             'payment_option' => 'abapay',
-            'return_url' => url('/payment/success'),
-            'cancel_url' => url('/payment/cancel'),
         ];
 
         // 5. Generate HASH (EXACT ABA ORDER — DO NOT CHANGE)
@@ -257,9 +255,7 @@ class PaymentController extends Controller
             // $lastname .
             $email .
             // $phone .
-            'abapay' .
-            $params['return_url'] .
-            $params['cancel_url'];
+            'abapay';
 
         $hash = base64_encode(
             hash_hmac(
@@ -302,44 +298,64 @@ class PaymentController extends Controller
     }
 
     // checkAbaStatus
-    public function checkAbaStatus($tranId)
+    public function checkAbaStatus(string $tranId)
     {
-        $params = [
-            'merchant_id' => config('gateway_setting.aba_merchant_id'),
-            'tran_id' => $tranId,
-            'req_time' => now()->format('YmdHis'),
-        ];
+        $merchantId = trim(config('gateway_setting.aba_merchant_id'));
+        $publicKey = trim(config('gateway_setting.aba_public_key'));
 
-        $hashString =
-            $params['req_time'] .
-            $params['merchant_id'] .
-            $params['tran_id'];
+        // ✅ REQUIRED by check-transaction-2
+        $reqTime = now()->utc()->format('YmdHis');
 
-        $params['hash'] = base64_encode(
-            hash_hmac(
-                'sha512',
-                $hashString,
-                config('gateway_setting.aba_public_key'),
-                true
-            )
+        // ✅ EXACT hash string order (from docs)
+        $hashString = $reqTime . $merchantId . $tranId;
+
+        // ✅ BASE64(HMAC_SHA512)
+        $hash = base64_encode(
+            hash_hmac('sha512', $hashString, $publicKey, true)
         );
 
-        $response = Http::asMultipart()->post(
-            'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/check-transaction',
-            $params
+        $response = Http::asJson()->post(
+            'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/check-transaction-2',
+            [
+                'req_time' => $reqTime,
+                'merchant_id' => $merchantId,
+                'tran_id' => $tranId,
+                'hash' => $hash,
+            ]
         );
-
-        if (!$response->ok()) {
-            return response()->json(['status' => 'pending']);
-        }
 
         $data = $response->json();
 
-        if ($data['status']['code'] === '00') {
-            return response()->json(['status' => 'paid']);
+        // SUCCESS conditions
+        if (
+            isset($data['data']) &&
+            (
+                $data['data']['payment_status_code'] == 0 ||
+                $data['data']['payment_status'] === 'APPROVED' ||
+                $data['data']['payment_amount'] > 0
+            )
+        ) {
+
+            OrderService::storeOrder(
+                $tranId,
+                Auth::id(),
+                'approved',
+                $data['data']['payment_amount'],
+                $data['data']['payment_amount'],
+                $data['data']['payment_currency'],
+                'aba'
+            );
+
+            return response()->json([
+                'status' => 'paid'
+            ]);
         }
 
-        return response()->json(['status' => 'pending']);
+        // Still pending
+        return response()->json([
+            'status' => 'pending'
+        ]);
+
     }
 
 }
