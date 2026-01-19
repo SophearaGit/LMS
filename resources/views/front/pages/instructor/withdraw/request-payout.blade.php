@@ -75,26 +75,6 @@
                             <div class="wsus__dashboard_contant">
                                 <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
                                     <div class="wsus__dashboard_heading">
-                                        <h5>Payout Details</h5>
-                                        <p>
-                                            Please make sure your payout
-                                            information is correct before requesting a payout.
-                                        </p>
-                                    </div>
-                                    <div class="wsus__dashboard_contant_btn">
-                                        <a href="{{ route('instructor.profile') }}#payout_details" class="common_btn">Edit
-                                            Payout</a>
-                                    </div>
-                                </div>
-                                <ul class="wsus__dashboard_profile_info">
-                                    <li><span>Gateway:</span> {{ Auth::user()?->payoutGatewayInfo->gateway }}
-                                    </li>
-                                    <li><span>Information:</span>{!! Auth::user()?->payoutGatewayInfo->information !!}</li>
-                                </ul>
-                            </div>
-                            <div class="wsus__dashboard_contant">
-                                <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
-                                    <div class="wsus__dashboard_heading">
                                         <h5>Request Payout</h5>
                                     </div>
                                 </div>
@@ -117,6 +97,26 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                            <div class="wsus__dashboard_contant">
+                                <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                                    <div class="wsus__dashboard_heading">
+                                        <h5>Payout Details</h5>
+                                        <p>
+                                            Please make sure your payout
+                                            information is correct before requesting a payout.
+                                        </p>
+                                    </div>
+                                    <div class="wsus__dashboard_contant_btn">
+                                        <a href="{{ route('instructor.profile') }}#payout_details" class="common_btn">Edit
+                                            Payout</a>
+                                    </div>
+                                </div>
+                                <ul class="wsus__dashboard_profile_info">
+                                    <li><span>Gateway:</span> {{ Auth::user()?->payoutGatewayInfo->gateway }}
+                                    </li>
+                                    <li><span>Information:</span>{!! Auth::user()?->payoutGatewayInfo->information !!}</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
