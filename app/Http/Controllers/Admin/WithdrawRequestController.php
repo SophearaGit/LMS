@@ -22,6 +22,7 @@ class WithdrawRequestController extends Controller
         $data = [
             'pageTitle' => 'CAIDT | Withdraw Request',
             'withdraw' => $withdraw->load('instructor'),
+            'instructorPayoutInformation' => $withdraw->instructor->payoutInformation,
         ];
         return view('admin.pages.withdraw-requests.show', $data);
     }
@@ -33,7 +34,7 @@ class WithdrawRequestController extends Controller
             'status' => 'required|in:pending,approved,rejected',
         ]);
 
-        if($request->status == 'approved' && $withdraw->status != 'pending') {
+        if ($request->status == 'approved' && $withdraw->status != 'pending') {
             notyf()->error('Withdraw request already processed.');
             return redirect()->route('admin.withdraw-request.index');
         }

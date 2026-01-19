@@ -1,3 +1,7 @@
+@php
+    $iPI = $instructorPayoutInformation->information ?? 'No payout information available.';
+@endphp
+
 @extends('admin.layouts.master')
 
 @section('pageTitle', $pageTitle ?? 'Page Title Here')
@@ -51,6 +55,12 @@
                                                             {{ $withdraw->instructor->email }}
                                                         </a>
                                                     </div>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <button type="submit" class="btn btn-warning mt-2​"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-scrollable">
+                                                        Pay Now
+                                                    </button>
                                                 </div>
                                             </div>
                                         </td>
@@ -128,6 +138,22 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="modal-scrollable" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ABA Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{!! $iPI !!}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

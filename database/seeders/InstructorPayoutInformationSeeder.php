@@ -16,8 +16,8 @@ class InstructorPayoutInformationSeeder extends Seeder
     {
         InstructorPayoutInformation::insert([
             'instructor_id' => 2,
-            'gateway' => 'Paypal',
-            'information' => 'credential id, secret key.',
+            'gateway' => 'Aba',
+            'information' => 'Enter your ABA account details here...',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
