@@ -92,7 +92,8 @@ class ProfileController extends Controller
     {
         $request->validate([
             'gateway' => 'required|string|max:255',
-            'gateway_information' => 'required|string|max:2000',
+            'gateway_information' => 'required|string',
+
         ]);
         $user = Auth::user();
         $payout = InstructorPayoutInformation::where('instructor_id', $user->id)->first();
