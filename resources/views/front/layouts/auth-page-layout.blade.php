@@ -34,7 +34,7 @@
 
 
     <!--============ PRELOADER START ===========-->
-    @include('front.layouts.components.preloader')
+    {{-- @include('front.layouts.components.preloader') --}}
     <!--============ PRELOADER START ===========-->
 
     {{-- HEADER START --}}

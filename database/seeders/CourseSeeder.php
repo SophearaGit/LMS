@@ -70,7 +70,7 @@ class CourseSeeder extends Seeder
                     "duration" => $faker->numberBetween(30, 600),
                     "thumbnail" => '/uploads' . $filename,
                     "demo_video_storage" => "youtube",
-                    "demo_video_source" => "https://www.youtube.com/live/_2El-J5lxs4?si=lVAiOm0icJ_cdypT",
+                    "demo_video_source" => "https://youtu.be/jTJvyKZDFsY?si=8hK2sRuAZZN5gQtY",
                     "description" => $faker->paragraph(5),
                     "capacity" => $faker->numberBetween(10, 100),
                     "price" => $faker->randomFloat(2, 50, 300),

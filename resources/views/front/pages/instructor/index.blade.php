@@ -108,6 +108,10 @@
                                                             <th class="amount">
                                                                 AMOUNT
                                                             </th>
+                                                            <th class="action">
+                                                                ACTION
+                                                            </th>
+
                                                         </tr>
                                                         @forelse ($orderItems as $item)
                                                             <tr>
@@ -143,6 +147,11 @@
                                                                         {{ config('settings.site_currency_icon') }}
                                                                         {{ number_format(floor(($item->price ?? 0) * 100) / 100, 2) }}
                                                                     </p>
+                                                                </td>
+                                                                <td class="action">
+                                                                    <a class="edit"
+                                                                        href="{{ route('instructor.courses.edit_basic_info', ['id' => $item->course->id, 'step' => 1]) }}"><i
+                                                                            class="far fa-edit" aria-hidden="true"></i></a>
                                                                 </td>
                                                             </tr>
                                                         @empty
