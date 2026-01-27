@@ -21,4 +21,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-"public/files/2/zip/Template.zip" 
+"public/files/2/zip/Template.zip"
+/public/files/
+/storage/app/public/
+
