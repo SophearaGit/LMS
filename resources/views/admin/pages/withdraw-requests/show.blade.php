@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="height: 600px">
                             <table class="table table-vcenter card-table">
                                 <tbody>
                                     <tr>
@@ -55,12 +55,6 @@
                                                             {{ $withdraw->instructor->email }}
                                                         </a>
                                                     </div>
-                                                </div>
-                                                <div class="ms-auto">
-                                                    <button type="submit" class="btn btn-warning mt-2​"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-scrollable">
-                                                        Pay Now
-                                                    </button>
                                                 </div>
                                             </div>
                                         </td>
@@ -129,6 +123,12 @@
                                                             {{ $withdraw->status != 'pending' ? 'disabled' : '' }}>
                                                             Update Status
                                                         </button>
+                                                        @if ($withdraw->status == 'pending')
+                                                            <a type="submit" class="btn btn-success mt-2"
+                                                                data-bs-toggle="modal" data-bs-target="#modal-scrollable">
+                                                                Pay Now
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                 </form>
                                             </div>
@@ -146,7 +146,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">ABA Information</h5>
+                    <h5 class="modal-title">Payout Information</h5>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

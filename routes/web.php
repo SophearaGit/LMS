@@ -103,14 +103,6 @@ Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" 
     Route::get('/orders', [StudentOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}/invoice', [StudentOrderController::class, 'invoice'])->name('orders.invoice');
 
-
-
-
-
-
-
-
-
 });
 
 /**

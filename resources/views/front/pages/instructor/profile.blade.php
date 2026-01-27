@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-12 col-sm-12 wow fadeInUp">
+                        {{-- <div class="col-xl-12 col-sm-12 wow fadeInUp">
                             <div class="wsus__dashboard_contant">
                                 <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
                                     <div class="wsus__dashboard_heading">
@@ -235,7 +235,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-xl-12 col-sm-12 wow fadeInUp">
                             <div class="wsus__dashboard_contant">
                                 <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
@@ -292,57 +292,4 @@
     </section>
     {{-- DASHBOARD OVERVIEW END --}}
 @endsection
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            tinymce.init({
-                selector: '.editor',
 
-                base_url: '/admin/assets/dist/libs/tinymce',
-                suffix: '.min',
-
-                plugins: 'advlist autolink lists link image charmap preview ' +
-                    'anchor searchreplace visualblocks code fullscreen ' +
-                    'insertdatetime media table help wordcount',
-
-                link_default_protocol: 'https',
-                convert_urls: false
-            });
-        });
-
-        $('.gateway').on('change', function() {
-            let id = $(this).find(':selected').data('id');
-            $('.gateway_description').attr('placeholder', $('.gateway-' + id).html());
-        });
-
-        $(document).ready(function() {
-            $('select').niceSelect();
-        });
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('#profileForm');
-            if (!form) return;
-
-            form.addEventListener('submit', function() {
-                const editor = tinymce.activeEditor;
-
-                let content = editor.getContent({
-                    format: 'html'
-                });
-
-                // convert ONLY plain URLs (not already linked)
-                content = content.replace(
-                    /(^|[\s>])((https?:\/\/)[^\s<]+)/g,
-                    function(match, prefix, url) {
-                        return prefix + '<a href="' + url + '" target="_blank" rel="noopener">' + url +
-                            '</a>';
-                    }
-                );
-
-                editor.setContent(content);
-                tinymce.triggerSave();
-            });
-        });
-    </script>
-@endpush

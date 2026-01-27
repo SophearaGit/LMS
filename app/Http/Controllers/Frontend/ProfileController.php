@@ -33,7 +33,7 @@ class ProfileController extends Controller
     {
         $data = [
             'pageTitle' => 'CAITD | Instructor Profile',
-            'payoutGateways' => PayoutGateway::where('status', 1)->get(),
+            // 'payoutGateways' => PayoutGateway::where('status', 1)->get(),
         ];
         return view('front.pages.instructor.profile', $data);
     }
