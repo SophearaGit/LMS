@@ -79,19 +79,26 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-check-label" for="is_preview">Is Prview</label>
-                            <div class="form-check form-switch mb-3">
+                            <label class="form-check-label" for="is_preview">Is Prview
+                                {{-- user will be allow to watch this lesson without paying --}}
+                                <span>
+
+
+
+                                </span>
+                            </label>
+                            <div class="form-check form-switch mb-4">
                                 <input class="form-check-input" type="checkbox" role="switch" id="is_preview"
                                     name="is_preview" value="1" @checked(@$lesson?->is_preview)>&nbsp;
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label class="form-check-label" for="downloadable">Downloadable</label>
                             <div class="form-check form-switch mb-3">
                                 <input class="form-check-input" type="checkbox" role="switch" id="downloadable"
                                     name="downloadable" value="1" @checked(@$lesson?->downloadable)>&nbsp;
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-md-12">

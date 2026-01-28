@@ -29,7 +29,7 @@
                             <ul>
                                 <li><a href="{{ url('/') }}">Home</a></li>
                                 <li>Instructor Dashboard</li>
-                            </ul>ss
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,8 @@
                                 <div class="wsus__dashboard_contant_top">
                                     <div class="wsus__dashboard_heading wow fadeInUp"
                                         style="visibility: visible; animation-name: fadeInUp;">
-                                        <h5>Best Selling Courses</h5>
+                                        <h5>Orders</h5>
+                                        <p>View and manage your course orders and sales details here.</p>
                                     </div>
                                 </div>
                                 <div class="wsus__dash_course_table wow fadeInUp"
