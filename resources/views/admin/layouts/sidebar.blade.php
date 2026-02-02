@@ -573,7 +573,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ Route::is('admin.database_clear.index') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ Route::is('admin.database_clear.index') ? 'active' : '' }}">
                     <a class="nav-link {{ Route::is('admin.database_clear.index') ? 'active' : '' }}"
                         href="{{ route('admin.database_clear.index') }}"
                         style="background-color: {{ Route::is('admin.database_clear.index') ? '#18212e' : '' }};">
@@ -585,7 +585,7 @@
                             Database Clear
                         </span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

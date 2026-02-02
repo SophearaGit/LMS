@@ -18,7 +18,10 @@ class FrontendContactController extends Controller
     {
         $data = [
             'pageTitle' => 'CAITD | About Us',
-            'contacts' => Contact::where('status', 1)->limit(4)->get(),
+            'contacts' => Contact::where('status', 1)
+            // ->limit(4)
+            ->latest()
+            ->get(),
             'contactSetting' => ContactSetting::first(),
         ];
         return view('front.pages.contact-us', $data);

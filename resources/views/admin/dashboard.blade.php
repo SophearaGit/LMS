@@ -262,13 +262,22 @@
                                         <tbody>
                                             @forelse ($recentCourses as $course)
                                                 <tr>
-                                                    <td>
+                                                    {{-- <td>
                                                         <a href="{{ route('courses.show', $course->slug) }}"
-                                                            target="_blank" class="ms-1" aria-label="Open website">
+                                                            target="_blank" class="ms-1" aria-label="Open website"> <i
+                                                                class="ti ti-link fs-4"></i>
+                                                            {{ Str::limit($course->title, 30) }}
+                                                        </a>
+                                                    </td> --}}
+                                                    <td>
+                                                        <a href="{{ $course->is_approved == 'pending' ? route('admin.courses.index') : route('courses.show', $course->slug) }}"
+                                                            @if ($course->is_approved != 'pending') target="_blank" @endif
+                                                            class="ms-1" aria-label="Open website">
                                                             <i class="ti ti-link fs-4"></i>
                                                             {{ Str::limit($course->title, 30) }}
                                                         </a>
                                                     </td>
+
                                                     <td class="text-secondary">
                                                         @if ($course->is_approved == 'pending')
                                                             <span class="badge bg-yellow-lt">Pending</span>
@@ -302,9 +311,17 @@
                                         <tbody>
                                             @forelse ($recentBlogs as $blog)
                                                 <tr>
-                                                    <td>
+                                                    {{-- <td>
                                                         <a href="{{ route('admin.blog.edit', $blog->id) }}"
                                                             class="ms-1" aria-label="Open website">
+                                                            <i class="ti ti-link fs-4"></i>
+                                                            {{ Str::limit($blog->title, 30) }}
+                                                        </a>
+                                                    </td> --}}
+                                                    <td>
+                                                        <a href="{{ $blog->status == '1' ? route('blog.detail', $blog->slug) : route('admin.blog.edit', $blog->id) }}"
+                                                            class="ms-1" aria-label="Open website"
+                                                            @if ($blog->status == '1') target="_blanks" @endif>
                                                             <i class="ti ti-link fs-4"></i>
                                                             {{ Str::limit($blog->title, 30) }}
                                                         </a>

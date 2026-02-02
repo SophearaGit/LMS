@@ -26,7 +26,9 @@ class CourseController extends Controller
     {
         $data = [
             'pageTitle' => 'CAITD | Courses',
-            'courses' => Course::with(['instructor'])->paginate(15),
+            'courses' => Course::with(['instructor'])
+                ->latest()
+                ->paginate(15),
         ];
         return view('admin.pages.course.course-module.index', $data);
     }

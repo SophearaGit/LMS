@@ -215,7 +215,6 @@
             $('select').niceSelect();
         });
 
-
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('#profileForm');
             if (!form) return;

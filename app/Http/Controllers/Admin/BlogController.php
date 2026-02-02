@@ -21,7 +21,9 @@ class BlogController extends Controller
     {
         $data = [
             'pageTitle' => 'CAITD | Blog',
-            'blogs' => Blog::with('blog_category')->paginate(10),
+            'blogs' => Blog::with('blog_category')
+                ->latest()
+                ->paginate(10),
         ];
         return view('admin.pages.blog.index', $data);
     }
@@ -115,7 +117,7 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( Blog $blog)
+    public function destroy(Blog $blog)
     {
         try {
             $this->deleteIfImageExist($blog->image);
