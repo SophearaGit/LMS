@@ -40,56 +40,20 @@ class CourseCategorySeeder extends Seeder
                 'icon' => 'ti ti-shield-check',
             ],
             [
-                'name' => 'Digital Marketing',
-                'icon' => 'ti ti-chart-bar',
-            ],
-            [
                 'name' => 'Graphic Design',
                 'icon' => 'ti ti-palette',
-            ],
-            [
-                'name' => 'UI/UX Design',
-                'icon' => 'ti ti-layout-grid',
             ],
             [
                 'name' => 'Game Development',
                 'icon' => 'ti ti-device-gamepad-2',
             ],
             [
-                'name' => 'Blockchain',
-                'icon' => 'ti ti-lock',
-            ],
-            [
                 'name' => 'DevOps',
                 'icon' => 'ti ti-server',
             ],
             [
-                'name' => 'Software Testing',
-                'icon' => 'ti ti-checkup-list',
-            ],
-            [
-                'name' => 'Project Management',
-                'icon' => 'ti ti-clipboard-list',
-            ],
-            [
                 'name' => 'Business Analysis',
                 'icon' => 'ti ti-briefcase',
-            ],
-            [
-                'name' => 'Artificial Intelligence',
-                'icon' => 'ti ti-robot',
-            ],
-            [
-                'name' => 'Internet of Things',
-                'icon' => 'ti ti-network',
-            ],
-            [
-                'name' => 'Augmented Reality',
-                'icon' => 'ti ti-eye',
-            ],
-            [
-                'name' => 'Virtual Reality',
-                'icon' => 'ti ti-badge-vr',
             ],
             [
                 'name' => 'html5',
@@ -130,16 +94,6 @@ class CourseCategorySeeder extends Seeder
                 'name' => 'ruby',
                 'icon' => 'ti ti-brand-ruby',
                 'parent_id' => 1, // Assuming 'Web Development' is the parent category
-            ],
-            [
-                'name' => 'swift',
-                'icon' => 'ti ti-brand-swift',
-                'parent_id' => 2, // Assuming 'Mobile Development' is the parent category
-            ],
-            [
-                'name' => 'kotlin',
-                'icon' => 'ti ti-brand-kotlin',
-                'parent_id' => 2, // Assuming 'Mobile Development' is the parent category
             ],
             [
                 'name' => 'flutter',
@@ -190,36 +144,6 @@ class CourseCategorySeeder extends Seeder
                 'name' => 'gcp',
                 'icon' => 'ti ti-brand-gcp',
                 'parent_id' => 5, // Assuming 'Cloud Computing' is the parent category
-            ],
-            [
-                'name' => 'ethical-hacking',
-                'icon' => 'ti ti-shield-lock',
-                'parent_id' => 6, // Assuming 'Cyber Security' is the parent category
-            ],
-            [
-                'name' => 'penetration-testing',
-                'icon' => 'ti ti-shield-check',
-                'parent_id' => 6, // Assuming 'Cyber Security' is the parent category
-            ],
-            [
-                'name' => 'seo',
-                'icon' => 'ti ti-search',
-                'parent_id' => 7, // Assuming 'Digital Marketing' is the parent category
-            ],
-            [
-                'name' => 'content-marketing',
-                'icon' => 'ti ti-pencil',
-                'parent_id' => 7, // Assuming 'Digital Marketing' is the parent category
-            ],
-            [
-                'name' => 'adobe-photoshop',
-                'icon' => 'ti ti-brand-adobe',
-                'parent_id' => 8, // Assuming 'Graphic Design' is the parent category
-            ],
-            [
-                'name' => 'adobe-illustrator',
-                'icon' => 'ti ti-brand-adobe-illustrator',
-                'parent_id' => 8, // Assuming 'Graphic Design' is the parent category
             ],
         ];
 

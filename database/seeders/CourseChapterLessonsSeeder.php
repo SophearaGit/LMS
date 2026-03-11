@@ -34,7 +34,11 @@ class CourseChapterLessonsSeeder extends Seeder
                         "chapter_id" => $chapter_id,
                         "course_id" => $course_id,
                         // "file_path => "https://youtu.be/UjBhbMMgLzc?si=ZbKmtzkJiKexqzqW",
+<<<<<<< HEAD
                         "file_path" => "https://www.youtube.com/watch?v=UjBhbMMgLzc",
+=======
+                        "file_path" => "https://youtu.be/I5kj-YsmWjM?si=XLcOB806tJKbhWvE",
+>>>>>>> main
                         "storage" => "youtube",
                         "duration" => $faker->numberBetween(30, 600),
                         "file_type" => "video",

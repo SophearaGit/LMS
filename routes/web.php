@@ -40,6 +40,7 @@ Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
 Route::get('/courses/{slug}', [CoursePageController::class, 'getcoursedetailpage'])->name('courses.show');
 Route::post('/review', [CoursePageController::class, 'sendReview'])->name('send.review');
+<<<<<<< HEAD
 
 // CART PAGE START
 Route::group(['middleware' => ['auth', 'verified', 'check_role:student']], function () {
@@ -69,7 +70,40 @@ Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.
 Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
 
 // ABOUT PAGE START
+=======
+>>>>>>> main
 
+// CART PAGE START
+Route::group(['middleware' => ['auth', 'verified', 'check_role:student']], function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/{course_id}/store', [CartController::class, 'store'])->name('cart.store');
+    Route::get('/cart/{cart_id}/delete', [CartController::class, 'destroy'])->name('cart.destroy');
+});
+
+// CHECKOUT PAGE START
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+// PAYMENT ROUTE START
+Route::get('/payment/paypal', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+Route::get('/payment/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+Route::get('/payment/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+
+Route::get('/stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+Route::get('/stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
+Route::get('/stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
+
+Route::post('/aba/payment', [PaymentController::class, 'payWithAba'])->name('aba.payment');
+Route::get('/aba/check-status/{tranId}', [PaymentController::class, 'checkAbaStatus']);
+
+Route::get('/razorpay/redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay.redirect');
+Route::post('/razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
+
+Route::get('/order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
+Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.fail');
+
+Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
+
+// ABOUT PAGE START
 /**
  *————————————————————————————————————————————————————————————————————————————————
  * STUDENT ROUTE
@@ -100,6 +134,7 @@ Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" 
     // ORDERS ROUTE
     Route::get('/orders', [StudentOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}/invoice', [StudentOrderController::class, 'invoice'])->name('orders.invoice');
+<<<<<<< HEAD
 
 
 
@@ -108,6 +143,8 @@ Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" 
 
 
 
+=======
+>>>>>>> main
 
 });
 

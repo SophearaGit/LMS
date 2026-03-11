@@ -8,7 +8,11 @@
                 <img src="{{ auth()->user()->image }}" alt="profile" class="img-fluid w-100">
             </div>
             <h4>{{ auth()->user()->name }}</h4>
-            <p><strong>{{ auth()->user()->role }}</strong></p>
+            <p class="text-uppercase">
+                <strong>{{ auth()->user()->role }}</strong>
+                {{-- <span class="badge rounded-pill text-bg-secondary">
+                </span> --}}
+            </p>
         </div>
         <ul class="wsus__dashboard_sidebar_menu">
             <li>

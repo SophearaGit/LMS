@@ -15,6 +15,7 @@ class PayoutGatewaySeeder extends Seeder
     {
         PayoutGateway::insert([
             [
+<<<<<<< HEAD
                 'name' => 'Stripe',
                 'description' => 'Publishable Key:"Enter your Stripe Publishable Key"',
                 'status' => 1,
@@ -22,6 +23,10 @@ class PayoutGatewaySeeder extends Seeder
             [
                 'name' => 'Razorpay',
                 'description' => 'Key ID:"Enter your Razorpay Key ID"',
+=======
+                'name' => 'Aba',
+                'description' => 'Enter your ABA account information here...',
+>>>>>>> main
                 'status' => 1,
             ],
             [
@@ -29,6 +34,19 @@ class PayoutGatewaySeeder extends Seeder
                 'description' => 'Client ID:"Enter your PayPal Client ID"',
                 'status' => 1,
             ],
+<<<<<<< HEAD
+=======
+            [
+                'name' => 'Stripe',
+                'description' => 'Publishable Key:"Enter your Stripe Publishable Key"',
+                'status' => 0,
+            ],
+            [
+                'name' => 'Razorpay',
+                'description' => 'Key ID:"Enter your Razorpay Key ID"',
+                'status' => 0,
+            ],
+>>>>>>> main
         ]);
     }
 }

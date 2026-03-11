@@ -33,7 +33,11 @@ class ProfileController extends Controller
     {
         $data = [
             'pageTitle' => 'CAITD | Instructor Profile',
+<<<<<<< HEAD
             'payoutGateways' => PayoutGateway::where('status', 1)->get(),
+=======
+            // 'payoutGateways' => PayoutGateway::where('status', 1)->get(),
+>>>>>>> main
         ];
         return view('front.pages.instructor.profile', $data);
     }
@@ -92,7 +96,12 @@ class ProfileController extends Controller
     {
         $request->validate([
             'gateway' => 'required|string|max:255',
+<<<<<<< HEAD
             'gateway_information' => 'required|string|max:2000',
+=======
+            'gateway_information' => 'required|string',
+
+>>>>>>> main
         ]);
         $user = Auth::user();
         $payout = InstructorPayoutInformation::where('instructor_id', $user->id)->first();

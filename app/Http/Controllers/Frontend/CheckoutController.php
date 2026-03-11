@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Cart;
@@ -35,11 +36,14 @@ define('ABA_PAYWAY_API_KEY', '308f1c5f450ff6d971bf8a805b4d18a6ef142464');
 |
 */
 define('ABA_PAYWAY_MERCHANT_ID', 'ec000262');
+=======
+>>>>>>> main
 
 class CheckoutController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         $user = Auth::guard('web')->user();
         $full_name = explode(" ", $user->name);
         $first_name = trim($full_name[0]);
@@ -91,4 +95,11 @@ class CheckoutController extends Controller
         $hash = base64_encode(hash_hmac('sha512', $str, ABA_PAYWAY_API_KEY, true));
         return $hash;
     }
+=======
+        $data = [
+            'pageTitle' => 'CAITD | Checkout',
+        ];
+        return view('front.pages.checkout', $data);
+    }
+>>>>>>> main
 }

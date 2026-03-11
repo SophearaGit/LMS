@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
+=======
+use App\Models\InstructorPayoutInformation;
+use App\Models\PayoutGateway;
+>>>>>>> main
 use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +23,10 @@ class WithdrawController extends Controller
         return view('front.pages.instructor.withdraw.index', $data);
     }
 
+<<<<<<< HEAD
     // requestPayout
+=======
+>>>>>>> main
     public function requestPayout(Request $request)
     {
         $data = [
@@ -26,16 +34,40 @@ class WithdrawController extends Controller
             'currentBallance' => Auth::user()->wallet,
             'pendingBallance' => Withdraw::where('instructor_id', Auth::user()->id)->where('status', 'pending')->sum('amount'),
             'totalPayout' => Withdraw::where('instructor_id', Auth::user()->id)->where('status', 'approved')->sum('amount'),
+<<<<<<< HEAD
         ];
         return view('front.pages.instructor.withdraw.request-payout', $data);
     }
+=======
+            'payoutGateways' => PayoutGateway::where('status', 1)->get(),
+        ];
+        return view('front.pages.instructor.withdraw.request-payout', $data);
+    }
+
+>>>>>>> main
     public function requestPayoutStore(Request $request)
     {
         try {
             $request->validate([
                 'payout_amount' => 'required|numeric|min:1|max:' . Auth::user()->wallet,
             ]);
+<<<<<<< HEAD
             if(Withdraw::where('instructor_id', Auth::user()->id)->where('status', 'pending')->exists()){
+=======
+
+            // check if user has payout information
+            $payout = InstructorPayoutInformation::where('instructor_id', Auth::id())->first();
+            if (
+                !$payout ||
+                empty($payout->gateway) ||
+                empty($payout->information)
+            ) {
+                notyf()->addError('Please add your payout information before requesting a withdrawal.');
+                return redirect()->back();
+            }
+
+            if (Withdraw::where('instructor_id', Auth::user()->id)->where('status', 'pending')->exists()) {
+>>>>>>> main
                 notyf()->addError('You have already requested a payout. Please wait for it to be approved.');
                 return redirect()->back();
             }

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+@php
+    $iPI = $instructorPayoutInformation->information ?? 'No payout information available.';
+@endphp
+
+>>>>>>> main
 @extends('admin.layouts.master')
 
 @section('pageTitle', $pageTitle ?? 'Page Title Here')
@@ -33,7 +40,11 @@
                         </div>
                     </div>
                     <div class="card-body">
+<<<<<<< HEAD
                         <div class="table-responsive">
+=======
+                        <div class="table-responsive" style="height: 600px">
+>>>>>>> main
                             <table class="table table-vcenter card-table">
                                 <tbody>
                                     <tr>
@@ -119,6 +130,15 @@
                                                             {{ $withdraw->status != 'pending' ? 'disabled' : '' }}>
                                                             Update Status
                                                         </button>
+<<<<<<< HEAD
+=======
+                                                        @if ($withdraw->status == 'pending')
+                                                            <a type="submit" class="btn btn-success mt-2"
+                                                                data-bs-toggle="modal" data-bs-target="#modal-scrollable">
+                                                                Pay Now
+                                                            </a>
+                                                        @endif
+>>>>>>> main
                                                     </div>
                                                 </form>
                                             </div>
@@ -132,6 +152,26 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+    <div class="modal modal-blur fade" id="modal-scrollable" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Payout Information</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{!! $iPI !!}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+>>>>>>> main
 @endsection
 
 @push('scripts')

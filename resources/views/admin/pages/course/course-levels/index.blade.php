@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @push('stylesheets')
+<<<<<<< HEAD
 <style>
     @media (min-width: 1400px) {
 
@@ -11,6 +12,18 @@
         .container-xl,
         .container-xxl {
             max-width: 100%;
+=======
+    <style>
+        @media (min-width: 1400px) {
+            .container,
+            .container-lg,
+            .container-md,
+            .container-sm,
+            .container-xl,
+            .container-xxl {
+                max-width: 100%;
+            }
+>>>>>>> main
         }
     }
 </style>

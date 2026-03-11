@@ -7,6 +7,10 @@ use App\Models\Order;
 use App\Service\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\Http;
+>>>>>>> main
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe\Checkout\Session as StripeSession;
 use Stripe\Stripe;
@@ -211,4 +215,153 @@ class PaymentController extends Controller
             dd($error);
         }
     }
+<<<<<<< HEAD
+=======
+
+    public function payWithAba(Request $request)
+    {
+        // 1. Amount in USD / KHR
+        $usdAmount = cartTotalPrice();
+        $amountKhr = round($usdAmount * 4000); // no decimals
+
+        // 2. Generate unique tran_id
+        $tranId = 'ABA' . time();
+
+        $reqTime = now()->format('YmdHis');
+
+        // 3. User info (safe)
+        $user = Auth::user();
+
+        $firstname = $user->name ?? 'Customer';
+        // $lastname = 'Pay';
+        $email = $user->email ?? 'test@example.com';
+        // $phone = '012345678';
+
+        // 4. Required params
+        $params = [
+            'req_time' => $reqTime,
+            'merchant_id' => config('gateway_setting.aba_merchant_id'),
+            'tran_id' => $tranId,
+            'amount' => $amountKhr,
+            'firstname' => $firstname,
+            // 'lastname' => $lastname,
+            'email' => $email,
+            // 'phone' => $phone,
+            'payment_option' => 'abapay',
+        ];
+
+        // 5. Generate HASH (EXACT ABA ORDER — DO NOT CHANGE)
+        $hashString =
+            $reqTime .
+            $params['merchant_id'] .
+            $tranId .
+            $amountKhr .
+            $firstname .
+            // $lastname .
+            $email .
+            // $phone .
+            'abapay';
+
+        $hash = base64_encode(
+            hash_hmac(
+                'sha512',
+                $hashString,
+                config('gateway_setting.aba_public_key'),
+                true
+            )
+        );
+
+        $params['hash'] = $hash;
+
+        // PRODUCTION: 'https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase',
+        // SADNBOX: 'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase'
+
+        // 6. Call ABA PayWay API
+        $response = Http::asMultipart()->post(
+            'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase',
+            $params
+        );
+
+        // 7. Error handling
+        if (!$response->ok()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'ABA PayWay request failed',
+                'error' => $response->body(),
+            ], 500);
+        }
+
+        // 8. Success
+        return response()->json([
+            'status' => 'success',
+            'tran_id' => $tranId,
+            'data' => $response->json(),
+            'amountUsd' => $usdAmount,
+            'amountKhr' => $amountKhr,
+        ]);
+
+    }
+
+    // checkAbaStatus
+    public function checkAbaStatus(string $tranId)
+    {
+        $merchantId = trim(config('gateway_setting.aba_merchant_id'));
+        $publicKey = trim(config('gateway_setting.aba_public_key'));
+
+        // ✅ REQUIRED by check-transaction-2
+        $reqTime = now()->utc()->format('YmdHis');
+
+        // ✅ EXACT hash string order (from docs)
+        $hashString = $reqTime . $merchantId . $tranId;
+
+        // ✅ BASE64(HMAC_SHA512)
+        $hash = base64_encode(
+            hash_hmac('sha512', $hashString, $publicKey, true)
+        );
+
+        $response = Http::asJson()->post(
+            'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/check-transaction-2',
+            [
+                'req_time' => $reqTime,
+                'merchant_id' => $merchantId,
+                'tran_id' => $tranId,
+                'hash' => $hash,
+            ]
+        );
+
+        $data = $response->json();
+
+        // SUCCESS conditions
+        if (
+            isset($data['data']) &&
+            (
+                $data['data']['payment_status_code'] == 0 ||
+                $data['data']['payment_status'] === 'APPROVED' ||
+                $data['data']['payment_amount'] > 0
+            )
+        ) {
+
+            OrderService::storeOrder(
+                $tranId,
+                Auth::id(),
+                'approved',
+                $data['data']['payment_amount'],
+                $data['data']['payment_amount'],
+                $data['data']['payment_currency'],
+                'aba'
+            );
+
+            return response()->json([
+                'status' => 'paid'
+            ]);
+        }
+
+        // Still pending
+        return response()->json([
+            'status' => 'pending'
+        ]);
+
+    }
+
+>>>>>>> main
 }

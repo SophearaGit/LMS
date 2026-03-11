@@ -85,7 +85,12 @@
                                 <div class="wsus__dashboard_contant_top">
                                     <div class="wsus__dashboard_heading wow fadeInUp"
                                         style="visibility: visible; animation-name: fadeInUp;">
+<<<<<<< HEAD
                                         <h5>Best Selling Courses</h5>
+=======
+                                        <h5>Orders</h5>
+                                        <p>View and manage your course orders and sales details here.</p>
+>>>>>>> main
                                     </div>
                                 </div>
                                 <div class="wsus__dash_course_table wow fadeInUp"
@@ -108,6 +113,13 @@
                                                             <th class="amount">
                                                                 AMOUNT
                                                             </th>
+<<<<<<< HEAD
+=======
+                                                            <th class="action">
+                                                                ACTION
+                                                            </th>
+
+>>>>>>> main
                                                         </tr>
                                                         @forelse ($orderItems as $item)
                                                             <tr>
@@ -144,6 +156,14 @@
                                                                         {{ number_format(floor(($item->price ?? 0) * 100) / 100, 2) }}
                                                                     </p>
                                                                 </td>
+<<<<<<< HEAD
+=======
+                                                                <td class="action">
+                                                                    <a class="edit"
+                                                                        href="{{ route('instructor.courses.edit_basic_info', ['id' => $item->course->id, 'step' => 1]) }}"><i
+                                                                            class="far fa-edit" aria-hidden="true"></i></a>
+                                                                </td>
+>>>>>>> main
                                                             </tr>
                                                         @empty
                                                             <tr>
