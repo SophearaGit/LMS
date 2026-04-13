@@ -13,7 +13,7 @@
             <div class="row">
                 <input type="hidden" name="course_id" value="{{ $course_id }}">
                 <input type="hidden" name="chapter_id" value="{{ $chapter_id }}">
-                {{-- <input type="hidden" name="lesson_id" value="{{ $lesson_id }}"> --}}
+
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="source" class="form-label">Source</label>
+                        <label for="storage" class="form-label">Source</label>
                         <select class="form-select storage" aria-label="Default select example" name="storage" required>
                             <option selected>Select</option>
                             @foreach (config('course.video_source') as $item => $name)

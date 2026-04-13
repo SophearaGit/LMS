@@ -70,6 +70,7 @@
                                             <div class="text-secondary">
                                                 Monthly Orders
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -121,74 +122,98 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="bg-primary text-white avatar">
-                                                <i class="ti ti-book"></i>
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                <b>
-                                                    {{ $totalPendingCourse }}
-                                                </b>
+                        <div class="col-sm-6 col-lg-3 ">
+                            <a href="{{ route('admin.courses.index', ['status' => 'pending']) }}">
+                                <div class="card card-sm bg-yellow-lt">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="bg-warning text-white avatar">
+                                                    <i class="ti ti-book"></i>
+                                                </span>
                                             </div>
-                                            <div class="text-secondary">
-                                                Pending Courses
+                                            <div class="col ">
+                                                <div class="font-weight-medium">
+                                                    <b>
+                                                        <strong>
+                                                            {{ $totalPendingCourse }}
+                                                        </strong>
+                                                    </b>
+                                                </div>
+                                                <div class="text-secondary">
+                                                    <b>
+                                                        <strong>
+                                                            Pending Courses
+                                                        </strong>
+                                                    </b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="bg-primary text-white avatar">
-                                                <i class="ti ti-book-off"></i>
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                <b>
-                                                    {{ $totalRejectedCourse }}
-                                                </b>
+                            <a href="{{ route('admin.courses.index', ['status' => 'rejected']) }}">
+                                <div class="card card-sm bg-red-lt">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="bg-danger text-white avatar">
+                                                    <i class="ti ti-book-off"></i>
+                                                </span>
                                             </div>
-                                            <div class="text-secondary">
-                                                Rejected Courses
+                                            <div class="col">
+                                                <div class="font-weight-medium">
+                                                    <b>
+                                                        <strong>
+                                                            {{ $totalRejectedCourse }}
+                                                        </strong>
+                                                    </b>
+                                                </div>
+                                                <div class="text-secondary">
+                                                    <b>
+                                                        <strong>
+                                                            Rejected Courses
+                                                        </strong>
+                                                    </b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="bg-primary text-white avatar">
-                                                <i class="ti ti-books"></i>
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                <b>
-                                                    {{ $totalCourseCount }}
-                                                </b>
+                            <a href="{{ route('admin.courses.index', ['status' => 'approved']) }}">
+                                <div class="card card-sm  bg-green-lt">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="bg-success text-white avatar">
+                                                    <i class="ti ti-books"></i>
+                                                </span>
                                             </div>
-                                            <div class="text-secondary">
-                                                Total Courses
+                                            <div class="col">
+                                                <div class="font-weight-medium">
+                                                    <b>
+                                                        <strong>
+                                                            {{ $totalCourseCount }}
+                                                        </strong>
+                                                    </b>
+                                                </div>
+                                                <div class="text-secondary">
+                                                    <b>
+                                                        <strong>
+                                                            Total Courses
+                                                        </strong>
+                                                    </b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-sm-12 col-lg-12">
                             <div class="card card-sm">
@@ -199,53 +224,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="col-sm-12 col-lg-4">
-                            <div class="card card-md sticky-top">
-                                <div class="card-stamp card-stamp-lg">
-                                    <div class="card-stamp-icon bg-primary">
-                                        <!-- Download SVG icon from http://tabler.io/icons/icon/ghost -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
-                                            <path
-                                                d="M5 11a7 7 0 0 1 14 0v7a1.78 1.78 0 0 1 -3.1 1.4a1.65 1.65 0 0 0 -2.6 0a1.65 1.65 0 0 1 -2.6 0a1.65 1.65 0 0 0 -2.6 0a1.78 1.78 0 0 1 -3.1 -1.4v-7">
-                                            </path>
-                                            <path d="M10 10l.01 0"></path>
-                                            <path d="M14 10l.01 0"></path>
-                                            <path d="M10 14a3.5 3.5 0 0 0 4 0"></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-10">
-                                            <h3 class="h1">Tabler Icons</h3>
-                                            <div class="markdown">
-                                                All icons come from the Tabler Icons set and are MIT-licensed. Visit
-                                                <a href="https://tabler.io/icons" target="_blank" rel="noopener">Tabler
-                                                    Icons Website</a>, download any of the 5880 icons in SVG, PNG
-                                                or&nbsp;React and use them in your favourite design tools.
-                                            </div>
-                                            <div class="mt-3">
-                                                <a href="https://tabler.io/icons" class="btn btn-primary" target="_blank"
-                                                    rel="noopener">
-                                                    <!-- Download SVG icon from http://tabler.io/icons/icon/download -->
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-1">
-                                                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
-                                                        <path d="M7 11l5 5l5 -5"></path>
-                                                        <path d="M12 4l0 12"></path>
-                                                    </svg>
-                                                    Download icons
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                         <div class="col-md-12 col-lg-4">
                             <div class="card">
                                 <div class="card-header">
@@ -380,6 +358,80 @@
                                                             {{ config('settings.site_currency_icon') }}
                                                             {{ $order->total_amount }}
                                                         </b>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <h3 class="card-title">
+                                            Recently Bought Courses
+                                        </h3>
+                                    </div>
+                                    <div class="card-actions">
+                                        <div class="dropdown">
+                                            <a href="#" class="btn-action dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                    <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                    <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end" style="">
+                                                <a href="{{ route('admin.report.excel') }}" class="dropdown-item">
+                                                    Export Excel
+                                                </a>
+                                                <a href="{{ route('admin.report.pdf') }}" class="dropdown-item">
+                                                    Download Pdf
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-table table-responsive">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Course Title
+                                                </th>
+                                                <th>
+                                                    Total Student
+                                                </th>
+                                                <th>
+                                                    Total Revenue
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($recentBoughtCourses as $course)
+                                                <tr>
+                                                    <td>
+                                                        <a href="{{ route('courses.show', $course->slug) }}"
+                                                            target="_blank" class="ms-1" aria-label="Open website"> <i
+                                                                class="ti ti-link fs-4"></i>
+                                                            {{ Str::limit($course->title, 30) }}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        {{ $course->enrollments()->count() }}
+                                                    </td>
+                                                    <td>
+                                                        {{ config('settings.site_currency_icon') }}
+                                                        {{ $course->total_revenue ?? '0' }}
                                                     </td>
                                                 </tr>
                                             @empty

@@ -6,12 +6,14 @@
             <input type="hidden" name="course_id" value="{{ @$courseId }}">
             <input type="hidden" name="current_step" value="4">
             <div class="row">
+
                 <div class="col-xl-12">
                     <div class="add_course_more_info_input">
                         <label for="#">Message for Reviewer</label>
                         <textarea rows="7" placeholder="Message for Reviewer" name="message_for_reviewer">{!! @$course->message_for_reviewer !!}</textarea>
                     </div>
                 </div>
+
                 <div class="col-xl-12">
                     <div class="add_course_more_info_input mb-0">
                         <label for="#">Status *</label>
@@ -25,6 +27,8 @@
                         <button type="submit" class="common_btn mt_25">save</button>
                     </div>
                 </div>
+
+
             </div>
         </form>
     </div>

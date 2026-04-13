@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class CourseContentController extends Controller
 {
 
-    public function createChapterModal(string $course_id)
+    public function createChapterModal(string $course_id): string
     {
         return view('front.pages.instructor.course.components.partials.course-chapter-modal', compact('course_id'))->render();
     }

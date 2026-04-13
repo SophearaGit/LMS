@@ -61,6 +61,63 @@
                         </span>
                     </a>
                 </li>
+                {{-- user dropdown role student and instructor --}}
+                <li class="nav-item dropdown {{ Route::is('admin.users.*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.users.*') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block dropdown-menu me-2">
+                            <i class="ti ti-users" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Users
+                        </span>
+                    </a>
+                    <div class="dropdown-menu {{ Route::is('admin.users.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.users.*') ? 'data-bs-popper="static"' : '' }}>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.users.index') ? 'active' : '' }} "
+                                    href="{{ route('admin.users.index') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.users.index') ? 'text-white' : '' }} ">
+                                        <i class="ti ti-user" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span
+                                        class="nav-link-title {{ Route::is('admin.users.index') ? 'text-white' : '' }} mt-1">
+                                        All Users
+                                    </span>
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.users.instructors') ? 'active' : '' }} "
+                                    href="{{ route('admin.users.instructors') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.users.instructors') ? 'text-white' : '' }} ">
+                                        <i class="ti ti-user-check" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span
+                                        class="nav-link-title {{ Route::is('admin.users.instructors') ? 'text-white' : '' }} mt-1">
+                                        Instructors
+                                    </span>
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.users.students') ? 'active' : '' }} "
+                                    href="{{ route('admin.users.students') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.users.students') ? 'text-white' : '' }} ">
+                                        <i class="ti ti-user-check" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span
+                                        class="nav-link-title {{ Route::is('admin.users.students') ? 'text-white' : '' }} mt-1">
+                                        Students
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
+
+
                 <li class="nav-item {{ Route::is('admin.orders.index') ? 'active' : '' }}">
                     <a class="nav-link {{ Route::is('admin.orders.index') ? 'active' : '' }}"
                         href="{{ route('admin.orders.index') }}"
@@ -93,9 +150,9 @@
                         style="background-color: {{ Route::is('admin.withdraw-request.index') ? '#18212e' : '' }};">
                         <span
                             class="nav-link-icon {{ Route::is('admin.withdraw-request.index') ? 'text-white' : '' }} d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-message-circle-dollar">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path

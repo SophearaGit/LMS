@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\Admin\CourseCategoryStoreRequest;
 use App\Http\Requests\Admin\CourseCategoryUpdateRequest;
 use App\Models\CourseCategory;
 use App\Traites\FileUpload;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 

@@ -44,6 +44,7 @@ use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TopBarController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\HeroController;
 use Illuminate\Support\Facades\Route;
 
@@ -92,6 +93,28 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
         ->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/report/excel', [DashboardController::class, 'exportExcel'])
+        ->name('report.excel');
+    Route::get('/report/pdf', [DashboardController::class, 'exportPdf'])
+        ->name('report.pdf');
+
+    /*******************************************************
+     * USERS ROUTES START
+     *******************************************************/
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/instructors', [UserController::class, 'instructors'])->name('users.instructors');
+
+    Route::get('/instructors/excel', [UserController::class, 'exportExcel'])
+        ->name('users.instructors.excel');
+    Route::get('/instructors/export-pdf', [UserController::class, 'exportPdf'])
+        ->name('users.instructors.exportPdf');
+
+    Route::get('/students', [UserController::class, 'students'])->name('users.students');
+    Route::get('/students/excel', [UserController::class, 'exportStudentsExcel'])
+        ->name('users.students.excel');
+
+    Route::get('/students/export-pdf', [UserController::class, 'exportStudentsPdf'])
+        ->name('users.students.exportPdf');
 
     /*******************************************************
      * INSTRUCTOR REQUESTS ROUTES START

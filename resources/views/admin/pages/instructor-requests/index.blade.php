@@ -23,7 +23,58 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Instructor Requests</h3>
+                        {{-- <div class="card-actions">
+                            <form action="{{ route('admin.instructor-requests.index') }}" method="GET">
+                                <p>Sort by Status:</p>
+                                <select name="status" onchange="this.form.submit()">
+                                    <option value="">All</option>
+                                    <option value="pending" @selected(request('status') == 'pending')>Pending</option>
+                                    <option value="approved" @selected(request('status') == 'approved')>Approved</option>
+                                    <option value="rejected" @selected(request('status') == 'rejected')>Rejected</option>
+                                </select>
+                            </form>
+                        </div> --}}
+                        <div class="card-actions">
+                            <div class="dropdown">
+                                <a href="#" class="btn-action dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"><!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    {{-- all --}}
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.instructor-requests.index') }}">
+                                        All
+                                    </a>
+                                    <a class="dropdown-item text-warning"
+                                        href="
+                                        {{ route('admin.instructor-requests.index', ['status' => 'pending']) }}
+                                    ">
+                                        Pending
+                                    </a>
+                                    <a class="dropdown-item text-success"
+                                        href="
+                                        {{ route('admin.instructor-requests.index', ['status' => 'approved']) }}">
+                                        Approved
+                                    </a>
+                                    <a class="dropdown-item text-danger"
+                                        href="
+                                        {{ route('admin.instructor-requests.index', ['status' => 'rejected']) }}">
+                                        Rejected
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    {{-- @include('admin.pages.partials.breadcrumb') --}}
                     <div class="card-body">
                         {{-- TABLE START --}}
                         <div class="table-responsive">
@@ -54,6 +105,10 @@
                                                     </span>
                                                 @elseif($item->approval_status === 'rejected')
                                                     <span class="badge bg-red text-red-fg">
+                                                        {{ $item->approval_status }}
+                                                    </span>
+                                                @elseif($item->approval_status === 'approved')
+                                                    <span class="badge bg-green text-green-fg">
                                                         {{ $item->approval_status }}
                                                     </span>
                                                 @endif
@@ -92,9 +147,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="3">
-                                                <span class="text-danger">NO DATA</span>
-                                            </td>
+                                            <td colspan="6" class="text-center">No instructor requests found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

@@ -205,8 +205,8 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
