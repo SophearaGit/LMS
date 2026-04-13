@@ -8,9 +8,85 @@ use App\Models\Course;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardController extends Controller
 {
+
+    public function exportExcel()
+    {
+
+        $report = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('courses', 'courses.id', '=', 'order_items.course_id')
+            ->select(
+                'courses.title as course_name',
+                DB::raw('SUM(order_items.qty) as total_students'),
+                DB::raw('SUM(order_items.price * order_items.qty) as total_revenue')
+            )
+            ->where('orders.status', 'approved') // optional but recommended
+            ->groupBy('courses.id', 'courses.title')
+            ->whereYear('orders.created_at', now()->year)
+            ->get();
+
+        // Create Spreadsheet
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Header
+        $sheet->setCellValue('A1', 'Course');
+        $sheet->setCellValue('B1', 'Total Students');
+        $sheet->setCellValue('C1', 'Total Revenue');
+
+        // data
+        $row = 2;
+        foreach ($report as $item) {
+            $sheet->setCellValue('A' . $row, $item->course_name);
+            $sheet->setCellValue('B' . $row, $item->total_students);
+            $sheet->setCellValue('C' . $row, $item->total_revenue);
+            $row++;
+        }
+
+        // File name
+        $fileName = 'course-sales.xlsx';
+
+        // Output
+        $writer = new Xlsx($spreadsheet);
+
+        return response()->streamDownload(function () use ($writer) {
+            $writer->save('php://output');
+        }, $fileName);
+    }
+
+
+    public function exportPdf(Request $request)
+    {
+        $year = $request->year ?? now()->year;
+
+        $report = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('courses', 'courses.id', '=', 'order_items.course_id')
+            ->whereYear('orders.created_at', $year)
+            ->where('orders.status', 'approved')
+            ->select(
+                'courses.title as course_name',
+                DB::raw('SUM(order_items.qty) as total_students'),
+                DB::raw('SUM(order_items.price * order_items.qty) as revenue')
+            )
+            ->groupBy('courses.id', 'courses.title')
+            ->get();
+
+        $pdf = Pdf::loadView('admin.reports.course-sales-pdf' , compact('report', 'year'));
+
+        return $pdf->download("course-sales-$year.pdf");
+    }
+
+
+
+
     public function index()
     {
 
@@ -26,6 +102,8 @@ class DashboardController extends Controller
                 ->whereYear('created_at', Carbon::now()->year)
                 ->count();
         }
+
+
 
         $data = [
             'pageTitle' => 'CAITD | Admin Dashboard',
@@ -43,9 +121,28 @@ class DashboardController extends Controller
             'recentCourses' => Course::latest()->take(5)->get(),
             'recentBlogs' => Blog::latest()->take(5)->get(),
             'recentOrders' => Order::latest()->take(5)->get(),
+            'recentBoughtCourses' => Course::whereHas('orderItems.order', function ($query) {
+                $query->where('status', 'approved');
+            })
+                ->with(['orderItems.order'])
+                ->withSum([
+                    'orderItems as total_revenue' => function ($query) {
+                        $query->whereHas('order', function ($q) {
+                            $q->where('status', 'approved');
+                        });
+                    }
+                ], DB::raw('price * qty'))
+                ->latest('id')
+                ->take(5)
+                ->get(),
+
         ];
 
         return view('admin.dashboard', $data);
     }
+
+
+
+
 
 }

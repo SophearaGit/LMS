@@ -19,16 +19,40 @@ class InstructorRequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index(Request $request)
+    // {
+    //     $instructorRequests = User::where('approval_status', 'pending')
+    //         ->orWhere('approval_status', 'rejected')
+    //         ->orWhere('approval_status', 'approved')
+    //         // ✅ Sort By Status
+    //         ->when($request->has('status') && $request->filled('status'), function ($query) use ($request) {
+    //             $query->where('approval_status', $request->status);
+    //         })
+
+    //         ->latest()
+    //         ->get();
+    //     $data = [
+    //         'pageTitle' => 'CAITD | Instructor Request'
+    //     ];
+    //     return view('admin.pages.instructor-requests.index', $data, compact('instructorRequests'));
+    // }
+
+
+    public function index(Request $request)
     {
-        $instructorRequests = User::where('approval_status', 'pending')
-            ->orWhere('approval_status', 'rejected')
+        $instructorRequests = User::whereIn('approval_status', [
+            'pending',
+            'approved',
+            'rejected'
+        ])
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('approval_status', $request->status);
+            })
+            ->latest()
             ->get();
-        $data = [
-            'pageTitle' => 'CAITD | Instructor Request'
-        ];
-        return view('admin.pages.instructor-requests.index', $data, compact('instructorRequests'));
+        return view('admin.pages.instructor-requests.index', compact('instructorRequests'));
     }
+
 
     /**
      * Download Instructor Document Or Resume.

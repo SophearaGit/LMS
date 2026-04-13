@@ -119,14 +119,15 @@
                                     @endif
                                 @endforeach
                             </div>
-                            <div class="wsus__sidebar_rating">
+                            {{-- Price range optional --}}
+                            {{-- <div class="wsus__sidebar_rating">
                                 <h3>Price Range</h3>
                                 <div class="range_slider">
                                     <input class="al-range-slider__input js-al-range-slider__input" name="from"
                                         type="text"><input class="al-range-slider__input js-al-range-slider__input"
                                         name="to" type="text">
                                 </div>
-                            </div>
+                            </div> --}}
                             <br>
                             <div class="row">
                                 <button type="submit" class="common_btn">Search</button>
@@ -137,7 +138,9 @@
                 <div class="col-xl-9 col-lg-8 order-lg-1">
                     <div class="wsus__page_courses_header wow fadeInUp"
                         style="visibility: visible; animation-name: fadeInUp;">
-                        <p>Showing <span>1-{{ $courses->count() }}</span> Of <span>{{ $courses->total() }}</span> Results
+                        {{-- <p>Showing <span>1-{{ $courses->count() }}</span> Of <span>{{ $courses->total() }}</span> Results
+                        </p> --}}
+                        <p>Showing <span>{{ $courses->count() }}</span> Of <span>{{ $courses->total() }}</span> Results
                         </p>
                         <form action="{{ route('courses') }}">
                             <p>Sort-by:</p>
@@ -202,8 +205,8 @@
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>

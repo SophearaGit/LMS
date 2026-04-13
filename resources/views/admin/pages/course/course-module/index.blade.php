@@ -24,12 +24,46 @@
                     <div class="card-header">
                         <h3 class="card-title">Courses</h3>
                         <div class="card-actions">
-                            {{-- <a href="{{ route('admin.courses.create') }}" class="btn btn-primary">
-                                <i class="ti ti-plus"></i>&nbsp;
-                                Add new
-                            </a> --}}
+                            <div class="dropdown">
+                                <a href="#" class="btn-action dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"><!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+
+                                    <form method="GET" action="{{ route('admin.courses.index') }}">
+                                        <a class="dropdown-item"
+                                            href="
+                                            {{ route('admin.courses.index', ['status' => 'pending']) }}
+                                        ">
+                                            Pending
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="
+                                            {{ route('admin.courses.index', ['status' => 'approved']) }}
+                                        ">
+                                            Approved
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="
+                                            {{ route('admin.courses.index', ['status' => 'rejected']) }}
+                                        ">
+                                            Rejected
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    {{-- @include('admin.pages.partials.breadcrumb') --}}
                     <div class="card-body">
                         {{-- TABLE START --}}
                         <div class="table-responsive">
@@ -65,8 +99,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <select name="status" id="" class="update_approval_status text-dark"
-                                                    data-id="{{ $item->id }}">
+                                                <select name="status" id=""
+                                                    class="update_approval_status text-dark" data-id="{{ $item->id }}">
                                                     <option @selected($item->is_approved === 'pending') value="pending">Pending
                                                     </option>
                                                     <option @selected($item->is_approved === 'approved') value="approved">Approved

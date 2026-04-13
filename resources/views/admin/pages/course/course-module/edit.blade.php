@@ -188,7 +188,7 @@
                                                         <label class="form-label">Description</label>
                                                         <textarea class="form-control" data-bs-toggle="autosize" placeholder="Type something…"
                                                             style="overflow: hidden; overflow-wrap: break-word; resize: none; text-align: start; height: 59.3333px;"
-                                                            name="description">{!! $course->description !!}</textarea>
+                                                            name="description">{!! $course->description !!} </textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-12">

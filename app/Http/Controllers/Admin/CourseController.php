@@ -22,14 +22,32 @@ class CourseController extends Controller
     /**
      * SHOW INSTRUCTOR COURSE PAGEs
      */
-    public function index()
+    // public function index(Request $request)
+    // {
+    //     $data = [
+    //         'pageTitle' => 'CAITD | Courses',
+    //         'courses' => Course::with(['instructor'])
+    //             ->latest()
+    //             ->paginate(15),
+    //     ];
+    //     return view('admin.pages.course.course-module.index', $data);
+    // }
+
+    public function index(Request $request)
     {
+        $courses = Course::with(['instructor'])
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('is_approved', $request->status);
+            })
+            ->latest()
+            ->paginate(15);
         $data = [
             'pageTitle' => 'CAITD | Courses',
-            'courses' => Course::with(['instructor'])->paginate(15),
+            'courses' => $courses,
         ];
         return view('admin.pages.course.course-module.index', $data);
     }
+
 
     /**
      * UPDATE COURSE APPROVAL STATUS

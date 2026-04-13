@@ -26,6 +26,7 @@ class BlogController extends Controller
                         $q->where('slug', $slug);
                     });
                 })
+                ->latest()
                 ->paginate(6),
         ];
         return view('front.pages.blog', $data);

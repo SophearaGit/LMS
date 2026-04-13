@@ -92,6 +92,7 @@
 
         $('.basic_info_form').on('submit', function(e) {
             e.preventDefault();
+            tinymce.triggerSave();
             let formData = new FormData(this);
 
             $.ajax({
