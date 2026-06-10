@@ -63,6 +63,11 @@ class Course extends Model
         return $this->hasMany(OrderItem::class, 'course_id', 'id');
     }
 
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
 
 
 

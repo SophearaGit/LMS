@@ -18,7 +18,6 @@
         ->get();
     $customPages = \App\Models\CustomPage::where('status', 1)->where('show_at_nav', 1)->limit(2)->latest()->get();
 @endphp
-
 <nav class="navbar navbar-expand-lg main_menu main_menu_3">
     <a class="navbar-brand" href="{{ url('/') }}">
         @if (config('settings.site_logo'))
@@ -61,7 +60,6 @@
                 @endforeach
             </ul>
         </div>
-
         <ul class="navbar-nav m-auto">
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
@@ -99,23 +97,49 @@
                     </ul>
                 </li>
             @endif
-
         </ul>
         <div class="right_menu">
-            <div class="menu_search_btn">
-                <img src="{{ asset('/front/images/search_icon.png') }}" alt="Search" class="img-fluid">
+            <div class="menu_search_btn"
+                style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; cursor: pointer;">
+                <i class="far fa-search" style="font-size: 22px; color: #333;"></i>
             </div>
             <ul>
-                <li>
-                    <a class="menu_signin" href="{{ route('cart.index') }}">
-                        <span>
-                            <img src="{{ asset('/front/images/cart_icon_black.png') }}" alt="user"
-                                class="img-fluid">
-                        </span>
-                        <b id="cart_count_badge"
-                            class="{{ cartTotalCourseCount() > 0 ? '' : 'd-none' }}">{{ cartTotalCourseCount() }}</b>
-                    </a>
-                </li>
+                {{-- WISHLIST ICON - ADD THIS --}}
+                @auth
+                    @if (Auth::user()->role == 'student')
+                        <li style="position: relative; display: flex; align-items: center; margin-right: 4px;">
+                            <a href="javascript:void(0);" id="desktop_wishlist_btn"
+                                style="position: relative; display: inline-flex; align-items: center; justify-content: center;
+              width: 40px; height: 40px;">
+                                <i class="far fa-heart" style="font-size: 22px; color: #333;"></i>
+                                @php $wishlistCount = \App\Models\Wishlist::where('user_id', auth()->id())->count(); @endphp
+                                <b id="wishlist_count_badge" class="{{ $wishlistCount > 0 ? '' : 'd-none' }}"
+                                    style="position: absolute; top: 0px; right: 0px;
+                  background: #e74c3c; color: #fff; border-radius: 50%;
+                  font-size: 10px; width: 17px; height: 17px;
+                  display: flex; align-items: center; justify-content: center;
+                  font-weight: 700; line-height: 1;">
+                                    {{ $wishlistCount }}
+                                </b>
+                            </a>
+                        </li>
+                        <li style="position: relative; display: flex; align-items: center; padding-right: 6px;">
+                            <a href="{{ route('cart.index') }}"
+                                style="position: relative; display: inline-flex; align-items: center; justify-content: center;
+                   width: 40px; height: 40px;">
+                                <i class="far fa-shopping-cart" style="font-size: 22px; color: #333;"></i>
+                                <b id="cart_count_badge" class="{{ cartTotalCourseCount() > 0 ? '' : 'd-none' }}"
+                                    style="position: absolute; top: 0px; right: 0px;
+                       background: #e74c3c; color: #fff; border-radius: 50%;
+                       font-size: 10px; width: 17px; height: 17px;
+                       display: flex; align-items: center; justify-content: center;
+                       font-weight: 700; line-height: 1;">
+                                    {{ cartTotalCourseCount() }}
+                                </b>
+                            </a>
+                        </li>
+                    @endif
+                @endauth
                 @auth
                     @if (Auth::user()->role == 'student')
                         <li>
@@ -136,8 +160,6 @@
                     </li>
                 @endauth
             </ul>
-
-
         </div>
     </div>
 </nav>

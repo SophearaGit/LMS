@@ -8,9 +8,30 @@
                         <h2>{{ $becomeInstructorSectionItems?->title }}</h2>
                     </div>
                     {!! $becomeInstructorSectionItems?->description !!}
-                    <a class="common_btn"
-                        href="{{ $becomeInstructorSectionItems?->btn_txt_url }}">{{ $becomeInstructorSectionItems?->btn_txt }}
-                        <i class="far fa-arrow-right"></i></a>
+                    {{-- <a class="common_btn"href="{{ $becomeInstructorSectionItems?->btn_txt_url }}">{{ $becomeInstructorSectionItems?->btn_txt }}
+          <i class="far fa-arrow-right"></i>
+          </a> --}}
+                    @if (auth()->user() != null)
+                        @if (auth()->user()->role === 'student')
+                            <a class="common_btn" href="/student/profile#section_become_instruction">
+                                {{-- {{ $becomeInstructorSectionItems?->btn_txt }} --}}
+                                Become an Instructor
+                                <i class="far fa-arrow-right"></i>
+                            </a>
+                        @elseif (auth()->user()->role === 'instructor')
+                            <a class="common_btn" href="/instructor/dashboard">
+                                {{-- {{ $becomeInstructorSectionItems?->btn_txt }} --}}
+                                Manage Your Courses
+                                <i class="far fa-arrow-right"></i>
+                            </a>
+                        @endif
+                    @endif
+                    @if (auth()->user() == null)
+                        <a class="common_btn" href="/register">
+                            Make Money Teaching Online
+                            <i class="far fa-arrow-right"></i>
+                        </a>
+                    @endif
                 </div>
             </div>
             <div class="col-xl-5 col-md-6 wow fadeInRight">

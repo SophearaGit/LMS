@@ -206,7 +206,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-xl-12 col-sm-12 wow fadeInUp">
+                        <div class="col-xl-12 col-sm-12 wow fadeInUp" id="section_become_instruction">
                             <div class="wsus__dashboard_contant">
                                 <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
                                     <div class="wsus__dashboard_heading">
@@ -218,8 +218,6 @@
                                         </p>
                                     </div>
                                 </div>
-
-
                                 {{-- <div
                                     class="wsus__dash_earning d-flex align-items-center flex-wrap
                                 @if (auth()->user()->approval_status === 'pending') justify-content-between
@@ -241,7 +239,6 @@
                                         </div>
                                     @endif
                                 </div> --}}
-
                                 <form action="{{ route('student.become_instructor_update', auth()->user()->id) }}"
                                     method="POST" enctype="multipart/form-data" class="wsus__dashboard_social_profile">
                                     @csrf

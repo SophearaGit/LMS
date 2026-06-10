@@ -100,8 +100,9 @@
                             <h1>{{ $course->title }}</h1>
                             <ul class="list">
                                 <li>
-                                    <span><img src="{{ $course->instructor->image }}" alt="user"
-                                            class="img-fluid"></span>
+                                    <span><img
+                                            src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                            alt="user" class="img-fluid"></span>
                                     By {{ $course->instructor->name }}
                                 </li>
                                 <li>
@@ -109,7 +110,7 @@
                                     {{ $course->category->name }}
                                 </li>
                                 <li>
-                                    <span><img src="/front/images/calendar_blue.png" alt="Calendar"
+                                    <span><img src="{{ '/front/images/calendar_blue.png' }}" alt="Calendar"
                                             class="img-fluid"></span>
                                     Last updated {{ date('d/M/Y', strtotime($course->updated_at)) }}
                                 </li>
@@ -152,7 +153,6 @@
                                     aria-controls="pills-disabled2" aria-selected="false" tabindex="-1">Review</button>
                             </li>
                         </ul>
-
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab" tabindex="0">
@@ -202,6 +202,7 @@
                                                                                     Preview
                                                                                 </span>
                                                                             </a>
+
                                                                             <!-- Custom Video Overlay -->
                                                                             <div id="videoOverlay{{ $lesson->id }}"
                                                                                 style="
@@ -260,8 +261,8 @@
                                     <div class="row align-items-center">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wsus__courses_instructor_img">
-                                                <img src="{{ $course->instructor->image }}" alt="Instructor"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Instructor" class="img-fluid">
                                             </div>
                                         </div>
                                         <div class="col-lg-8 col-md-6">
@@ -287,36 +288,38 @@
                                                     </li>
                                                     <li><strong>4.7 Rating</strong></li>
                                                     <li>
-                                                        <span><img src="/front/images/book_icon.png" alt="book"
-                                                                class="img-fluid"></span>
+                                                        <span><img src="{{ '/front/images/book_icon.png' }}"
+                                                                alt="book" class="img-fluid"></span>
                                                         {{ $course->instructor->courses()->count() }} Courses
                                                     </li>
                                                     <li>
-                                                        <span><img src="/front/images/user_icon_gray.png" alt="user"
-                                                                class="img-fluid"></span>
+                                                        <span><img src="{{ '/front/images/user_icon_gray.png' }}"
+                                                                alt="user" class="img-fluid"></span>
                                                         {{ $course->instructor->students()->count() }} Students
                                                     </li>
                                                 </ul>
                                                 <ul class="badge d-flex flex-wrap">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Exclusive Author">
-                                                        <img src="/front/images/badge_1.png" alt="Badge"
+                                                        <img src="{{ '/front/images/badge_1.png' }}" alt="Badge"
                                                             class="img-fluid">
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Top Earning"><img src="/front/images/badge_2.png"
-                                                            alt="Badge" class="img-fluid"></li>
+                                                        data-bs-title="Top Earning"><img
+                                                            src="{{ '/front/images/badge_2.png' }}" alt="Badge"
+                                                            class="img-fluid"></li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Trending"><img src="/front/images/badge_3.png"
-                                                            alt="Badge" class="img-fluid"></li>
+                                                        data-bs-title="Trending"><img
+                                                            src="{{ '/front/images/badge_3.png' }}" alt="Badge"
+                                                            class="img-fluid"></li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="2 Years of Membership"><img
-                                                            src="/front/images/badge_4.png" alt="Badge"
+                                                            src="{{ '/front/images/badge_4.png' }}" alt="Badge"
                                                             class="img-fluid">
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Collector Lavel 1">
-                                                        <img src="/front/images/badge_5.png" alt="Badge"
+                                                        <img src="{{ '/front/images/badge_5.png' }}" alt="Badge"
                                                             class="img-fluid">
                                                     </li>
                                                 </ul>
@@ -379,11 +382,9 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="pills-disabled2" role="tabpanel"
                                 aria-labelledby="pills-disabled-tab2" tabindex="0">
                                 <div class="wsus__courses_review box_area">
@@ -471,7 +472,6 @@
                                                     <span
                                                         class="qnty">{{ $course->reviews->where('rating', 1)->count() }}</span>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -552,13 +552,16 @@
                                 @if ($course->demo_video_storage == 'youtube')
                                     <a class="play_btn venobox vbox-item" data-autoplay="true" data-vbtype="video"
                                         href="{{ $course->demo_video_source }}">
-                                        <img src="/front/images/play_icon_white.png" alt="Play" class="img-fluid">
+                                        <img src="{{ '/front/images/play_icon_white.png' }}" alt="Play"
+                                            class="img-fluid">
                                     </a>
                                 @else
                                     <!-- Button -->
                                     <a id="btn_play" class="play_btn">
-                                        <img src="/front/images/play_icon_white.png" alt="Play" class="img-fluid">
+                                        <img src="{{ '/front/images/play_icon_white.png' }}" alt="Play"
+                                            class="img-fluid">
                                     </a>
+
                                     <!-- Custom Video Overlay -->
                                     <div id="videoOverlay"
                                         style="
@@ -600,7 +603,7 @@
                             <ul>
                                 <li>
                                     <p>
-                                        <span><img src="/front/images/clock_icon_black.png" alt="clock"
+                                        <span><img src="{{ asset('/front/images/clock_icon_black.png') }}" alt="clock"
                                                 class="img-fluid"></span>
                                         Course Duration
                                     </p>
@@ -608,24 +611,24 @@
                                 </li>
                                 <li>
                                     <p>
-                                        <span><img src="/front/images/network_icon_black.png" alt="network"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('/front/images/network_icon_black.png') }}"
+                                                alt="network" class="img-fluid"></span>
                                         Skill Level
                                     </p>
                                     {{ $course->level->name }}
                                 </li>
                                 <li>
                                     <p>
-                                        <span><img src="/front/images/user_icon_black_2.png" alt="User"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('/front/images/user_icon_black_2.png') }}"
+                                                alt="User" class="img-fluid"></span>
                                         Student Enrolled
                                     </p>
                                     {{ $course->enrollments()->count() }}
                                 </li>
                                 <li>
                                     <p>
-                                        <span><img src="/front/images/language_icon_black.png" alt="Language"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('/front/images/language_icon_black.png') }}"
+                                                alt="Language" class="img-fluid"></span>
                                         Language
                                     </p>
                                     {{ $course->language->name }}
@@ -668,20 +671,20 @@
                             <h3>This Course Includes</h3>
                             <ul>
                                 <li>
-                                    <span><img src="/front/images/video_icon_black.png" alt="video"
+                                    <span><img src="{{ asset('/front/images/video_icon_black.png') }}" alt="video"
                                             class="img-fluid"></span>
                                     {{-- 54 min 24 sec Video Lectures --}}
                                     {{ minToHours($course->duration) }} Video Lectures
                                 </li>
                                 @if ($course->certificate == 1)
                                     <li>
-                                        <span><img src="/front/images/certificate_icon_black.png" alt="Certificate"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ '/front/images/certificate_icon_black.png' }}"
+                                                alt="Certificate" class="img-fluid"></span>
                                         Certificate of Completion
                                     </li>
                                 @endif
                                 <li>
-                                    <span><img src="/front/images/life_time_icon.png" alt="Certificate"
+                                    <span><img src="{{ asset('/front/images/life_time_icon.png') }}" alt="Certificate"
                                             class="img-fluid"></span>
                                     Course Lifetime Access
                                 </li>
@@ -690,7 +693,8 @@
                         <div class="wsus__courses_sidebar_instructor">
                             <div class="image_area d-flex flex-wrap align-items-center">
                                 <div class="img">
-                                    <img src="{{ $course->instructor->image }}" alt="Instructor" class="img-fluid">
+                                    <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                        alt="Instructor" class="img-fluid">
                                 </div>
                                 <div class="text">
                                     <h3>{{ $course->instructor->name }}</h3>
@@ -707,13 +711,26 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
     <script>
+        const notyf = new Notyf({
+            duration: 5000,
+            dismissible: true,
+            position: {
+                x: 'right',
+                y: 'bottom'
+            },
+        });
+        // Add to cart click — lives in layout so it works on every page
+        $(document).on('click', '.add_to_cart_btn', function(e) {
+            e.preventDefault();
+            add_to_cart($(this).data('course-id'));
+        });
+
         $(document).ready(function() {
             $('[id^=btn_play]').each(function() {
                 const btn = $(this);
                 const lessonId = this.id.replace('btn_play', '');
                 const overlay = $('#videoOverlay' + lessonId);
                 const video = $('#demoVideo' + lessonId);
-
                 // Ensure video is always clickable & cursor shows
                 video.css({
                     'z-index': '1000000',
@@ -724,19 +741,16 @@
                 overlay.css({
                     'pointer-events': 'auto'
                 });
-
                 // Show modal and play video
                 btn.on('click', function() {
                     overlay.css('display', 'flex');
                     setTimeout(() => overlay.css('opacity', '1'), 10);
-
                     if (video.length) {
                         const vid = video.get(0);
                         vid.muted = false;
                         vid.play();
                     }
                 });
-
                 // Close modal when clicking overlay background
                 overlay.on('click', function(e) {
                     if (e.target.id === 'videoOverlay' + lessonId) {
@@ -754,18 +768,14 @@
             });
         });
 
-
         function openOverlay() {
             let overlay = $('#videoOverlay');
             let video = $('#demoVideo');
-
             overlay.css('display', 'flex');
-
             // Small delay to trigger CSS transition
             setTimeout(() => {
                 overlay.css('opacity', '1');
             }, 10);
-
             // Autoplay MP4
             if (video.is('video')) {
                 video.get(0).muted = false;
@@ -785,14 +795,24 @@
                 }
             }, 300); // Matches transition duration
         }
-
         $('#btn_play').on('click', openOverlay);
         $('#closeOverlay').on('click', closeOverlay);
-
         // Close if clicking outside the video
         $('#videoOverlay').on('click', function(e) {
             if (e.target.id === 'videoOverlay') {
                 closeOverlay();
+            }
+        });
+        // Auto-activate Instructor tab if URL hash is #instructor-tab
+        $(document).ready(function() {
+            if (window.location.hash === '#instructor-tab') {
+                $('#pills-contact-tab').trigger('click');
+                // Smooth scroll to the tab area
+                setTimeout(() => {
+                    $('html, body').animate({
+                        scrollTop: $('#pills-tab').offset().top - 80
+                    }, 500);
+                }, 200);
             }
         });
     </script>
