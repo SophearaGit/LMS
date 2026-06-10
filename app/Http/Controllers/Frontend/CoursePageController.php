@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Frontend;
-
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -11,7 +9,7 @@ use App\Models\Enrollments;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Wishlist;
 class CoursePageController extends Controller
 {
     public function getCoursePage(Request $request)
@@ -72,6 +70,12 @@ class CoursePageController extends Controller
                 ->get(),
             'levels' => CourseLevel::with('courses')->get(),
             'languages' => CourseLanguage::with('courses')->get(),
+            // At the top of getCoursePage() $data array, add:
+            'wishlistedCourseIds' => Auth::check()
+                ? Wishlist::where('user_id', Auth::id())
+                    ->pluck('course_id')
+                    ->toArray()
+                : [],
         ];
         return view('front.pages.course-page', $data);
     }
@@ -97,43 +101,35 @@ class CoursePageController extends Controller
         ];
         return view('front.pages.course-detail-page', $data);
     }
-
     public function sendReview(Request $request)
     {
         // dd($request->all());
-
         $request->validate(rules: [
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string|max:2000',
             'course_id' => 'required|exists:courses,id',
         ]);
-
         $checkPurchase = Enrollments::where('user_id', Auth::id())
             ->where('course_id', $request->course_id)
             ->exists();
-
         $alreadyReviewed = Review::where('user_id', Auth::id())
             ->where('course_id', $request->course_id)
             ->where('status', 1)
             ->exists();
-
         if (!$checkPurchase) {
             notyf()->error('You must purchase the course before submitting a review.');
             return redirect()->back();
         }
-
         if ($alreadyReviewed) {
             notyf()->error('You have already submitted a review for this course.');
             return redirect()->back();
         }
-
         // $review = new Review();
         // $review->user_id = Auth::id();
         // $review->course_id = $request->course_id;
         // $review->review = $request->comment;
         // $review->rating = $request->rating;
         // $review->save();
-
         Review::updateOrCreate(
             [
                 'user_id' => Auth::id(),
@@ -145,9 +141,7 @@ class CoursePageController extends Controller
                 'status' => 0,
             ]
         );
-
         notyf()->success('Thank you for your review! It will be published after approval.');
         return redirect()->back();
     }
-
 }

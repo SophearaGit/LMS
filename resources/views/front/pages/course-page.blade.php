@@ -71,39 +71,6 @@
                                     @endif
                                 @endforeach
                             </div>
-                            {{-- <div class="wsus__sidebar_course_lavel rating">
-                                <h3>Rating</h3>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr1">
-                                    <label class="form-check-label" for="flexCheckDefaultr1">
-                                        <i class="fas fa-star" aria-hidden="true"></i> 5 star
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr2">
-                                    <label class="form-check-label" for="flexCheckDefaultr2">
-                                        <i class="fas fa-star" aria-hidden="true"></i> 4 star or above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr3">
-                                    <label class="form-check-label" for="flexCheckDefaultr3">
-                                        <i class="fas fa-star" aria-hidden="true"></i> 3 star or above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr4">
-                                    <label class="form-check-label" for="flexCheckDefaultr4">
-                                        <i class="fas fa-star" aria-hidden="true"></i> 2 star or above
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr5">
-                                    <label class="form-check-label" for="flexCheckDefaultr5">
-                                        <i class="fas fa-star" aria-hidden="true"></i> 1 star or above
-                                    </label>
-                                </div>
-                            </div> --}}
                             <div class="wsus__sidebar_course_lavel duration">
                                 <h3>Language</h3>
                                 @foreach ($languages as $language)
@@ -119,15 +86,6 @@
                                     @endif
                                 @endforeach
                             </div>
-                            {{-- Price range optional --}}
-                            {{-- <div class="wsus__sidebar_rating">
-                                <h3>Price Range</h3>
-                                <div class="range_slider">
-                                    <input class="al-range-slider__input js-al-range-slider__input" name="from"
-                                        type="text"><input class="al-range-slider__input js-al-range-slider__input"
-                                        name="to" type="text">
-                                </div>
-                            </div> --}}
                             <br>
                             <div class="row">
                                 <button type="submit" class="common_btn">Search</button>
@@ -138,15 +96,13 @@
                 <div class="col-xl-9 col-lg-8 order-lg-1">
                     <div class="wsus__page_courses_header wow fadeInUp"
                         style="visibility: visible; animation-name: fadeInUp;">
-                        {{-- <p>Showing <span>1-{{ $courses->count() }}</span> Of <span>{{ $courses->total() }}</span> Results
-                        </p> --}}
                         <p>Showing <span>{{ $courses->count() }}</span> Of <span>{{ $courses->total() }}</span> Results
                         </p>
                         <form action="{{ route('courses') }}">
                             <p>Sort-by:</p>
                             <select class="select_js order_by" style="display: none;" name="order_by"
                                 onchange="this.form.submit()">
-                                <option value="desc"@selected(request()->order_by == 'desc')>New to Old</option>
+                                <option value="desc" @selected(request()->order_by == 'desc')>New to Old</option>
                                 <option value="asc" @selected(request()->order_by == 'asc')>Old to New</option>
                             </select>
                         </form>
@@ -161,22 +117,21 @@
                                             class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
-                                                        alt="Love" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
-                                                        alt="Compare" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
-                                                        alt="Cart" class="img-fluid">
-                                                </a>
+                                                @auth
+                                                    <a href="javascript:void(0);" class="wishlist_btn"
+                                                        data-course-id="{{ $course->id }}"
+                                                        title="{{ in_array($course->id, $wishlistedCourseIds) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist"
+                                                            class="img-fluid wishlist-icon {{ in_array($course->id, $wishlistedCourseIds) ? 'wishlisted' : '' }}"
+                                                            style="{{ in_array($course->id, $wishlistedCourseIds) ? 'filter: invert(27%) sepia(95%) saturate(7481%) hue-rotate(356deg) brightness(97%) contrast(118%);' : '' }}">
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('login') }}" title="Login to Wishlist">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist" class="img-fluid">
+                                                    </a>
+                                                @endauth
                                             </li>
                                         </ul>
                                         <span class="time"><i class="far fa-clock"></i>
@@ -203,7 +158,7 @@
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
-                                        <a class="author" href="#">
+                                        <a class="author" href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                             <div class="img">
                                                 <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
                                                     alt="Author" class="img-fluid">
@@ -286,6 +241,19 @@
 @endsection
 @push('scripts')
     <script>
+        const notyf = new Notyf({
+            duration: 5000,
+            dismissible: true,
+            position: {
+                x: 'right',
+                y: 'bottom'
+            },
+        });
+        // Add to cart click — lives in layout so it works on every page
+        $(document).on('click', '.add_to_cart_btn', function(e) {
+            e.preventDefault();
+            add_to_cart($(this).data('course-id'));
+        });
         $(document).ready(function() {
             $('.categoty_list li.active .wsus__sidebar_sub_category').each(function() {
                 var dynamicHeight = 0;

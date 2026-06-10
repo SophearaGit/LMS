@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Frontend;
-
 use App\Http\Controllers\Controller;
 use App\Models\AboutUsSection;
 use App\Models\BecomeInstructorSection;
@@ -18,15 +16,14 @@ use App\Models\LatestCourseSection;
 use App\Models\NewsLetter;
 use App\Models\Testimonial;
 use App\Models\VideoSection;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Auth;
 class FrontendController extends Controller
 {
     public function index(Request $request)
     {
         $featuredInstructorItems = FeaturedInstructorSection::first();
-
         $data = [
             'pageTitle' => 'CAITD | Homepage',
             'heroItems' => Hero::first(),
@@ -46,15 +43,17 @@ class FrontendController extends Controller
             'featuredInstructorItems' => $featuredInstructorItems,
             'testimonials' => Testimonial::all(),
             'blogs' => Blog::where('status', 1)->latest()->get(),
+            'wishlistedCourseIds' => Auth::check()
+                ? Wishlist::where('user_id', Auth::id())
+                    ->pluck('course_id')
+                    ->toArray()
+                : [],
         ];
-
         $featuredInstructorCourses = Course::whereIn('id', json_decode($featuredInstructorItems?->featured_courses))->get();
-
         return view('front.pages.index', $data, compact(
             'featuredInstructorCourses'
         ));
     }
-
     public function subscribeNewsletter(Request $request)
     {
         $request->validate(
@@ -67,16 +66,13 @@ class FrontendController extends Controller
                 'email.unique' => 'Email already subscribed to our newsletter.',
             ]
         );
-
         $data = $request->only('email');
         NewsLetter::create($data);
-
         return response()->json([
             'status' => 'success',
             'message' => 'You have successfully subscribed to our newsletter.',
         ]);
     }
-
     public function getAboutUs()
     {
         $data = [
@@ -87,7 +83,6 @@ class FrontendController extends Controller
         ];
         return view('front.pages.about-us', $data);
     }
-
     public function customPage(string $slug)
     {
         $data = [
@@ -99,8 +94,4 @@ class FrontendController extends Controller
         ];
         return view('front.pages.custom-page', $data);
     }
-
 }
-
-
-

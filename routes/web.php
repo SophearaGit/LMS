@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CartController;
@@ -16,12 +15,11 @@ use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\StudentOrderController;
+use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\WithdrawController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schedule;
-
 Schedule::command('telescope:prune --hours=48')->daily();
-
 /**
  *————————————————————————————————————————————————————————————————————————————————
  * FRONTEND ROUTE
@@ -35,42 +33,32 @@ Route::get('/page/{slug}', [FrontendController::class, 'customPage'])->name('cus
 Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'getBlogDetail'])->name('blog.detail');
 Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment.store');
-
 // COURSE PAGE START
 Route::get('/courses', [CoursePageController::class, 'getCoursePage'])->name('courses');
 Route::get('/courses/{slug}', [CoursePageController::class, 'getcoursedetailpage'])->name('courses.show');
 Route::post('/review', [CoursePageController::class, 'sendReview'])->name('send.review');
-
 // CART PAGE START
 Route::group(['middleware' => ['auth', 'verified', 'check_role:student']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/{course_id}/store', [CartController::class, 'store'])->name('cart.store');
     Route::get('/cart/{cart_id}/delete', [CartController::class, 'destroy'])->name('cart.destroy');
 });
-
 // CHECKOUT PAGE START
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-
 // PAYMENT ROUTE START
 Route::get('/payment/paypal', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
 Route::get('/payment/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
 Route::get('/payment/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
-
 Route::get('/stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
 Route::get('/stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
 Route::get('/stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
-
 Route::post('/aba/payment', [PaymentController::class, 'payWithAba'])->name('aba.payment');
 Route::get('/aba/check-status/{tranId}', [PaymentController::class, 'checkAbaStatus']);
-
 Route::get('/razorpay/redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay.redirect');
 Route::post('/razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
-
 Route::get('/order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
 Route::get('/order-fail', [PaymentController::class, 'orderFail'])->name('order.fail');
-
 Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
-
 // ABOUT PAGE START
 /**
  *————————————————————————————————————————————————————————————————————————————————
@@ -78,12 +66,17 @@ Route::post('/newsletter/subscribe', [FrontendController::class, 'subscribeNewsl
  *————————————————————————————————————————————————————————————————————————————————
  */
 Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" => "student."], function () {
+    // routes/web.php — inside your auth middleware group
+    Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::get('/wishlist/modal-items', [WishlistController::class, 'modalItems'])
+        ->middleware('auth')
+        ->name('wishlist.modal_items');
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/become-instructor', [StudentDashboardController::class, 'becomeInstructor'])->name('become_instructor');
     Route::post('/become-instructor/{user}', [StudentDashboardController::class, 'becomeInstructorUpdate'])->name('become_instructor_update');
     Route::get('/reviews', [StudentDashboardController::class, 'getReview'])->name('reviews.index');
     Route::delete('/reviews/{review}/delete', [StudentDashboardController::class, 'deleteReview'])->name('reviews.delete');
-
     // PROFIL UPDATE
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('prfile.update');
@@ -98,13 +91,10 @@ Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" 
     Route::get('/enroll-courses/{lesson_id}/download-file', [EnrolledCourseController::class, 'downloadFile'])->name('enroll_courses.download_file');
     // CERTIFICATE ROUTE
     Route::get('/certificate/{course}/download', [CertificateController::class, 'download'])->name('certificate.download');
-
     // ORDERS ROUTE
     Route::get('/orders', [StudentOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}/invoice', [StudentOrderController::class, 'invoice'])->name('orders.invoice');
-
 });
-
 /**
  * ————————————————————————————————————————————————————————————————————————————————
  * INSTRUCTOR ROUTE
@@ -160,7 +150,6 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
      */
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}/invoice/{orderItem}', [OrderController::class, 'invoice'])->name('orders.invoice');
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * WITHDRAW ROUTE
@@ -169,8 +158,6 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::get('/withdraws', [WithdrawController::class, 'index'])->name('withdraws.index');
     Route::get('/withdraws/request-payout', [WithdrawController::class, 'requestPayout'])->name('withdraws.request_payout');
     Route::post('/withdraws/request-payout', [WithdrawController::class, 'requestPayoutStore'])->name('withdraws.request_payout_store');
-
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * LARAVEL FILE MANAGER
@@ -179,10 +166,6 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "pr
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
-
 });
-
-
 require __DIR__ . '/auth.php';
-
 require __DIR__ . '/admin.php';

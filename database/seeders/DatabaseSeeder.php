@@ -1,14 +1,10 @@
 <?php
-
 namespace Database\Seeders;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 // use App\Models\BlogCategory;
 // use App\Models\Setting;
 // use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\Seeder;
-
 class DatabaseSeeder extends Seeder
 {
     /**

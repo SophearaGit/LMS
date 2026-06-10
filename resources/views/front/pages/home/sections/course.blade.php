@@ -9,7 +9,6 @@
         ->pluck('course_id')
         ->toArray();
 @endphp
-
 <section class="wsus__courses_3 pt_120 xs_pt_100 mt_120 xs_mt_90 pb_120 xs_pb_100">
     <div class="container">
         <div class="row">
@@ -89,22 +88,21 @@
                                             class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
-                                                        alt="Love" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
-                                                        alt="Compare" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
-                                                        alt="Cart" class="img-fluid">
-                                                </a>
+                                                @auth
+                                                    <a href="javascript:void(0);" class="wishlist_btn"
+                                                        data-course-id="{{ $course->id }}"
+                                                        title="{{ in_array($course->id, $wishlistedCourseIds) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist"
+                                                            class="img-fluid wishlist-icon {{ in_array($course->id, $wishlistedCourseIds) ? 'wishlisted' : '' }}"
+                                                            style="{{ in_array($course->id, $wishlistedCourseIds) ? 'filter: invert(27%) sepia(95%) saturate(7481%) hue-rotate(356deg) brightness(97%) contrast(118%);' : '' }}">
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('login') }}" title="Login to Wishlist">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist" class="img-fluid">
+                                                    </a>
+                                                @endauth
                                             </li>
                                         </ul>
                                         <span class="time"><i class="far fa-clock"></i>
@@ -131,10 +129,11 @@
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
-                                        <a class="author" href="#">
+                                        <a class="author"
+                                            href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
@@ -222,22 +221,21 @@
                                             class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
-                                                        alt="Love" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
-                                                        alt="Compare" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
-                                                        alt="Cart" class="img-fluid">
-                                                </a>
+                                                @auth
+                                                    <a href="javascript:void(0);" class="wishlist_btn"
+                                                        data-course-id="{{ $course->id }}"
+                                                        title="{{ in_array($course->id, $wishlistedCourseIds) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist"
+                                                            class="img-fluid wishlist-icon {{ in_array($course->id, $wishlistedCourseIds) ? 'wishlisted' : '' }}"
+                                                            style="{{ in_array($course->id, $wishlistedCourseIds) ? 'filter: invert(27%) sepia(95%) saturate(7481%) hue-rotate(356deg) brightness(97%) contrast(118%);' : '' }}">
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('login') }}" title="Login to Wishlist">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist" class="img-fluid">
+                                                    </a>
+                                                @endauth
                                             </li>
                                         </ul>
                                         <span class="time"><i class="far fa-clock"></i>
@@ -264,10 +262,11 @@
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
-                                        <a class="author" href="#">
+                                        <a class="author"
+                                            href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
@@ -355,22 +354,21 @@
                                             class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
-                                                        alt="Love" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
-                                                        alt="Compare" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
-                                                        alt="Cart" class="img-fluid">
-                                                </a>
+                                                @auth
+                                                    <a href="javascript:void(0);" class="wishlist_btn"
+                                                        data-course-id="{{ $course->id }}"
+                                                        title="{{ in_array($course->id, $wishlistedCourseIds) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist"
+                                                            class="img-fluid wishlist-icon {{ in_array($course->id, $wishlistedCourseIds) ? 'wishlisted' : '' }}"
+                                                            style="{{ in_array($course->id, $wishlistedCourseIds) ? 'filter: invert(27%) sepia(95%) saturate(7481%) hue-rotate(356deg) brightness(97%) contrast(118%);' : '' }}">
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('login') }}" title="Login to Wishlist">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist" class="img-fluid">
+                                                    </a>
+                                                @endauth
                                             </li>
                                         </ul>
                                         <span class="time"><i class="far fa-clock"></i>
@@ -397,10 +395,11 @@
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
-                                        <a class="author" href="#">
+                                        <a class="author"
+                                            href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
@@ -488,22 +487,21 @@
                                             class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
-                                                        alt="Love" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
-                                                        alt="Compare" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
-                                                        alt="Cart" class="img-fluid">
-                                                </a>
+                                                @auth
+                                                    <a href="javascript:void(0);" class="wishlist_btn"
+                                                        data-course-id="{{ $course->id }}"
+                                                        title="{{ in_array($course->id, $wishlistedCourseIds) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist"
+                                                            class="img-fluid wishlist-icon {{ in_array($course->id, $wishlistedCourseIds) ? 'wishlisted' : '' }}"
+                                                            style="{{ in_array($course->id, $wishlistedCourseIds) ? 'filter: invert(27%) sepia(95%) saturate(7481%) hue-rotate(356deg) brightness(97%) contrast(118%);' : '' }}">
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('login') }}" title="Login to Wishlist">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist" class="img-fluid">
+                                                    </a>
+                                                @endauth
                                             </li>
                                         </ul>
                                         <span class="time"><i class="far fa-clock"></i>
@@ -530,10 +528,11 @@
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
-                                        <a class="author" href="#">
+                                        <a class="author"
+                                            href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
@@ -621,22 +620,21 @@
                                             class="img-fluid">
                                         <ul>
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/love_icon_black.png') }}"
-                                                        alt="Love" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/compare_icon_black.png') }}"
-                                                        alt="Compare" class="img-fluid">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <img src="{{ asset('/front/images/cart_icon_black_2.png') }}"
-                                                        alt="Cart" class="img-fluid">
-                                                </a>
+                                                @auth
+                                                    <a href="javascript:void(0);" class="wishlist_btn"
+                                                        data-course-id="{{ $course->id }}"
+                                                        title="{{ in_array($course->id, $wishlistedCourseIds) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist"
+                                                            class="img-fluid wishlist-icon {{ in_array($course->id, $wishlistedCourseIds) ? 'wishlisted' : '' }}"
+                                                            style="{{ in_array($course->id, $wishlistedCourseIds) ? 'filter: invert(27%) sepia(95%) saturate(7481%) hue-rotate(356deg) brightness(97%) contrast(118%);' : '' }}">
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('login') }}" title="Login to Wishlist">
+                                                        <img src="{{ asset('/front/images/love_icon_black.png') }}"
+                                                            alt="Wishlist" class="img-fluid">
+                                                    </a>
+                                                @endauth
                                             </li>
                                         </ul>
                                         <span class="time"><i class="far fa-clock"></i>
@@ -663,10 +661,11 @@
                                             <li>{{ $course->lessons->count() }} Lessons</li>
                                             <li>{{ $course->enrollments()->count() }} Student</li>
                                         </ul>
-                                        <a class="author" href="#">
+                                        <a class="author"
+                                            href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
-                                                    class="img-fluid">
+                                                <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
+                                                    alt="Author" class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
