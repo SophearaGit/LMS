@@ -100,7 +100,7 @@ Route::group(["middleware" => ['auth', 'verified'], "prefix" => "student", "as" 
  * INSTRUCTOR ROUTE
  * ————————————————————————————————————————————————————————————————————————————————
  */
-Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor'], "prefix" => "instructor", "as" => "instructor."], function () {
+Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor', 'instructor.status'], "prefix" => "instructor", "as" => "instructor."], function () {
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
     // PROFIL UPDATE
     Route::get('/profile', [ProfileController::class, 'instructorProfile'])->name('profile');

@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Mail\InstructorRequestApprovedMail;
 use App\Mail\InstructorRequestRejectMail;
@@ -10,12 +8,9 @@ use App\Traites\FileUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-
 class InstructorRequestController extends Controller
 {
     use FileUpload;
-
-
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +23,6 @@ class InstructorRequestController extends Controller
     //         ->when($request->has('status') && $request->filled('status'), function ($query) use ($request) {
     //             $query->where('approval_status', $request->status);
     //         })
-
     //         ->latest()
     //         ->get();
     //     $data = [
@@ -36,24 +30,23 @@ class InstructorRequestController extends Controller
     //     ];
     //     return view('admin.pages.instructor-requests.index', $data, compact('instructorRequests'));
     // }
-
-
     public function index(Request $request)
     {
-        $instructorRequests = User::whereIn('approval_status', [
-            'pending',
-            'approved',
-            'rejected'
-        ])
-            ->when($request->filled('status'), function ($query) use ($request) {
-                $query->where('approval_status', $request->status);
-            })
-            ->latest()
-            ->get();
-        return view('admin.pages.instructor-requests.index', compact('instructorRequests'));
+        $data = [
+            'pageTitle' => 'Instructor Request - CAIT',
+            'instructorRequests' => User::whereIn('approval_status', [
+                'pending',
+                // 'approved',
+                'rejected'
+            ])
+                ->when($request->filled('status'), function ($query) use ($request) {
+                    $query->where('approval_status', $request->status);
+                })
+                ->latest()
+                ->get(),
+        ];
+        return view('admin.pages.instructor-requests.index', $data);
     }
-
-
     /**
      * Download Instructor Document Or Resume.
      */
@@ -61,21 +54,17 @@ class InstructorRequestController extends Controller
     {
         return response()->download(public_path($user->document));
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $instructor_request)
     {
-
         $request->validate([
             'status' => ['required', 'in:pending,approved,rejected']
         ]);
-
         $instructor_request->approval_status = $request->status;
         $request->status == 'approved' ? $instructor_request->role = 'instructor' : '';
         $instructor_request->save();
-
         if ($instructor_request->approval_status === 'approved') {
             if (config('mail_queue.is_queue')) {
                 Mail::to($instructor_request->email)->queue(new InstructorRequestApprovedMail($instructor_request));
@@ -94,9 +83,19 @@ class InstructorRequestController extends Controller
                 Mail::to($instructor_request->email)->send(new InstructorRequestRejectMail($instructor_request));
             }
         }
-
         return redirect()->back();
     }
+    public function toggleActive(Request $request, $id)
+    {
+        $instructor = User::where('role', 'instructor')->findOrFail($id);
 
+        $instructor->account_status = $request->input('account_status'); // 'enabled' or 'disabled'
+        $instructor->save();
 
+        $message = $instructor->account_status === 'enabled'
+            ? "{$instructor->name}'s account has been enabled."
+            : "{$instructor->name}'s account has been disabled.";
+
+        return back()->with('success', $message);
+    }
 }

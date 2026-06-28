@@ -37,8 +37,9 @@
                         <div class="card-actions">
                             <div class="dropdown">
                                 <a href="#" class="btn-action dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"><!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
+                                    aria-haspopup="true" aria-expanded="false">
+
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -50,8 +51,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     {{-- all --}}
-                                    <a class="dropdown-item"
-                                        href="{{ route('admin.instructor-requests.index') }}">
+                                    <a class="dropdown-item" href="{{ route('admin.instructor-requests.index') }}">
                                         All
                                     </a>
                                     <a class="dropdown-item text-warning"

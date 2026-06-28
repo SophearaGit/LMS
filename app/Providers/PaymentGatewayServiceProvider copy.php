@@ -1,11 +1,7 @@
 <?php
-
 namespace App\Providers;
-
 use App\Service\PaymentGatewaySettingService;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-
 class PaymentGatewayServiceProvider extends ServiceProvider
 {
     /**
@@ -20,16 +16,11 @@ class PaymentGatewayServiceProvider extends ServiceProvider
             }
         );
     }
-
     /**
      * Bootstrap services.
      */
     public function boot(): void
     {
-        if (!Schema::hasTable('payment_settings')) {
-            return;
-        }
-
         $paymentGatewaySetting = $this->app->make(PaymentGatewaySettingService::class);
         $paymentGatewaySetting->set_global_settings();
     }
