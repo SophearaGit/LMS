@@ -4,6 +4,7 @@
     <style>
         /* responsive css */
         @media (min-width: 1400px) {
+
             .container,
             .container-lg,
             .container-md,
@@ -103,14 +104,12 @@
     <script>
         const csrf_token = $(`meta[name=csrf_token]`).attr('content');
         var delete_url = null;
-
         $('.delete-item').on('click', function(e) {
             e.preventDefault();
             let url = $(this).attr('href');
             delete_url = url;
             $('#modal-danger').modal('show');
         });
-
         $('.delete-confirm-btn').on('click', function(e) {
             e.preventDefault();
             $.ajax({

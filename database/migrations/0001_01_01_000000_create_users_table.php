@@ -30,6 +30,7 @@ return new class extends Migration {
             $table->enum('approval_status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->enum('login_as', ['student', 'instructor'])->nullable();
             $table->double('wallet')->nullable();
+             $table->enum('account_status', ['enabled', 'disabled'])->default('enabled');
             $table->rememberToken();
             $table->timestamps();
         });

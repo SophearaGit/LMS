@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\Admin\AboutUsSectionController;
+use App\Http\Controllers\Admin\AdminCertificateController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\PayoutGatewayController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SocialLinkController;
+use App\Http\Controllers\Admin\StudentCertificateController;
 use App\Http\Controllers\Admin\VideoSectionController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\FeaturedInstructorSectionController;
@@ -47,80 +48,63 @@ use App\Http\Controllers\Admin\TopBarController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\HeroController;
 use Illuminate\Support\Facades\Route;
-
 Route::group(["middleware" => "guest:admin", "prefix" => "admin", "as" => "admin."], function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
-
     Route::post('login', [AuthenticatedSessionController::class, 'store'])
         ->name('login.store');
-
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
-
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
-
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset');
-
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
-
-
 });
-
 Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin."], function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
-
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
         ->middleware(['signed', 'throttle:6,1'])
         ->name('verification.verify');
-
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
-
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
-
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
-
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/report/excel', [DashboardController::class, 'exportExcel'])
         ->name('report.excel');
     Route::get('/report/pdf', [DashboardController::class, 'exportPdf'])
         ->name('report.pdf');
-
+    // certificate routes
+    Route::get('/certificates/{course}/{user}/download', [StudentCertificateController::class, 'download'])->name('certificates.download');
+    Route::get('/completed-students', [AdminCertificateController::class, 'completedStudents'])->name('certificates.completed-students');
     /*******************************************************
      * USERS ROUTES START
      *******************************************************/
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/instructors', [UserController::class, 'instructors'])->name('users.instructors');
-
     Route::get('/instructors/excel', [UserController::class, 'exportExcel'])
         ->name('users.instructors.excel');
     Route::get('/instructors/export-pdf', [UserController::class, 'exportPdf'])
         ->name('users.instructors.exportPdf');
-
     Route::get('/students', [UserController::class, 'students'])->name('users.students');
     Route::get('/students/excel', [UserController::class, 'exportStudentsExcel'])
         ->name('users.students.excel');
-
     Route::get('/students/export-pdf', [UserController::class, 'exportStudentsPdf'])
         ->name('users.students.exportPdf');
-
     /*******************************************************
      * INSTRUCTOR REQUESTS ROUTES START
      *******************************************************/
     Route::get('/instructor-doc-downloads/{user}', [InstructorRequestController::class, 'downloadDoc'])->name('instructor_doc_downloads');
     Route::resource('instructor-requests', InstructorRequestController::class);
+    Route::patch('users/instructors/{id}/toggle-active', [InstructorRequestController::class, 'toggleActive'])->name('users.instructors.toggle-active');
     /*******************************************************
      * COURSE LANGUAGES ROUTES START
      *******************************************************/
@@ -175,8 +159,6 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     // SORT CHAPTER ROUTE
     Route::get('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter');
     Route::post('/course-content/{course_id}/sort-chapter', [CourseContentController::class, 'UpdateSortChapter'])->name('course-content.update-sort-chapter');
-
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      *  ORDERS ROUTE
@@ -184,7 +166,6 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
      */
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order_id}/show', [OrderController::class, 'show'])->name('orders.show');
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * PAYMENT SETTINGS ROUTE
@@ -195,7 +176,6 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::post('/payment-settings/stripe', [PaymentSettingController::class, 'stripe_store'])->name('payment-settings.stripe');
     Route::post('/payment-settings/razorpay', [PaymentSettingController::class, 'razorpay_store'])->name('payment-settings.razorpay');
     Route::post('/payment-settings/aba', [PaymentSettingController::class, 'aba_store'])->name('payment-settings.aba');
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * SITE SETTINGS ROUTE
@@ -212,27 +192,23 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     // logo & favicon settings
     Route::get('/logo-favicon-settings', [SettingController::class, 'logoFaviconSettings'])->name('site-settings.logo-favicon-settings');
     Route::post('/update-logo-favicon-settings', [SettingController::class, 'updateLogoFaviconSettings'])->name('site-settings.update-logo-favicon-settings');
-
     // payout settings resource
     Route::resource('payout-gateways', PayoutGatewayController::class);
     // withdraw request
     Route::get('/withdraw-request', [WithdrawRequestController::class, 'index'])->name('withdraw-request.index');
     Route::get('/withdraw-request/{withdraw}/show', [WithdrawRequestController::class, 'show'])->name('withdraw-request.show');
     Route::post('/withdraw-request/{withdraw}/status', [WithdrawRequestController::class, 'updateStatus'])->name('withdraw-request.update-status');
-
     Route::get('/certificate-builder', [CertificateBuilderController::class, 'index'])->name('certificate-builder.index');
     Route::post('/certificate-builder/store', [CertificateBuilderController::class, 'store'])->name('certificate-builder.store');
     Route::post('/certificate-builder/update-position', [CertificateBuilderController::class, 'updatePosition'])->name('certificate-builder.update-position');
-
-
+    Route::get('/issued', [AdminCertificateController::class, 'issued'])->name('certificates.issued');
     Route::resource('/hero', HeroController::class);
     Route::resource('/features', FeatureController::class);
     Route::resource('/about-section', AboutUsSectionController::class);
     Route::resource('/latest-courses', LatestCourseSectionController::class);
     Route::resource('/become-instructor', BecomeInstructorSectionController::class);
     Route::resource('/video-section', VideoSectionController::class);
-    Route::resource('/brand-section', controller: BrandSectionController::class);
-
+    Route::resource('/brand-section', BrandSectionController::class);
     Route::get('/get-instructor-courses/{instructor_id}', [FeaturedInstructorSectionController::class, 'getInstructorCourses'])->name('get_instructor_courses');
     Route::resource('/featured-instructor-section', FeaturedInstructorSectionController::class);
     Route::resource('/testimonial-section', TestimonialController::class);
@@ -248,37 +224,13 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::resource('/custom-page', CustomPageController::class);
     Route::resource('/blog-category', BlogCategoryController::class);
     Route::resource('/blog', BlogController::class);
-
     // profile
     Route::get('/profile', [ProfileUpdateController::class, 'profile'])->name('profile.index');
     Route::post('/profile', [ProfileUpdateController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileUpdateController::class, 'updatePassword'])->name('profile.password.update');
-
     // admin.database.clear
     Route::get('/database-clear', [DatabaseClearController::class, 'databaceClearIndex'])->name('database_clear.index');
     Route::delete('/database-clear', [DatabaseClearController::class, 'databaceClear'])->name('database_clear.clear');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * LARAVEL FILE MANAGER
@@ -288,4 +240,3 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });
-

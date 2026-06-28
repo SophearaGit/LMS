@@ -114,10 +114,6 @@
                         </div>
                     </div>
                 </li>
-
-
-
-
                 <li class="nav-item {{ Route::is('admin.orders.index') ? 'active' : '' }}">
                     <a class="nav-link {{ Route::is('admin.orders.index') ? 'active' : '' }}"
                         href="{{ route('admin.orders.index') }}"
@@ -231,7 +227,6 @@
                                         Courses
                                     </span>
                                 </a>
-
                                 <a class="dropdown-item {{ Route::is('admin.course-languages.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-languages.index') }}">
                                     <span
@@ -243,7 +238,6 @@
                                         Course Languages
                                     </span>
                                 </a>
-
                                 <a class="dropdown-item {{ Route::is('admin.course-levels.index') ? 'active' : '' }} "
                                     href="{{ route('admin.course-levels.index') }}">
                                     <span
@@ -616,6 +610,50 @@
                         </span>
                     </a>
                 </li>
+                {{-- Certificates
+├── Completed Students
+└── Issued Certificates --}}
+                <li class="nav-item dropdown {{ Route::is('admin.certificates.*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-certificates" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ Route::is('admin.certificates.*') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block dropdown-menu me-2">
+                            <i class="ti ti-certificate" style="font-size: 20px;"></i>
+                        </span>
+                        <span class="nav-link-title mt-1">
+                            Certificates
+                        </span>
+                    </a>
+                    <div class="dropdown-menu {{ Route::is('admin.certificates.*') ? 'show' : '' }}"
+                        {{ Route::is('admin.certificates.*') ? 'data-bs-popper="static"' : '' }}>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::is('admin.certificates.completed-students') ? 'active' : '' }}"
+                                    href="{{ route('admin.certificates.completed-students') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.certificates.completed-students') ? 'text-white' : '' }}">
+                                        <i class="ti ti-users" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span
+                                        class="nav-link-title mt-1 {{ Route::is('admin.certificates.completed-students') ? 'text-white' : '' }}">
+                                        Completed Students
+                                    </span>
+                                </a>
+                                <a class="dropdown-item {{ Route::is('admin.certificates.issued') ? 'active' : '' }}"
+                                    href="#" onclick="alert('Coming Soon!')">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block {{ Route::is('admin.certificates.issued') ? 'text-white' : '' }}">
+                                        <i class="ti ti-award" style="font-size: 20px;"></i>
+                                    </span>
+                                    <span
+                                        class="nav-link-title mt-1 {{ Route::is('admin.certificates.issued') ? 'text-white' : '' }}">
+                                        Issued Certificates (Coming Soon)
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li
                     class="nav-item {{ Route::is('admin.site-settings.index') || Route::is('admin.site-settings.commission-settings.index') ? 'active' : '' }}">
                     <a class="nav-link {{ Route::is('admin.site-settings.index') || Route::is('admin.site-settings.commission-settings.index') ? 'active' : '' }}"
@@ -631,18 +669,16 @@
                     </a>
                 </li>
                 {{-- <li class="nav-item {{ Route::is('admin.database_clear.index') ? 'active' : '' }}">
-                    <a class="nav-link {{ Route::is('admin.database_clear.index') ? 'active' : '' }}"
-                        href="{{ route('admin.database_clear.index') }}"
-                        style="background-color: {{ Route::is('admin.database_clear.index') ? '#18212e' : '' }};">
-                        <span
+        <a class="nav-link {{ Route::is('admin.database_clear.index') ? 'active' : '' }}" href="{{ route('admin.database_clear.index') }}" style="background-color: {{ Route::is('admin.database_clear.index') ? '#18212e' : '' }};">
+          <span
                             class="nav-link-icon {{ Route::is('admin.database_clear.index') ? 'text-white' : '' }} d-md-none d-lg-inline-block">
                             <i class="ti ti-skull" style="font-size: 20px;"></i>
                         </span>
-                        <span class="nav-link-title mt-1">
+          <span class="nav-link-title mt-1">
                             Database Clear
                         </span>
-                    </a>
-                </li> --}}
+        </a>
+        </li> --}}
             </ul>
         </div>
     </div>

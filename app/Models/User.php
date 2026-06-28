@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'role',
         'approval_status',
+        'account_status',
         'facebook',
         'x',
         'linkedin',

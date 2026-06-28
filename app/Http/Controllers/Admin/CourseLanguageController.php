@@ -1,14 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\CourseLanguage;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException as ValidationValidationException;
 use Illuminate\Support\Str;
-
 class CourseLanguageController extends Controller
 {
     /**
@@ -21,10 +17,8 @@ class CourseLanguageController extends Controller
         ];
         $courseLanguages = CourseLanguage::paginate(15);
         $data['courseLanguages'] = $courseLanguages;
-
         return view('admin.pages.course.course-languages.index', $data);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -35,7 +29,6 @@ class CourseLanguageController extends Controller
         ];
         return view('admin.pages.course.course-languages.create', $data);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -51,7 +44,6 @@ class CourseLanguageController extends Controller
         notyf()->success('Course Language Created Successfully');
         return redirect()->route('admin.course-languages.index');
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -62,7 +54,6 @@ class CourseLanguageController extends Controller
             'course_language' => $course_language
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -77,7 +68,6 @@ class CourseLanguageController extends Controller
         notyf()->success('Course Language Updated Successfully');
         return redirect()->route('admin.course-languages.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */

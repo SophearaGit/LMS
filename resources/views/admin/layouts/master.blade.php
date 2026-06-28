@@ -1,12 +1,4 @@
-<!doctype html>
-<!--
-* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
-* @version 1.0.0-beta20
-* @link https://tabler.io
-* Copyright 2018-2023 The Tabler Authors
-* Copyright 2018-2023 codecalm.net Paweł Kuna
-* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
--->
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,6 +8,7 @@
     <meta name="base_url" content="{{ url('/') }}">
     <meta name="csrf_token" content="{{ csrf_token() }}" />
     <title>@yield('pageTitle')</title>
+
     <!-- CSS files -->
     <script src="/admin/assets/dist/js/jquery-3.7.1.min.js"></script>
     <link href="/admin/assets/dist/css/tabler.min.css?1692870487" rel="stylesheet" />
@@ -50,22 +43,28 @@
 <body>
     <script src="/admin/assets/dist/js/demo-theme.min.js?1692870487"></script>
     <div class="page">
+
         <!-- Sidebar -->
         @include('admin.layouts.sidebar')
+
         <!-- Navbar -->
         @include('admin.layouts.navbar')
         <div class="page-wrapper">
+
             <!-- Page header -->
             {{-- @if (Route::is('admin.instructor-requests.index') || Route::is('admin.course-languages.index') || Route::is('admin.course-languages.create') || Route::is('admin.course-languages.edit') || Route::is('admin.course-levels.index') || Route::is('admin.course-levels.create') || Route::is('admin.course-levels.edit') || Route::is('admin.course-categories.index') || Route::is('admin.course-categories.create') || Route::is('admin.course-categories.edit'))
             @else
                 @include('admin.layouts.header')
             @endif --}}
+
             <!-- Page body -->
             @yield('content')
+
             <!-- Footer -->
             {{-- @include('admin.layouts.footer') --}}
         </div>
     </div>
+
     <!-- Modals -->
     <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true"
         data-bs-backdrop="static" data-bs-keyboard="false">
@@ -74,6 +73,7 @@
                 <button type="button" class="btn-close btn_cancel" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-status bg-danger"></div>
                 <div class="modal-body text-center py-4">
+
                     <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"

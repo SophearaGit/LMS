@@ -1,12 +1,11 @@
 <?php
-
 use App\Http\Middleware\CheckRoleMiddleware;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\CheckInstructorStatus;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -18,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => Authenticate::class,
             'guest' => RedirectIfAuthenticated::class,
             'check_role' => CheckRoleMiddleware::class,
+            'instructor.status' => CheckInstructorStatus::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
