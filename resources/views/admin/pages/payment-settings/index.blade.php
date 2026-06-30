@@ -34,7 +34,7 @@
                                             <i class="ti ti-brand-paypal mb-1"></i>&nbsp; Paypal Settings
                                         </a>
                                     </li>
-                                    <li class="nav-item" role="presentation">
+                                    {{-- <li class="nav-item" role="presentation">
                                         <a href="#stripe-settings" class="nav-link " data-bs-toggle="tab"
                                             aria-selected="false" tabindex="-1" role="tab">
                                             <i class="ti ti-brand-stripe mb-1"></i>&nbsp; Stripe Settings
@@ -45,7 +45,7 @@
                                             aria-selected="false" tabindex="-1" role="tab">
                                             <i class="ti ti-blade mb-1"></i>&nbsp; Razorpay Settings
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     {{-- aba payway --}}
                                     <li class="nav-item" role="presentation">
                                         <a href="#abapayway-settings" class="nav-link active" data-bs-toggle="tab"
@@ -122,8 +122,7 @@
                                                 <div class="col-md-4">
                                                     <div class="mb-4">
                                                         <label class="form-label">App ID</label>
-                                                        <input type="text" class="form-control"
-                                                            name="paypal_live_app_id"
+                                                        <input type="text" class="form-control" name="paypal_live_app_id"
                                                             placeholder="Enter Paypal Live App ID Here."
                                                             value="{{ config('gateway_setting.paypal_live_app_id') }}">
                                                         <x-input-error :messages="$errors->get('paypal_live_app_id')" class="mt-2" />
@@ -139,7 +138,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane " id="stripe-settings" role="tabpanel">
+                                    {{-- <div class="tab-pane " id="stripe-settings" role="tabpanel">
                                         <form action="{{ route('admin.payment-settings.stripe') }}" method="POST">
                                             @csrf
                                             <div class="row">
@@ -285,7 +284,7 @@
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>
+                                    </div> --}}
                                     <div class="tab-pane active show" id="abapayway-settings" role="tabpanel">
                                         <form action="{{ route('admin.payment-settings.aba') }}" method="POST">
                                             @csrf
