@@ -83,15 +83,13 @@
         </div>
     </div>
 </div>
-
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/front/js/jquery-ui.min.js"></script>
     <script>
-        const based_url = $('meta[name="base_url"]').attr('content');
-        const get_course_content_url = based_url + `/instructor/course-content/:id/create-chapter`;
-        const update_url = based_url + '/instructor/courses/update-more-info';
-
+        const get_course_content_url = $('meta[name="base_url"]').attr('content') +
+            `/instructor/course-content/:id/create-chapter`;
+        const update_url = $('meta[name="base_url"]').attr('content') + '/instructor/courses/update-more-info';
         let modalLoader = `
             <div class="modal-content">
                 <div class="modal-header">
@@ -122,9 +120,7 @@
                 success: function(data) {
                     $('.dynamic-modal-content').html(data);
                 },
-                error: function(xhr, status, error) {
-
-                },
+                error: function(xhr, status, error) {},
             })
         })
         // DOWN HERE IS FOR SUBMITING THE FORM
@@ -137,9 +133,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                beforeSend: function() {
-
-                },
+                beforeSend: function() {},
                 success: function(data) {
                     if (data.status == 'success') {
                         window.location.href = data.redirect;
@@ -159,9 +153,7 @@
                         notyf.error(value[0])
                     })
                 },
-                complete: function() {
-
-                }
+                complete: function() {}
             });
         });
         // GET DYNAMIC MODAL TO ADD LESSON TO CHAPTER
@@ -169,8 +161,8 @@
             $('#dynamic_modal').modal('show');
             let course_id = $(this).data('course-id');
             let chapter_id = $(this).data('chapter-id');
-            let get_edit_chapter_url = base_url + '/instructor/course-content/:course_id/edit-chapter';
-
+            let get_edit_chapter_url = $('meta[name="base_url"]').attr('content') +
+                '/instructor/course-content/:course_id/edit-chapter';
             $.ajax({
                 method: 'GET',
                 url: get_edit_chapter_url.replace('course_id', course_id),
@@ -184,9 +176,7 @@
                 success: function(data) {
                     $('.dynamic-modal-content').html(data);
                 },
-                error: function(xhr, status, error) {
-
-                },
+                error: function(xhr, status, error) {},
             })
         })
         // GET DYNAMIC MODAL TO ADD LESSON TO CHAPTER
@@ -195,10 +185,10 @@
             $('#dynamic_modal').modal('show');
             let course_id = $(this).data('course-id');
             let chapter_id = $(this).data('chapter-id');
-
             $.ajax({
                 method: 'GET',
-                url: base_url + '/instructor/course-content/create-lesson',
+                url: $('meta[name="base_url"]').attr('content') +
+                    '/instructor/course-content/create-lesson',
                 data: {
                     'course_id': course_id,
                     'chapter_id': chapter_id,
@@ -209,9 +199,7 @@
                 success: function(data) {
                     $('.dynamic-modal-content').html(data);
                 },
-                error: function(xhr, status, error) {
-
-                },
+                error: function(xhr, status, error) {},
             })
         })
         // EDIT LESSON PART
@@ -221,10 +209,9 @@
             let course_id = $(this).data('course-id');
             let chapter_id = $(this).data('chapter-id');
             let lesson_id = $(this).data('lesson-id');
-
             $.ajax({
                 method: 'GET',
-                url: base_url + '/instructor/course-content/edit-lesson',
+                url: $('meta[name="base_url"]').attr('content') + '/instructor/course-content/edit-lesson',
                 data: {
                     'course_id': course_id,
                     'chapter_id': chapter_id,
@@ -236,9 +223,7 @@
                 success: function(data) {
                     $('.dynamic-modal-content').html(data);
                 },
-                error: function(xhr, status, error) {
-
-                },
+                error: function(xhr, status, error) {},
             })
         })
         // CHANGE INPUT BASE ON STORAGE
@@ -270,7 +255,8 @@
                     let chapterIds = ui.item.data("chapter-id")
                     $.ajax({
                         method: "POST",
-                        url: base_url + `/instructor/course-chapter/${chapterIds}/sort-lesson`,
+                        url: $('meta[name="base_url"]').attr('content') +
+                            `/instructor/course-chapter/${chapterIds}/sort-lesson`,
                         data: {
                             _token: csrf_token,
                             order_ids: orderIds,
@@ -286,14 +272,11 @@
                             });
                             notyf.success(data.message);
                         },
-                        error: function(xhr, status, error) {
-
-                        },
+                        error: function(xhr, status, error) {},
                     })
                 }
             });
         }
-
         // DELETE PART
         $('.btn_dynamic_delete').on('click', function(e) {
             e.preventDefault();
@@ -318,17 +301,15 @@
                 }
             });
         })
-
         $('.short_chapter_btn').on('click', function(e) {
             e.preventDefault();
-
             $('#dynamic_modal').modal('show');
             $('#dynamic_modal').attr('data-bs-backdrop', 'static');
-
             let course_id = $(this).data('course-id');
             $.ajax({
                 method: 'GET',
-                url: base_url + `/instructor/course-content/${course_id}/sort-chapter`,
+                url: $('meta[name="base_url"]').attr('content') +
+                    `/instructor/course-content/${course_id}/sort-chapter`,
                 data: {},
                 beforeSend: function() {
                     $('.dynamic-modal-content').html(modalLoader);
