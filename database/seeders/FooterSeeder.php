@@ -3,20 +3,18 @@
 namespace Database\Seeders;
 
 use App\Models\Footer;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Foundation\Testing\WithFaker;
 
 class FooterSeeder extends Seeder
 {
     public function run(): void
     {
         Footer::create([
-            'description' => 'Nunc in sollicitudin diam, ut bibendum malesuada sodales porttitor.',
-            'copyright' => 'Copyright © 2024 All Rights Reserved by CAITD Education',
-            'phone' => '+855 097 888 7777',
-            'address' => '25-02 44th Queens, NY 3645, United States',
-            'email' => 'your.email+fakedata71544@gmail.com',
+            'description' => 'C.A.I.T Digitalization Co., Ltd. delivers innovative digital solutions, custom software development, web and mobile applications, cloud services, and IT consulting to help businesses accelerate their digital transformation.',
+            'copyright' => 'Copyright © 2026 C.A.I.T Digitalization Co., Ltd. All Rights Reserved.',
+            'phone' => '+855 12 345 678',
+            'address' => 'Phnom Penh, Cambodia',
+            'email' => 'info@caitdigital.com',
         ]);
     }
 }

@@ -14,7 +14,7 @@ class VideoSectionSeeder extends Seeder
     public function run(): void
     {
         VideoSection::create([
-            'background_image' => '/default-images/video-section-images/video_bg.jpg',
+            'background_image' => '/default-images/video-section-images/video_bg.webp',
             'video_url' => 'https://www.youtube.com/watch?v=ODT_01t4WyI',
             'description' => '
                 <p>Explore a wide range of free online courses available in various subjects, allowing you to learn at your own pace from anywhere in the world.</p>

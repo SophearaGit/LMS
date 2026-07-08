@@ -85,7 +85,8 @@
                                 <div class="wsus__single_courses_3">
                                     <div class="wsus__single_courses_3_img">
                                         <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}"
-                                            class="img-fluid">
+                                            class="img-fluid" loading="lazy" decoding="async" width="400"
+                                            height="250">
                                         <ul>
                                             <li>
                                                 @auth

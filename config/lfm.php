@@ -74,8 +74,21 @@ return [
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
+
                 'application/pdf',
                 'text/plain',
+
+                'video/mp4',
+                'video/mpeg',
+                'video/quicktime',
+                'video/x-msvideo',
+                'video/x-matroska',
+                'video/webm',
+
+                'audio/mpeg',
+                'audio/mp3',
+                'audio/wav',
+                'audio/webm',
             ],
         ],
         'image' => [

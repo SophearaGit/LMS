@@ -23,10 +23,12 @@
                         @endfor
                     </p>
                     <p class="description" title="{{ $testimonial->review }}">
-                        {{ \Illuminate\Support\Str::limit($testimonial->review, 50) }}</p>
+                        {{ $testimonial->review }}
+                    </p>
                     <div class="wsus__testimonial_footer">
                         <div class="img">
-                            <img src="{{ asset($testimonial->user_image) }}" alt="user" class="img-fluid">
+                            <img src="{{ asset($testimonial->user_image) }}" alt="{{ $testimonial->user_name }}"
+                                class="img-fluid" loading="lazy" decoding="async" width="80" height="80">
                         </div>
                         <h3>
                             {{ $testimonial->user_name }}

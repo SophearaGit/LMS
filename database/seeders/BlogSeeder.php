@@ -19,7 +19,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-1.jpg',
+                'image' => '/default-images/blog/blogpost-1.webp',
                 'title' => 'Understanding the Basics of Business Management',
                 'slug' => 'understanding-the-basics-of-business-management',
                 'description' => '<p>Business management is the backbone of any successful organization. In this blog post, we delve into the <strong>fundamental principles</strong> that drive effective management, such as <em>planning</em>, <em>organizing</em>, <em>leading</em>, and <em>controlling</em>. Understanding these core concepts helps managers set clear objectives, allocate resources efficiently, and motivate teams to achieve common goals.</p>
@@ -31,7 +31,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-2.jpg',
+                'image' => '/default-images/blog/blogpost-2.webp',
                 'title' => 'The Role of Data Science in Modern Business',
                 'slug' => 'the-role-of-data-science-in-modern-business',
                 'description' => '<p>Data science has revolutionized the way businesses operate, enabling them to make data-driven decisions. In this post, we explore how data science techniques such as <strong>machine learning</strong>, <strong>data mining</strong>, and <strong>predictive analytics</strong> can enhance business strategies.</p>
@@ -43,7 +43,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-3.jpg',
+                'image' => '/default-images/blog/blogpost-3.webp',
                 'title' => 'Effective Marketing Strategies for Small Businesses',
                 'slug' => 'effective-marketing-strategies-for-small-businesses',
                 'description' => '<p>Small businesses often face unique challenges when it comes to marketing. This blog post outlines <strong>cost-effective marketing strategies</strong> that can help small businesses reach their target audience without breaking the bank. We discuss the importance of <em>social media marketing</em>, <em>content marketing</em>, and <em>email campaigns</em>.</p>
@@ -55,7 +55,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-4.jpg',
+                'image' => '/default-images/blog/blogpost-4.webp',
                 'title' => 'Health & Fitness: Tips for a Balanced Lifestyle',
                 'slug' => 'health-fitness-tips-for-a-balanced-lifestyle',
                 'description' => '<p>Maintaining a healthy lifestyle is crucial for overall well-being. In this blog post, we share practical tips for achieving a balanced lifestyle that includes regular exercise, nutritious eating, and mental wellness. We emphasize the importance of setting realistic fitness goals and finding activities that you enjoy.</p>
@@ -67,7 +67,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-5.jpg',
+                'image' => '/default-images/blog/blogpost-5.webp',
                 'title' => 'Exploring the Latest Trends in Finance',
                 'slug' => 'exploring-the-latest-trends-in-finance',
                 'description' => '<p>The finance industry is constantly evolving, with new trends shaping how we manage money and investments. In this post, we explore the latest developments in finance, including <strong>fintech innovations</strong>, <strong>cryptocurrency</strong>, and <strong>sustainable investing</strong>. We discuss how these trends are transforming traditional financial practices and what they mean for consumers and investors.</p>
@@ -79,7 +79,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-6.jpg',
+                'image' => '/default-images/blog/blogpost-6.webp',
                 'title' => 'Lifestyle Changes for a More Fulfilling Life',
                 'slug' => 'lifestyle-changes-for-a-more-fulfilling-life',
                 'description' => '<p>Making small lifestyle changes can lead to significant improvements in your overall happiness and fulfillment. In this blog post, we discuss various lifestyle adjustments that can enhance your daily routine, such as prioritizing self-care, cultivating positive relationships, and pursuing hobbies that bring joy.</p>
@@ -91,7 +91,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-1.jpg',
+                'image' => '/default-images/blog/blogpost-1.webp',
                 'title' => 'Travel Tips for Your Next Adventure',
                 'slug' => 'travel-tips-for-your-next-adventure',
                 'description' => '<p>Traveling can be one of life\'s most rewarding experiences, but it also requires careful planning. In this blog post, we share essential travel tips to help you make the most of your next adventure. From choosing the right destination to packing efficiently, we cover all the bases.</p>
@@ -103,7 +103,7 @@ class BlogSeeder extends Seeder
             [
                 'user_id' => 1,
                 'blog_category_id' => $blogCategoryIds[array_rand($blogCategoryIds)],
-                'image' => '/default-images/blog/blogpost-2.jpg',
+                'image' => '/default-images/blog/blogpost-2.webp',
                 'title' => 'Culinary Delights: Exploring Global Cuisines',
                 'slug' => 'culinary-delights-exploring-global-cuisines',
                 'description' => '<p>Food is a universal language that brings people together. In this blog post, we take you on a culinary journey around the world, exploring diverse cuisines and their unique flavors. From the spicy dishes of Southeast Asia to the rich, hearty meals of Europe, we celebrate the art of cooking and the joy of sharing meals with loved ones.</p>

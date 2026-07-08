@@ -4,7 +4,37 @@
     $footerColumnOnes = \App\Models\FooterColumnOne::where('status', 1)->get();
     $footerColumnTwos = \App\Models\FooterColumnTwo::where('status', 1)->get();
 @endphp
+<style>
+    .wsus__footer_3_logo_area ul {
+        display: flex;
+        gap: 12px;
+    }
 
+    .wsus__footer_3_logo_area ul li a {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent !important;
+        border-radius: 50%;
+        transition: transform .3s ease;
+        box-shadow: none !important;
+    }
+
+    .wsus__footer_3_logo_area ul li a:hover {
+        background: transparent !important;
+        transform: translateY(-3px);
+    }
+
+    .footer-social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+    }
+</style>
 <footer class="footer_3" style="background: url({{ asset('front/images/footer_3_bg.jpg') }});">
     <div class="footer_3_overlay pt_120 xs_pt_100">
         <div class="wsus__footer_bottom">
@@ -27,9 +57,12 @@
                             <h2>Follow Us On</h2>
                             <ul class="d-flex flex-wrap">
                                 @foreach ($socialLinks as $socialLink)
-                                    <li><a href="{{ $socialLink->link }}" target="_blank"><img
-                                                src="{{ asset($socialLink->icon) }}" alt=""
-                                                style="width: 50px; height: 50px;"></a>
+                                    <li>
+                                        <a href="{{ $socialLink->link }}" target="_blank">
+                                            <img src="{{ asset($socialLink->icon) }}"
+                                                alt="{{ $socialLink->name ?? 'Social' }}" class="footer-social-icon"
+                                                loading="lazy" decoding="async" width="42" height="42">
+                                        </a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -65,8 +98,9 @@
                             <ul>
                                 <li>
                                     <div class="icon">
-                                        <img src="{{ asset('front/images/mail.png') }}" alt="Call"
-                                            class="img-fluid">
+                                        <img src="{{ asset('front/images/mail.png') }}" alt="Email"
+                                            class="img-fluid" loading="lazy" decoding="async" width="24"
+                                            height="24">
                                     </div>
                                     <div class="text">
                                         <h4>Email us:</h4>
