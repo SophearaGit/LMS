@@ -14,7 +14,8 @@
             <div class="col-xl-4 wow fadeInUp">
                 <div class="wsus__single_blog_4">
                     <a href="{{ route('blog.detail', $blog->slug) }}" class="wsus__single_blog_4_img">
-                        <img src="{{ asset($blog->image) }}" alt="Blog" class="img-fluid">
+                        <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}" class="img-fluid" loading="lazy"
+                            decoding="async" width="420" height="280">
                         <span class="date">
                             {{ $blog->created_at->format('F d, Y') }}
                         </span>
@@ -23,12 +24,14 @@
                         <ul>
                             <li>
                                 <span><img src="{{ asset('/front/images/user_icon_black.png') }}" alt="User"
-                                        class="img-fluid"></span>
+                                        class="img-fluid" loading="lazy" decoding="async" width="16"
+                                        height="16"></span>
                                 By {{ $blog->blog_author->name }}
                             </li>
                             <li>
                                 <span><img src="{{ asset('/front/images/comment_icon_black.png') }}" alt="Comment"
-                                        class="img-fluid"></span>
+                                        class="img-fluid" loading="lazy" decoding="async" width="16"
+                                        height="16"></span>
                                 {{ count($blog->comments) ?? 0 }} Comments
                             </li>
                         </ul>

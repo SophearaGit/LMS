@@ -15,7 +15,7 @@ class BrandSeeder extends Seeder
     {
         for ($i = 1; $i <= 6; $i++) {
             Brand::create([
-                'image' => "/default-images/brand-section-images/brand_icon_{$i}.png",
+                'image' => "/default-images/brand-section-images/brand_icon_{$i}.webp",
                 'url' => 'https://neal.fun/internet-roadtrip/',
                 'status' => 1,
             ]);

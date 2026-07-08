@@ -25,7 +25,7 @@
                     <div class="col-xxl-4 col-xl-4 col-md-6 col-lg-6 d-none d-xl-block wow fadeInUp">
                         <div class="wsus__quality_courses_img">
                             <img src="{{ asset($featuredInstructorItems?->instructor_image) }}" alt="Quality Courses"
-                                class="img-fluid w-100">
+                                class="img-fluid w-100" loading="lazy" decoding="async" width="500" height="650">
                         </div>
                     </div>
                     <div class="col-xxl-3 col-xl-4 col-md-6 col-lg-5 wow fadeInUp">
@@ -35,7 +35,8 @@
                                     <div class="wsus__single_courses_3">
                                         <div class="wsus__single_courses_3_img">
                                             <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}"
-                                                class="img-fluid">
+                                                class="img-fluid" loading="lazy" decoding="async" width="320"
+                                                height="220">
                                             <ul>
                                                 <li>
                                                     @auth
@@ -82,8 +83,11 @@
                                             <a class="author"
                                                 href="{{ route('courses.show', $course->slug) }}#instructor-tab">
                                                 <div class="img">
-                                                    <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png' ? asset('/default-images/avatar/both.jpg') : asset($course->instructor->image) }}"
-                                                        alt="Author" class="img-fluid">
+                                                    <img src="{{ $course->instructor->image == '/default-images/avatar/teacher.png'
+                                                        ? asset('/default-images/avatar/both.jpg')
+                                                        : asset($course->instructor->image) }}"
+                                                        alt="{{ $course->instructor->name }}" class="img-fluid"
+                                                        loading="lazy" decoding="async" width="45" height="45">
                                                 </div>
                                                 <h4>{{ $course->instructor->name }}</h4>
                                             </a>

@@ -16,17 +16,17 @@ class SocialLinkSeeder extends Seeder
         SocialLink::insert(
             [
                 [
-                    'icon' => '/default-images/social-link/x.png',
+                    'icon' => '/default-images/social-link/x.webp',
                     'link' => 'https://youtu.be/9kzE8isXlQY?si=xTqid_-qyzzvhNZy',
                     'status' => 1,
                 ],
                 [
-                    'icon' => '/default-images/social-link/facebook.png',
+                    'icon' => '/default-images/social-link/facebook.webp',
                     'link' => 'https://youtu.be/9kzE8isXlQY?si=xTqid_-qyzzvhNZy',
                     'status' => 1,
                 ],
                 [
-                    'icon' => '/default-images/social-link/linkedin.png',
+                    'icon' => '/default-images/social-link/linkedin.webp',
                     'link' => 'https://youtu.be/9kzE8isXlQY?si=xTqid_-qyzzvhNZy',
                     'status' => 1,
                 ],

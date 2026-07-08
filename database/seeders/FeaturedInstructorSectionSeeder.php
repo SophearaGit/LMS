@@ -17,7 +17,7 @@ class FeaturedInstructorSectionSeeder extends Seeder
             'button_url' => 'http://caitd.edu/courses',
             'instructor_id' => 2,
             'featured_courses' => '["2", "3", "6"]',
-            'instructor_image' => '/default-images/featured-instructor-section/meMonday-removebg.png',
+            'instructor_image' => '/default-images/featured-instructor-section/meMonday-removebg.webp',
         ]);
     }
 }
