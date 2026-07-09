@@ -1,9 +1,7 @@
 @extends('front.layouts.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @section('content')
-
     @include('front.pages.partials.bread-crumb')
-
     <section class="wsus__contact_us mt_95 xs_mt_75 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -20,17 +18,16 @@
                         </div>
                     </div>
                 @endforeach
-
             </div>
             <div class="wsus__contact_form_area mt_30 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                 <div class="row align-items-center">
                     <div class="col-xl-4 col-lg-5 d-md-none d-lg-block">
                         <div class="wsus__contact_form_img">
-                            <img src="{{ $contactSetting?->image }}" alt="contact" class="img-fluid">
+                            <img src="{{ $contactSetting?->image }}" alt="contact" class="img-fluid" loading="lazy"
+                                decoding="async" width="500" height="600">
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-7">
-
                         <form action="{{ route('send.contact') }}" method="POST" class="wsus__contact_form">
                             @csrf
                             <h4>Send Us Message</h4>
@@ -55,7 +52,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -68,5 +64,4 @@
             </div>
         @endif
     </section>
-
 @endsection

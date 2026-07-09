@@ -5,7 +5,6 @@
 @endpush
 @section('content')
     @include('front.pages.partials.bread-crumb')
-
     <section class="payment pt_95 xs_pt_75 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -24,17 +23,17 @@
                             {{-- <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
                                 <a href="{{ route('stripe.payment') }}" class="payment_mathod">
-                                    <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
-                                </a>
-                            </div> --}}
+            <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
+            </a>
+          </div> --}}
                             {{-- RAZORPAY --}}
                             {{-- <div class="col-xl-3 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
                                 <a href="{{ route('razorpay.redirect') }}" class="payment_mathod">
-                                    <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
-                                    <h2>Razorpay</h2>
-                                </a>
-                            </div> --}}
+          <img src="/front/images/payment_4.png" alt="payment" class="img-fluid w-100">
+          <h2>Razorpay</h2>
+          </a>
+        </div> --}}
                             {{-- ABA Payway --}}
                             <div class="col-xl-4 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
@@ -51,8 +50,8 @@
                                     });
                                 </script>
                                 <form action="{{ route('aba.payment') }}" method="POST" id="aba_form">
-                                    @csrf
-                                </form> --}}
+          @csrf
+          </form> --}}
                             </div>
                         </div>
                     </div>
@@ -84,26 +83,22 @@
                                 aria-label="Close" id="closeBtn"></button>
                         </div>
                         <div class="modal-body" id="modal_body">
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
-
 @endsection
 @push('scripts')
     {{-- <script>
         $('#aba_click_pay').on('click', function(e) {
             e.preventDefault();
-
             $.ajax({
                 method: "POST",
-                url: base_url + "/aba/payment",
+                url: $('meta[name="base_url"]').attr('content') + "/aba/payment",
                 data: {
-                    _token: csrf_token
+                    _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 beforeSend: function() {
                     $('#aba_click_pay').prop('disabled', true);
@@ -112,43 +107,33 @@
                     $('#aba_qr_modal').modal('show');
                 },
                 error: function(xhr, status, error) {
-
                 },
             });
         });
     </script> --}}
-
     <script>
         let paymentCompleted = false;
 
         function startAbaPolling(tranId) {
             let interval = setInterval(function() {
-
-                $.get(base_url + '/aba/check-status/' + tranId, function(res) {
-
+                $.get($('meta[name="base_url"]').attr('content') + '/aba/check-status/' + tranId, function(res) {
                     if (res.status === 'paid' && !paymentCompleted) {
                         paymentCompleted = true;
                         clearInterval(interval);
-
                         $('#aba_qr_modal').modal('hide');
                         window.location.href =
-                            base_url + '/student/enroll-courses';
+                            $('meta[name="base_url"]').attr('content') + '/student/enroll-courses';
                     }
-
                 });
-
             }, 3000);
         }
-
-
         $('#aba_click_pay').on('click', function(e) {
             e.preventDefault();
-
             $.ajax({
                 method: "POST",
-                url: base_url + "/aba/payment",
+                url: $('meta[name="base_url"]').attr('content') + "/aba/payment",
                 data: {
-                    _token: csrf_token
+                    _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 beforeSend: function() {
                     $('#aba_click_pay').prop('disabled', true);
@@ -158,12 +143,10 @@
                         alert('Payment init failed');
                         return;
                     }
-
                     // 1. Inject QR image
                     $('#modal_body').html(`
                         <div class="text-center">
                             <img src="${res.data.qrImage}" alt="ABA QR Code" class="mb-3 rounded"  />
-
                             <strong>
                                 ${res.amountUsd}
                             </strong> USD
@@ -182,13 +165,11 @@
                             <br/>
                         </div>
                     `);
-
                     // 2. Show modal
                     $('#aba_qr_modal').modal({
                         backdrop: 'static',
                         keyboard: false
                     }).modal('show');
-
                     // 3. Start checking payment status
                     startAbaPolling(res.tran_id);
                 },
