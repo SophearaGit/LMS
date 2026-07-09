@@ -25,7 +25,7 @@ class HeroSeeder extends Seeder
                 'vid_btn_url' => 'https://www.youtube.com/watch?v=D_uLM5i0Z4c&t=11s&pp=0gcJCbAJAYcqIYzv',
                 'banner_item_title' => '250+ Popular Course',
                 'banner_item_subtitle' => 'Explore a variety of fresh topics',
-                'image' => '/default-images/hero-images/toonSitReadGuy.png',
+                'image' => '/default-images/hero-images/toonSitReadGuy.webp',
                 'round_txt' => '.take .the .worldwide .best .online course',
                 'created_at' => now(),
                 'updated_at' => now(),

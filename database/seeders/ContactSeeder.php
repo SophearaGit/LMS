@@ -1,11 +1,7 @@
 <?php
-
 namespace Database\Seeders;
-
 use App\Models\Contact;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
 class ContactSeeder extends Seeder
 {
     /**
@@ -13,15 +9,38 @@ class ContactSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = \Faker\Factory::create();
-        for ($i = 1; $i <= 4; $i++) {
-            Contact::create([
-                'icon' => '/default-images/contact/contact_icon_' . $i . '.png',
-                'title' => $faker->sentence(3),
-                'line_one' => $faker->phoneNumber(),
-                'line_two' => $faker->phoneNumber(),
+        $contacts = [
+            [
+                'icon' => '/default-images/contact/contact_icon_1.png',
+                'title' => 'Phone Number',
+                'line_one' => '+855 96 564 8889',
+                'line_two' => '+855 10 564 888',
                 'status' => 1,
-            ]);
+            ],
+            [
+                'icon' => '/default-images/contact/contact_icon_2.png',
+                'title' => 'Email Address',
+                'line_one' => 'info@cait.com.kh',
+                'line_two' => 'support@cait.com.kh',
+                'status' => 1,
+            ],
+            [
+                'icon' => '/default-images/contact/contact_icon_3.png',
+                'title' => 'Office Address',
+                'line_one' => 'Phnom Penh, Cambodia',
+                'line_two' => 'C.A.I.T Digitalization Co., Ltd.',
+                'status' => 1,
+            ],
+            [
+                'icon' => '/default-images/contact/contact_icon_4.png',
+                'title' => 'Working Hours',
+                'line_one' => 'Monday - Friday',
+                'line_two' => '08:00 AM - 05:30 PM',
+                'status' => 1,
+            ],
+        ];
+        foreach ($contacts as $contact) {
+            Contact::create($contact);
         }
     }
 }
