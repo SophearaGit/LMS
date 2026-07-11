@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CourseStoreBasicInfoRequest;
 use App\Models\Course;
@@ -15,24 +13,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-
+use App\Models\CourseChapterLessons;
+use Illuminate\Support\Facades\DB;
 class CourseController extends Controller
 {
     use FileUpload;
-    /**
-     * SHOW INSTRUCTOR COURSE PAGEs
-     */
-    // public function index(Request $request)
-    // {
-    //     $data = [
-    //         'pageTitle' => 'CAITD | Courses',
-    //         'courses' => Course::with(['instructor'])
-    //             ->latest()
-    //             ->paginate(15),
-    //     ];
-    //     return view('admin.pages.course.course-module.index', $data);
-    // }
-
     public function index(Request $request)
     {
         $courses = Course::with(['instructor'])
@@ -47,8 +32,6 @@ class CourseController extends Controller
         ];
         return view('admin.pages.course.course-module.index', $data);
     }
-
-
     /**
      * UPDATE COURSE APPROVAL STATUS
      */
@@ -62,7 +45,6 @@ class CourseController extends Controller
             'message' => 'Updated successfully',
         ]);
     }
-
     /**
      * SHOW INSTRUCTOR COURSE CREATE PAGE
      */
@@ -74,7 +56,6 @@ class CourseController extends Controller
         ];
         return view('admin.pages.course.course-module.create', $data);
     }
-
     /**
      * STORE BASIC INFO
      */
@@ -95,7 +76,6 @@ class CourseController extends Controller
         $course->save();
         // save course id on session
         Session::put('course_create_id', $course->id);
-
         return response()->json([
             'status' => 'success',
             'message' => 'Updated successfully',
@@ -183,7 +163,6 @@ class CourseController extends Controller
                 $course->save();
                 // save course id on session
                 Session::put('course_create_id', $course->id);
-
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Updated successfully',
@@ -238,5 +217,31 @@ class CourseController extends Controller
                 break;
         }
     }
-
+    /**
+     * DELETE COURSE (LOGICAL DELETE)
+     */
+    public function destroy(Request $request, $id)
+    {
+        $course = Course::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            // soft delete related lessons
+            CourseChapterLessons::where('course_id', $course->id)->delete();
+            // soft delete related chapters
+            CourseChapter::where('course_id', $course->id)->delete();
+            // soft delete the course itself
+            $course->delete();
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Course deleted successfully',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong while deleting the course',
+            ], 500);
+        }
+    }
 }

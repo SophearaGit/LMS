@@ -26,8 +26,9 @@
                         <div class="card-actions">
                             <div class="dropdown">
                                 <a href="#" class="btn-action dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"><!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
+                                    aria-haspopup="true" aria-expanded="false">
+
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -38,7 +39,6 @@
                                     </svg>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-
                                     <form method="GET" action="{{ route('admin.courses.index') }}">
                                         <a class="dropdown-item"
                                             href="
@@ -124,7 +124,7 @@
                                                         <path d="M16 5l3 3" />
                                                     </svg>
                                                 </a>
-                                                <a href="{{ route('admin.course-levels.destroy', $item->id) }}"
+                                                <a href="{{ route('admin.courses.destroy', $item->id) }}"
                                                     class="text-danger delete-item">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -157,19 +157,47 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-status bg-danger"></div>
+                <div class="modal-body text-center py-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 9v2m0 4v.01" />
+                        <path
+                            d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                    </svg>
+                    <h3>Are you sure?</h3>
+                    <div class="text-secondary">Do you really want to delete this course? This process cannot be undone.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">Cancel</a>
+                            </div>
+                            <div class="col"><a href="#"
+                                    class="btn btn-danger w-100 delete-confirm-btn">Delete</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script src="/front/js/jquery-3.7.1.min.js"></script>
-
     <script>
         $(document).ready(function() {
             $('select').niceSelect();
         });
-
         // VARIABLES
         const csrf_token = $(`meta[name=csrf_token]`).attr('content');
         const base_url = $('meta[name="base_url"]').attr('content');
-
+        var delete_url = null;
         // FUNCTIONS
         function updata_approval_status(id, status) {
             $.ajax({
@@ -182,12 +210,9 @@
                 success: function(data) {
                     window.location.reload();
                 },
-                error: function(xhr, status, error) {
-
-                },
+                error: function(xhr, status, error) {},
             })
         }
-
         // DOM LOAD
         $(function() {
             $('.update_approval_status').on('change', function() {
@@ -195,6 +220,32 @@
                 let status = $(this).val();
                 updata_approval_status(id, status)
             })
+            $('.delete-item').on('click', function(e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+                delete_url = url;
+                $('#modal-danger').modal('show');
+            });
+            $('.delete-confirm-btn').on('click', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    method: 'DELETE',
+                    url: delete_url,
+                    data: {
+                        _token: csrf_token
+                    },
+                    beforeSend: function() {
+                        $('.delete-confirm-btn').text('Deleting...');
+                    },
+                    success: function(data) {
+                        window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        let errMsg = xhr.responseJSON.message;
+                        notyf.error(errMsg);
+                    }
+                });
+            });
         });
     </script>
 @endpush
