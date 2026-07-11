@@ -43,13 +43,11 @@
     {{-- jquery-ui --}}
     <script src="/front/js/jquery-ui.min.js"></script>
 </head>
-
 @auth
     <div class="modal fade" id="wishlistModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" style="max-width: 500px;">
             <div class="modal-content"
                 style="border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
-
                 {{-- Header --}}
                 <div class="modal-header border-0 pb-0 px-4 pt-4"
                     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
@@ -64,14 +62,12 @@
                     <button type="button" class="btn-close btn-close-white mb-auto" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-
                 {{-- Body --}}
                 <div class="modal-body px-4 py-3" id="wishlist_modal_body" style="max-height: 460px; overflow-y: auto;">
                     <div class="text-center py-4">
                         <div class="spinner-border text-primary" role="status"></div>
                     </div>
                 </div>
-
                 {{-- Footer --}}
                 <div class="modal-footer border-0 px-4 pb-4 pt-0">
                     <a href="{{ route('courses') }}" class="btn btn-outline-secondary btn-sm"
@@ -105,7 +101,6 @@
         <div class="modal-dialog modal-dialog-centered modal-lg dynamic-modal-content">
         </div>
     </div>
-
     <script>
         // Open modal and load wishlist
         $(document).on('click', '#desktop_wishlist_btn, #mobile_wishlist_btn', function() {
@@ -116,62 +111,55 @@
     `);
             $('#wishlist_modal_subtitle').text('Loading...');
             $('#wishlistModal').modal('show');
-
-            $.get('{{ route('student.wishlist.modal_items') }}', function(html) {
-                $('#wishlist_modal_body').html(html);
-                const count = $('.wishlist-item').length;
-                $('#wishlist_modal_subtitle').text(count + ' saved course' + (count !== 1 ? 's' : ''));
-            });
+            $.get('{{ route('student.wishlist.modal_items') }}',
+                function(html) {
+                    $('#wishlist_modal_body').html(html);
+                    const count = $('.wishlist-item').length;
+                    $('#wishlist_modal_subtitle').text(count + ' saved course' + (count !== 1 ? 's' : ''));
+                });
         });
-
         // Remove from wishlist inside modal
         $(document).on('click', '.remove-wishlist-modal-btn', function() {
             const courseId = $(this).data('course-id');
             const btn = $(this);
             btn.prop('disabled', true).html('<i class="far fa-spinner fa-spin"></i>');
-
             $.post('{{ route('student.wishlist.toggle') }}', {
-                _token: '{{ csrf_token() }}',
-                course_id: courseId
-            }, function() {
-                $('#wishlist-item-' + courseId).fadeOut(250, function() {
-                    $(this).remove();
-                    syncWishlistBadge();
+                    _token: '{{ csrf_token() }}',
+                    course_id: courseId
+                },
+                function() {
+                    $('#wishlist-item-' + courseId).fadeOut(250, function() {
+                        $(this).remove();
+                        syncWishlistBadge();
+                    });
                 });
-            });
         });
-
         // Hook into existing wishlist toggle buttons on page (real-time badge update)
         $(document).on('click', '.wishlist_btn', function() {
             const courseId = $(this).data('course-id');
             // Small delay to let the toggle AJAX finish first
             setTimeout(syncWishlistBadge, 600);
         });
-
         // Sync badge count from server
         function syncWishlistBadge() {
-            $.get('{{ route('student.wishlist.modal_items') }}', function(html) {
-                const temp = $('<div>').html(html);
-                const count = temp.find('.wishlist-item').length;
-
-                $('#wishlist_count_badge, #mobile_wishlist_count_badge').text(count);
-
-                if (count === 0) {
-                    $('#wishlist_count_badge, #mobile_wishlist_count_badge').addClass('d-none');
-                } else {
-                    $('#wishlist_count_badge, #mobile_wishlist_count_badge').removeClass('d-none');
-                }
-
-                // Update subtitle if modal is still open
-                if ($('#wishlistModal').hasClass('show')) {
-                    $('#wishlist_modal_body').html(html);
-                    $('#wishlist_modal_subtitle').text(count + ' saved course' + (count !== 1 ? 's' : ''));
-                }
-            });
+            $.get('{{ route('student.wishlist.modal_items') }}',
+                function(html) {
+                    const temp = $('<div>').html(html);
+                    const count = temp.find('.wishlist-item').length;
+                    $('#wishlist_count_badge, #mobile_wishlist_count_badge').text(count);
+                    if (count === 0) {
+                        $('#wishlist_count_badge, #mobile_wishlist_count_badge').addClass('d-none');
+                    } else {
+                        $('#wishlist_count_badge, #mobile_wishlist_count_badge').removeClass('d-none');
+                    }
+                    // Update subtitle if modal is still open
+                    if ($('#wishlistModal').hasClass('show')) {
+                        $('#wishlist_modal_body').html(html);
+                        $('#wishlist_modal_subtitle').text(count + ' saved course' + (count !== 1 ? 's' : ''));
+                    }
+                });
         }
     </script>
-
-
     {{-- SCROLL BUTTON START --}}
     @include('front.layouts.components.scroll-button')
     {{-- SCROLL BUTTON END --}}
@@ -366,7 +354,7 @@
                             method: 'DELETE',
                             url: url,
                             data: {
-                                _token: csrf_token
+                                _token: $('meta[name="csrf-token"]').attr('content'),
                             },
                             success: function() {
                                 window.location.reload();

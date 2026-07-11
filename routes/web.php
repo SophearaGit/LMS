@@ -118,6 +118,7 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor', 'ins
     Route::post('/courses/store-basic-info', action: [CourseController::class, 'storeBasicInfo'])->name('courses.store_basic_info');
     Route::get('/courses/{id}/edit-basic-info', [CourseController::class, 'editBasicInfo'])->name('courses.edit_basic_info');
     Route::post('/courses/update-more-info', action: [CourseController::class, 'updateMoreInfo'])->name('courses.update_more_info');
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
     /**
      * ————————————————————————————————————————————————————————————————————————————————
      * COURSE CHAPTER ROUTE

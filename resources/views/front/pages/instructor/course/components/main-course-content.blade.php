@@ -240,7 +240,6 @@
                 }
             });
         })
-        // const csrf_token = $('meta[name="csrf-token"]').attr('content');
         // SORTABLE LIST
         if ($('.sortable_list li').length) {
             $('.sortable_list').sortable({
@@ -258,7 +257,7 @@
                         url: $('meta[name="base_url"]').attr('content') +
                             `/instructor/course-chapter/${chapterIds}/sort-lesson`,
                         data: {
-                            _token: csrf_token,
+                            _token: $('meta[name="csrf-token"]').attr('content'),
                             order_ids: orderIds,
                         },
                         success: function(data) {

@@ -1,20 +1,19 @@
 <?php
-
 namespace App\Http\Controllers\Frontend;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\CourseStoreBasicInfoRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\CourseChapter;
+use App\Models\CourseChapterLessons;
 use App\Models\CourseLanguage;
 use App\Models\CourseLevel;
 use App\Traites\FileUpload;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
 class CourseController extends Controller
 {
     use FileUpload;
@@ -61,7 +60,6 @@ class CourseController extends Controller
         $course->save();
         // save course id on session
         Session::put('course_create_id', $course->id);
-
         return response()->json([
             'status' => 'success',
             'message' => 'Updated successfully',
@@ -152,7 +150,6 @@ class CourseController extends Controller
                 $course->save();
                 // save course id on session
                 Session::put('course_create_id', $course->id);
-
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Updated successfully',
@@ -207,5 +204,33 @@ class CourseController extends Controller
                 break;
         }
     }
-
+    /**
+     * DELETE COURSE (LOGICAL DELETE)
+     */
+    public function destroy(Request $request, $id)
+    {
+        $course = Course::where('id', $id)
+            ->where('instructor_id', Auth::guard('web')->user()->id)
+            ->firstOrFail();
+        DB::beginTransaction();
+        try {
+            // soft delete related lessons
+            CourseChapterLessons::where('course_id', $course->id)->delete();
+            // soft delete related chapters
+            CourseChapter::where('course_id', $course->id)->delete();
+            // soft delete the course itself
+            $course->delete();
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Course deleted successfully',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong while deleting the course',
+            ], 500);
+        }
+    }
 }

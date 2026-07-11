@@ -108,7 +108,7 @@
                     method: "POST",
                     url: base_url + `/instructor/course-content/${courseId}/sort-chapter`,
                     data: {
-                        _token: csrf_token,
+                        _token: $('meta[name="csrf-token"]').attr('content'),
                         order_ids: orderIds,
                     },
                     success: function(data) {

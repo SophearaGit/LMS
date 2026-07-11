@@ -3,8 +3,6 @@
 @push('stylesheets')
     <style>
         .wsus__dash_course_table .image img {
-            /* width: 160px !important;
-                                                                            border-radius: 10px; */
             height: 120px !important;
             object-fit: cover !important;
         }
@@ -12,7 +10,6 @@
 @endpush
 @section('content')
     @include('front.pages.instructor.components.breadcrum-banner')
-
     {{-- DASHBOARD OVERVIEW START --}}
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
@@ -40,7 +37,6 @@
                                 </select>
                             </div>
                         </form> --}}
-
                         <div class="wsus__dash_course_table">
                             <div class="row">
                                 <div class="col-12">
@@ -52,13 +48,15 @@
                                                         COURSES
                                                     </th>
                                                     <th class="details">
-
                                                     </th>
                                                     <th class="sale">
                                                         STUDENT
                                                     </th>
                                                     <th class="status">
                                                         STATUS
+                                                    </th>
+                                                    <th class="status">
+                                                        APPROVAL STATUS
                                                     </th>
                                                     <th class="action">
                                                         ACTION
@@ -90,14 +88,24 @@
                                                             <p>{{ $item->enrollments()->count() }}</p>
                                                         </td>
                                                         <td class="status">
-                                                            <p class="active">{{ $item->status }}</p>
+                                                            <p
+                                                                class="{{ $item->status === 'active' ? 'active' : ($item->status === 'draft' ? 'Pending' : 'delete') }}">
+                                                                {{ ucfirst($item->status) }}
+                                                            </p>
+                                                        </td>
+                                                        <td class="status">
+                                                            <p
+                                                                class="{{ $item->is_approved === 'approved' ? 'active' : ($item->is_approved === 'pending' ? 'Pending' : 'delete') }}">
+                                                                {{ ucfirst($item->is_approved) }}
+                                                            </p>
                                                         </td>
                                                         <td class="action">
                                                             <a class="edit"
                                                                 href="{{ route('instructor.courses.edit_basic_info', ['id' => $item->id, 'step' => 1]) }}"><i
                                                                     class="far fa-edit" aria-hidden="true"></i></a>
-                                                            <a class="del" href="#"><i class="fas fa-trash-alt"
-                                                                    aria-hidden="true"></i></a>
+                                                            <a class="del btn_dynamic_delete"
+                                                                href="{{ route('instructor.courses.destroy', $item->id) }}"><i
+                                                                    class="fas fa-trash-alt" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -128,3 +136,46 @@
     </section>
     {{-- DASHBOARD OVERVIEW END --}}
 @endsection
+@push('scripts')
+    <script>
+        $(function() {
+            $('.btn_dynamic_delete').on('click', function(e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            method: 'DELETE',
+                            url: url,
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                            },
+                            success: function() {
+                                notyf.success('Course deleted successfully');
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 1000);
+                            },
+                            error: function(xhr, status, error) {
+                                let message = 'Something went wrong.';
+                                if (xhr.responseJSON && xhr.responseJSON
+                                    .message) {
+                                    message = xhr.responseJSON.message;
+                                }
+                                notyf.error(message);
+                            },
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
