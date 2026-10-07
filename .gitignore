@@ -25,3 +25,5 @@ yarn-error.log
 /public/files/
 /storage/app/public/
 public/uploads/
+pullmain.bat
+pushsopheara.bat
