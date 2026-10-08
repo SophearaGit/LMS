@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\BlockDangerousFileNames;
 use App\Http\Middleware\CheckRoleMiddleware;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\CheckInstructorStatus;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest' => RedirectIfAuthenticated::class,
             'check_role' => CheckRoleMiddleware::class,
             'instructor.status' => CheckInstructorStatus::class,
+            'safe_filenames' => BlockDangerousFileNames::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
