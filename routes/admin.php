@@ -237,7 +237,7 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
      * LARAVEL FILE MANAGER
      * ————————————————————————————————————————————————————————————————————————————————
      */
-    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin', 'safe_filenames']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });

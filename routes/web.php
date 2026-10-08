@@ -164,9 +164,20 @@ Route::group(["middleware" => ['auth', 'verified', 'check_role:instructor', 'ins
      * LARAVEL FILE MANAGER
      * ————————————————————————————————————————————————————————————————————————————————
      */
-    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'safe_filenames']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
+});
+/**
+ * ————————————————————————————————————————————————————————————————————————————————
+ * FILE MANAGER (default address used by the instructor course pages)
+ * ————————————————————————————————————————————————————————————————————————————————
+ * The package's own /filemanager routes are switched off in config/lfm.php because
+ * they let every logged-in user, students included, upload files. They are
+ * registered here instead, for instructors only.
+ */
+Route::group(['prefix' => 'filemanager', 'middleware' => ['auth', 'verified', 'check_role:instructor', 'instructor.status', 'safe_filenames']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

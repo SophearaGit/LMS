@@ -15,7 +15,7 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'use_package_routes' => true,
+    'use_package_routes' => false, // routes are registered in routes/web.php and routes/admin.php with role checks
 
     /*
     |--------------------------------------------------------------------------
@@ -146,7 +146,7 @@ return [
     'disallowed_mimetypes' => ['text/x-php', 'text/html', 'text/plain'],
 
     // extensions of executables to prevent from uploading
-    'disallowed_extensions' => ['php', 'html'],
+    'disallowed_extensions' => ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'pht', 'phps', 'phar', 'html', 'htm', 'shtml', 'htaccess', 'ini', 'cgi', 'pl', 'sh'],
 
     // Item Columns
     'item_columns' => ['name', 'url', 'time', 'icon', 'is_file', 'is_image', 'thumb_url'],
