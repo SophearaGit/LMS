@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\PaymentSetting;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class PaymentSettingSeeder extends Seeder
 {
@@ -35,13 +36,28 @@ class PaymentSettingSeeder extends Seeder
 
             ['key' => 'aba_status', 'value' => 'active'],
             ['key' => 'aba_currency', 'value' => 'KHR'],
-            ['key' => 'aba_rate', 'value' => '1'],
+            // Course prices are in USD; this is how many riel ABA charges per 1 USD.
+            ['key' => 'aba_rate', 'value' => '4100'],
             ['key' => 'aba_merchant_id', 'value' => 'ec462957'],
             ['key' => 'aba_public_key', 'value' => 'f8ef4e3da01e86f4f190156d91f5948c98a175eb'],
             ['key' => 'aba_rsa_public_key', 'value' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCw75mAl0gbuUuf8va6kXfHjaa22VK/L6wKx+Urz/VIl2R+7rjJbPIWWKMLrOs4C8QcaSoHv0HTUpsalYdl7EWMV2UuGBQEP/JAN5dh+UPQ6MvAxEEgKMq5MS0Sawu9XtF+WGDsYvf24tsfbjLc2JWPmCn5M1N8d3bY+tR8JSFsxQIDAQAB'],
             ['key' => 'aba_rsa_secret_key', 'value' => 'MIICXQIBAAKBgQDmbRgx+9zvNUFGb+vwrBIJpOIzhYBIK8vqgnuBg9B2lcfYWTyR9WndcbrA9UU9NtUyKHA+QAiRz4i8CQPbTZzwVS3ijD65TRqevAESWHmeJn22ix4KlaeyolYZYD4A5iexW1xTWPsYeZK2jFk7o395OLYOXYrH7kaXhUhMkU+59wIDAQABAoGAVp/tqCDMunq1SuMZelVdxJVhWkgWZUtdshASmSpyLJp7Uiid/isZ/N9b+11Zhb0+4cfVBnnxHsu71iC3e/LOC87UCWq45TrPt+5paRihSFacF3FNJ8LHlnfUg3/avm9Ik4i9AHTcDiIbzKIyqfI4x7ETMt1KoWDMCiwqRycfyg0CQQD+Ox/eChf7e1MWMi5iyLhubKpP3W1L9g52OFbEk1xIbq/vCdsf4s8Jj4vfaiiqN3/39LVSYXk3MO5gVzPu7P37AkEA6AeQst4k2iP6AG6W9uhw4zLvtyOnrIwM7ToY6LtKg18wx8/Db/JzB5jncAP5M24eYVtr1dDURwxR4E0zcs1fNQJBAJuSQqX1N0fE58slWg1JFtM729yTe1aIc8EUKMSSCF6qnS6BsX2JpXgMR2On6sp+u+hX7r1CuJJ1dumtczI6BBECQAf9orUWQ2yjyotTQ62zKZgZe/nxp2eg1x0gYBU7xgAqOhLXi+KCFgYP9QB9kop74130+Qy/CWB9AyDXZ8svWXUCQQDGrkNgW1mSfkBpl+IjTifcijB2g4m3JPLdxbHEBBo2soJCKDKoQP5lCkkjkb65ioLDKMf7zVD4yCrka8OxV8Qp'],
         ];
-        PaymentSetting::insert($settings);
+        // Safe to run more than once: only adds keys that don't exist yet,
+        // so values changed in Admin → Payment Settings are kept.
+        foreach ($settings as $setting) {
+            PaymentSetting::firstOrCreate(['key' => $setting['key']], ['value' => $setting['value']]);
+        }
+
+        // Repair a wrong ABA rate saved by the old seeder (1 while charging in KHR).
+        $abaCurrency = PaymentSetting::where('key', 'aba_currency')->value('value');
+        $abaRate = (float) PaymentSetting::where('key', 'aba_rate')->value('value');
+        if ($abaCurrency === 'KHR' && $abaRate < 100) {
+            PaymentSetting::where('key', 'aba_rate')->update(['value' => '4100']);
+        }
+
+        // Settings are cached; make the new values take effect right away.
+        Cache::forget('gatewaySettings');
     }
 }
 

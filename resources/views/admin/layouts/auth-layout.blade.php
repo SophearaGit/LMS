@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>@yield('pageTitle')</title>
+    @include('admin.layouts.brand-head')
     <!-- CSS files -->
     <link href="/admin/assets/dist/css/tabler.min.css?1692870487" rel="stylesheet" />
     <link href="/admin/assets/dist/css/tabler-flags.min.css?1692870487" rel="stylesheet" />

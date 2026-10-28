@@ -213,11 +213,53 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * Currency + amount ABA should charge, from Admin → Payment Settings.
+     * Course prices are in the site currency (USD); aba_rate converts them.
+     */
+    private function abaCharge(float $siteAmount): array
+    {
+        $currency = strtoupper((string) config('gateway_setting.aba_currency', 'KHR'));
+        if (! in_array($currency, ['USD', 'KHR'], true)) {
+            $currency = 'KHR';
+        }
+
+        $rate = (float) config('gateway_setting.aba_rate');
+        // Guard against a misconfigured rate (e.g. 1 while charging in KHR), which would
+        // undercharge students; fall back to a safe default and log it for the admin.
+        $fallback = $currency === 'KHR' ? 4100 : 1;
+        $looksWrong = $rate <= 0 || ($currency === 'KHR' && $rate < 100);
+        if ($looksWrong) {
+            logger()->warning('ABA PayWay: exchange rate looks wrong, using fallback', [
+                'configured_rate' => $rate, 'currency' => $currency, 'fallback' => $fallback,
+            ]);
+            $rate = $fallback;
+        }
+
+        $amount = $siteAmount * $rate;
+
+        return [
+            'currency' => $currency,
+            'rate'     => $rate,
+            // KHR has no decimals; USD uses 2.
+            'amount'   => $currency === 'KHR' ? (string) (int) round($amount) : number_format($amount, 2, '.', ''),
+        ];
+    }
+
     public function payWithAba(Request $request)
     {
-        // 1. Amount in USD / KHR
+        if (config('gateway_setting.aba_status') !== 'active') {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'ABA PayWay is not available right now.',
+            ], 422);
+        }
+
+        // 1. Amount in the currency set in Payment Settings
         $usdAmount = cartTotalPrice();
-        $amountKhr = round($usdAmount * 4000); // no decimals
+        $charge = $this->abaCharge((float) $usdAmount);
+        $amountKhr = $charge['amount']; // kept name: the amount sent to ABA (in $charge['currency'])
+        $currency = $charge['currency'];
 
         // 2. Generate unique tran_id
         $tranId = 'ABA' . time();
@@ -243,6 +285,7 @@ class PaymentController extends Controller
             'email' => $email,
             // 'phone' => $phone,
             'payment_option' => 'abapay',
+            'currency' => $currency,
         ];
 
         // 5. Generate HASH (EXACT ABA ORDER — DO NOT CHANGE)
@@ -255,7 +298,10 @@ class PaymentController extends Controller
             // $lastname .
             $email .
             // $phone .
-            'abapay';
+            'abapay' .
+            // return_url, cancel_url, continue_success_url, return_deeplink are not sent (empty),
+            // so currency follows payment_option in ABA's hash order.
+            $currency;
 
         $hash = base64_encode(
             hash_hmac(
@@ -291,8 +337,10 @@ class PaymentController extends Controller
             'status' => 'success',
             'tran_id' => $tranId,
             'data' => $response->json(),
-            'amountUsd' => $usdAmount,
-            'amountKhr' => $amountKhr,
+            'amountUsd' => number_format((float) $usdAmount, 2, '.', ''),
+            'amountKhr' => $currency === 'KHR' ? $amountKhr : null,
+            'amount' => $amountKhr,
+            'currency' => $currency,
         ]);
 
     }

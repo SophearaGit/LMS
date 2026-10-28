@@ -1,418 +1,292 @@
 @extends('admin.layouts.master')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Instructors')
 @push('stylesheets')
+    @include('admin.pages.users.partials.people-styles')
     <style>
-        @media (min-width: 1400px) {
-
-            .container,
-            .container-lg,
-            .container-md,
-            .container-sm,
-            .container-xl,
-            .container-xxl {
-                max-width: 100%;
-            }
+        /* Grid view is opt-in on desktop; phones and tablets always get cards. */
+        #pp-grid { display: none; }
+        @media (min-width: 992px) {
+            .pp-mode-grid #pp-list { display: none !important; }
+            .pp-mode-grid #pp-grid { display: block; }
         }
-
-        /* ── View toggle (only 2 states needed, no Tabler native) ── */
-        .ir-view-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            border: var(--tblr-border-width) solid var(--tblr-border-color);
-            background: transparent;
-            border-radius: var(--tblr-border-radius);
-            color: var(--tblr-secondary);
-            cursor: pointer;
-            transition: background .15s, color .15s;
-        }
-
-        .ir-view-btn:first-child {
-            border-right: 0;
-            border-radius: var(--tblr-border-radius) 0 0 var(--tblr-border-radius);
-        }
-
-        .ir-view-btn:last-child {
-            border-radius: 0 var(--tblr-border-radius) var(--tblr-border-radius) 0;
-        }
-
-        .ir-view-btn.active,
-        .ir-view-btn:hover {
-            background: var(--tblr-bg-surface-secondary);
-            color: var(--tblr-body-color);
-        }
-
-        /* ── Grid view ── */
-        #grid-view {
-            display: none;
-        }
-
-        #grid-view.active {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: var(--tblr-page-padding);
-        }
-
-        /* ── Disabled row/card ── */
-        .row-disabled {
-            opacity: .45;
-        }
-
-        .card-disabled {
-            opacity: .45;
-        }
-
-        /* ── Toggle switch (tiny, pure CSS) ── */
-        .tblr-switch {
-            position: relative;
-            display: inline-block;
-            width: 2rem;
-            height: 1.25rem;
-        }
-
-        .tblr-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .tblr-switch-slider {
-            position: absolute;
-            cursor: pointer;
-            inset: 0;
-            background: var(--tblr-border-color);
-            border-radius: 100rem;
-            transition: .2s;
-        }
-
-        .tblr-switch-slider::before {
-            content: '';
-            position: absolute;
-            width: .875rem;
-            height: .875rem;
-            left: .1875rem;
-            bottom: .1875rem;
-            background: #fff;
-            border-radius: 50%;
-            transition: .2s;
-        }
-
-        .tblr-switch input:checked+.tblr-switch-slider {
-            background: var(--tblr-success);
-        }
-
-        .tblr-switch input:checked+.tblr-switch-slider::before {
-            transform: translateX(.75rem);
+        @media (max-width: 991.98px) {
+            #pp-grid { display: block; }
         }
     </style>
 @endpush
 @section('content')
-    <div class="container-xl mt-4">
-        {{-- Stats row --}}
-        <div class="row row-cards mb-3">
-            <div class="col-sm-6 col-lg-4">
-                <div class="card card-sm">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <span class="bg-primary text-white avatar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="col">
-                                <div class="font-weight-medium">Total instructors</div>
-                                <div class="text-secondary">{{ $instructors->count() }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    @php
+        $filters = [
+            'all'      => ['All instructors', 'ti-chalkboard', 'purple'],
+            'active'   => ['Active',          'ti-circle-check', 'green'],
+            'disabled' => ['Disabled',        'ti-user-off', 'red'],
+        ];
+        $sorts = [
+            'newest' => 'Newest first', 'oldest' => 'Oldest first', 'name' => 'Name A–Z',
+            'courses' => 'Most courses', 'students' => 'Most students',
+        ];
+        $linkFor = fn ($over) => route('admin.users.instructors', array_filter(array_merge(
+            ['filter' => $filter === 'all' ? null : $filter, 'sort' => $sort === 'newest' ? null : $sort, 'search' => $search ?: null],
+            is_array($over) ? $over : ['filter' => $over === 'all' ? null : $over])));
+
+        $rowData = function ($u) {
+            $hasOwnImage = $u->image && $u->image !== '/default-images/avatar/teacher.jpg'
+                && is_file(public_path(ltrim($u->image, '/')));
+            return [
+                'avatar'     => $hasOwnImage ? asset($u->image) : asset('default-images/avatar/both.jpg'),
+                'isDisabled' => $u->account_status === 'disabled',
+                'subtitle'   => $u->headline ?: 'Instructor',
+            ];
+        };
+    @endphp
+
+    <div class="container-xl mt-4 mb-5">
+        {{-- Page header --}}
+        <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
+            <div>
+                <div class="text-secondary text-uppercase fw-semibold small mb-1">People</div>
+                <h2 class="page-title mb-1">Instructors</h2>
+                <div class="text-secondary">Approved teachers, their courses and students. Disable an account to block their access.</div>
             </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="card card-sm">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <span class="bg-success text-white avatar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12" />
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="col">
-                                <div class="font-weight-medium">Active</div>
-                                <div class="text-secondary">{{ $instructors->where('account_status', 'enabled')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="card card-sm">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <span class="bg-secondary text-white avatar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="col">
-                                <div class="font-weight-medium">Disabled</div>
-                                <div class="text-secondary">{{ $instructors->where('account_status', 'disabled')->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="{{ route('admin.instructor-requests.index') }}" class="btn btn-outline-secondary">
+                    <i class="ti ti-user-exclamation me-1"></i> Instructor requests
+                </a>
+                @include('admin.pages.users.partials.export-menu', [
+                    'noun' => 'instructors',
+                    'excelRoute' => route('admin.users.instructors.excel'),
+                    'pdfRoute' => route('admin.users.instructors.exportPdf'),
+                    'viewCount' => $instructors->total(),
+                    'allCount' => $counts['all'],
+                    'filterLabel' => $filters[$filter][0],
+                ])
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Instructors</h3>
-                <div class="card-actions d-flex align-items-center gap-2">
-                    {{-- View toggle --}}
-                    <div class="d-flex">
-                        <button class="ir-view-btn active" id="btn-list" title="List view" aria-label="List view">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="8" y1="6" x2="21" y2="6" />
-                                <line x1="8" y1="12" x2="21" y2="12" />
-                                <line x1="8" y1="18" x2="21" y2="18" />
-                                <line x1="3" y1="6" x2="3.01" y2="6" />
-                                <line x1="3" y1="12" x2="3.01" y2="12" />
-                                <line x1="3" y1="18" x2="3.01" y2="18" />
-                            </svg>
-                        </button>
-                        <button class="ir-view-btn" id="btn-grid" title="Grid view" aria-label="Grid view">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="3" width="7" height="7" />
-                                <rect x="14" y="3" width="7" height="7" />
-                                <rect x="14" y="14" width="7" height="7" />
-                                <rect x="3" y="14" width="7" height="7" />
-                            </svg>
-                        </button>
+
+        @include('admin.pages.users.partials.filter-cards')
+
+        <div class="card" id="pp-root">
+            {{-- Toolbar --}}
+            <div class="card-header flex-wrap gap-3">
+                <div>
+                    <h3 class="card-title mb-0">{{ $filters[$filter][0] }}</h3>
+                    <div class="text-secondary small mt-1">
+                        @if ($instructors->total())
+                            Showing {{ $instructors->firstItem() }}–{{ $instructors->lastItem() }} of {{ $instructors->total() }}
+                        @else
+                            No results
+                        @endif
                     </div>
-                    {{-- Export dropdown --}}
-                    <div class="dropdown">
-                        <a href="#" class="btn-action dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                                <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                                <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                            </svg>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a href="{{ route('admin.users.instructors.excel') }}" class="dropdown-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                    <polyline points="14 2 14 8 20 8" />
-                                </svg>
-                                Export Excel
-                            </a>
-                            <a href="{{ route('admin.users.instructors.exportPdf') }}" class="dropdown-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                    <polyline points="14 2 14 8 20 8" />
-                                </svg>
-                                Download PDF
-                            </a>
+                </div>
+                <div class="ms-md-auto d-flex flex-wrap gap-2 w-100" style="max-width: 560px;">
+                    <form action="{{ route('admin.users.instructors') }}" method="GET" class="d-flex gap-2 flex-grow-1" role="search">
+                        @if ($filter !== 'all') <input type="hidden" name="filter" value="{{ $filter }}"> @endif
+                        <div class="input-icon flex-grow-1">
+                            <span class="input-icon-addon"><i class="ti ti-search"></i></span>
+                            <input type="search" name="search" value="{{ $search }}" class="form-control"
+                                placeholder="Search name or email…" aria-label="Search instructors" autocomplete="off">
                         </div>
+                        <select name="sort" class="form-select w-auto" aria-label="Sort instructors" onchange="this.form.submit()">
+                            @foreach ($sorts as $value => $label)
+                                <option value="{{ $value }}" @selected($sort === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                    <div class="btn-group pp-view-toggle d-none d-lg-inline-flex" role="group" aria-label="Layout">
+                        <button type="button" class="btn btn-outline-secondary active" data-pp-view="list" title="List view" aria-label="List view">
+                            <i class="ti ti-list"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-pp-view="grid" title="Grid view" aria-label="Grid view">
+                            <i class="ti ti-layout-grid"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                {{-- ═══ LIST VIEW ═══ --}}
-                <div id="list-view">
-                    <div class="table-responsive">
-                        <table class="table table-vcenter card-table">
-                            <thead>
-                                <tr>
-                                    <th>Instructor</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Account</th>
-                                    <th>Toggle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($instructors as $instructor)
-                                    @php $isDisabled = $instructor->account_status === 'disabled'; @endphp
-                                    <tr class="{{ $isDisabled ? 'row-disabled' : '' }}">
-                                        <td>
-                                            <div class="d-flex py-1 align-items-center">
-                                                <span class="avatar me-2"
-                                                    style="background-image: url({{ $instructor->image === '/default-images/avatar/teacher.jpg' ? asset('/default-images/avatar/both.jpg') : asset($instructor->image) }})"></span>
-                                                <div class="flex-fill">
-                                                    <div class="font-weight-medium">{{ $instructor->name }}</div>
-                                                    @if ($instructor->headline)
-                                                        <div class="text-secondary small">{{ $instructor->headline }}</div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-secondary">{{ $instructor->email }}</td>
-                                        <td class="text-secondary">{{ ucfirst($instructor->role) }}</td>
-                                        <td>
-                                            @if ($isDisabled)
-                                                <span class="badge bg-secondary text-secondary-fg">Disabled</span>
-                                            @else
-                                                <span class="badge bg-success text-success-fg">Active</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <form
-                                                action="{{ route('admin.users.instructors.toggle-active', $instructor->id) }}"
-                                                method="POST">
-                                                @csrf @method('PATCH')
-                                                <input type="hidden" name="account_status"
-                                                    value="{{ $isDisabled ? 'enabled' : 'disabled' }}">
-                                                <label class="tblr-switch"
-                                                    title="{{ $isDisabled ? 'Enable account' : 'Disable account' }}">
-                                                    <input type="checkbox" {{ $isDisabled ? '' : 'checked' }}
-                                                        onchange="this.closest('form').submit()">
-                                                    <span class="tblr-switch-slider"></span>
-                                                </label>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5">
-                                            <div class="empty">
-                                                <div class="empty-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                                        <circle cx="9" cy="7" r="4" />
-                                                    </svg>
-                                                </div>
-                                                <p class="empty-title">No instructors found</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+
+            @if ($instructors->isEmpty())
+                <div class="pp-empty">
+                    @if ($search !== '')
+                        <div class="pp-empty-icon bg-secondary-lt"><i class="ti ti-search-off"></i></div>
+                        <h3 class="mb-1">No matches for “{{ $search }}”</h3>
+                        <p class="text-secondary mb-3">Try another name or email.</p>
+                        <a href="{{ $linkFor(['search' => null]) }}" class="btn btn-outline-secondary">Clear search</a>
+                    @else
+                        <div class="pp-empty-icon bg-secondary-lt"><i class="ti ti-chalkboard"></i></div>
+                        <h3 class="mb-1">{{ $filter === 'disabled' ? 'No disabled instructors' : 'No instructors yet' }}</h3>
+                        <p class="text-secondary mb-3">Approved instructor requests will appear here.</p>
+                        <a href="{{ route('admin.instructor-requests.index') }}" class="btn btn-outline-secondary">Review requests</a>
+                    @endif
                 </div>
-                {{-- ═══ END LIST VIEW ═══ --}}
-                {{-- ═══ GRID VIEW ═══ --}}
-                <div id="grid-view">
-                    @forelse ($instructors as $instructor)
-                        @php $isDisabled = $instructor->account_status === 'disabled'; @endphp
-                        <div class="card card-sm {{ $isDisabled ? 'card-disabled' : '' }}">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <span class="avatar avatar-md me-3"
-                                        style="background-image: url({{ $instructor->image === '/default-images/avatar/teacher.jpg' ? asset('/default-images/avatar/both.jpg') : asset($instructor->image) }})"></span>
-                                    <div class="flex-fill overflow-hidden">
-                                        <div class="font-weight-medium text-truncate">{{ $instructor->name }}</div>
-                                        <div class="text-secondary small text-truncate">
-                                            {{ $instructor->headline ?? ucfirst($instructor->role) }}
+            @else
+                {{-- ───────── Desktop list ───────── --}}
+                <div class="table-responsive d-none d-lg-block" id="pp-list">
+                    <table class="table table-vcenter card-table pp-table">
+                        <thead>
+                            <tr>
+                                <th>Instructor</th>
+                                <th>Courses</th>
+                                <th>Students</th>
+                                <th>Joined</th>
+                                <th>Account</th>
+                                                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($instructors as $instructor)
+                                @php extract($rowData($instructor)); @endphp
+                                <tr class="{{ $isDisabled ? 'is-disabled' : '' }}">
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <span class="avatar avatar-md rounded-circle" style="background-image: url('{{ $avatar }}')"></span>
+                                            <div class="min-w-0">
+                                                <div class="pp-name text-truncate">{{ $instructor->name }}</div>
+                                                <div class="text-secondary small text-truncate" style="max-width: 320px;">
+                                                    <span class="">{{ $instructor->email }}</span>
+                                                    @if ($instructor->headline) · {{ $instructor->headline }} @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="pp-num">{{ $instructor->live_courses_count }}</span>
+                                        <span class="text-secondary small">live</span>
+                                        @if ($instructor->courses_count > $instructor->live_courses_count)
+                                            <div class="small text-secondary">{{ $instructor->courses_count - $instructor->live_courses_count }} pending / draft</div>
+                                        @endif
+                                    </td>
+                                    <td><span class="pp-num">{{ $instructor->students_count }}</span>
+                                        <span class="text-secondary small">{{ \Illuminate\Support\Str::plural('enrolment', $instructor->students_count) }}</span></td>
+                                    <td class="text-nowrap">
+                                        @if ($instructor->created_at)
+                                            <div>{{ $instructor->created_at->format('d M Y') }}</div>
+                                            <div class="small text-secondary">{{ $instructor->created_at->diffForHumans() }}</div>
+                                        @else
+                                            <span class="text-secondary">—</span>
+                                        @endif
+                                    </td>
+                                    <td class="pp-keep">
+                                        @include('admin.pages.users.partials.account-switch', ['user' => $instructor])
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                {{-- ───────── Grid (desktop option) / cards (mobile) ───────── --}}
+                <div class="card-body" id="pp-grid">
+                    <div class="row g-3">
+                        @foreach ($instructors as $instructor)
+                            @php extract($rowData($instructor)); @endphp
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="pp-card {{ $isDisabled ? 'is-disabled' : '' }}">
+                                    <div class="d-flex align-items-start gap-3 pp-fade">
+                                        <span class="avatar avatar-lg rounded-circle flex-shrink-0" style="background-image: url('{{ $avatar }}')"></span>
+                                        <div class="flex-grow-1 min-w-0">
+                                            <div class="pp-name text-truncate">{{ $instructor->name }}</div>
+                                            <div class="pp-meta text-truncate">{{ $subtitle }}</div>
+                                            <span class="pp-meta pp-email d-block">{{ $instructor->email }}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="text-secondary small mb-2 text-truncate">{{ $instructor->email }}</div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    @if ($isDisabled)
-                                        <span class="badge bg-secondary-lt text-secondary">Disabled</span>
-                                    @else
-                                        <span class="badge bg-success-lt text-success">Active</span>
-                                    @endif
-                                    <form action="{{ route('admin.users.instructors.toggle-active', $instructor->id) }}"
-                                        method="POST">
-                                        @csrf @method('PATCH')
-                                        <input type="hidden" name="account_status"
-                                            value="{{ $isDisabled ? 'enabled' : 'disabled' }}">
-                                        <label class="tblr-switch"
-                                            title="{{ $isDisabled ? 'Enable account' : 'Disable account' }}">
-                                            <input type="checkbox" {{ $isDisabled ? '' : 'checked' }}
-                                                onchange="this.closest('form').submit()">
-                                            <span class="tblr-switch-slider"></span>
-                                        </label>
-                                    </form>
+                                    <div class="pp-stats pp-fade" style="--pp-cols: 3;">
+                                        <div class="pp-stat">
+                                            <div class="label">Live</div>
+                                            <div class="value">{{ $instructor->live_courses_count }}</div>
+                                        </div>
+                                        <div class="pp-stat">
+                                            <div class="label">Courses</div>
+                                            <div class="value">{{ $instructor->courses_count }}</div>
+                                        </div>
+                                        <div class="pp-stat">
+                                            <div class="label">Students</div>
+                                            <div class="value">{{ $instructor->students_count }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mt-3 gap-2">
+                                        @include('admin.pages.users.partials.account-switch', ['user' => $instructor])
+                                        <span class="pp-meta text-nowrap">
+                                            <i class="ti ti-calendar"></i>
+                                            {{ $instructor->created_at ? $instructor->created_at->format('d M Y') : '—' }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
-                        <div class="empty" style="grid-column:1/-1">
-                            <p class="empty-title">No instructors found</p>
-                        </div>
-                    @endforelse
+                        @endforeach
+                    </div>
                 </div>
-                {{-- ═══ END GRID VIEW ═══ --}}
-            </div>
-            {{-- Pagination --}}
-            @if (method_exists($instructors, 'hasPages') && $instructors->hasPages())
-                <div class="card-footer d-flex align-items-center">
-                    {{ $instructors->withQueryString()->links() }}
-                </div>
+
+                @if ($instructors->hasPages())
+                    <div class="card-footer d-flex justify-content-center justify-content-md-end">
+                        {{ $instructors->onEachSide(1)->links() }}
+                    </div>
+                @endif
             @endif
+        </div>
+    </div>
+
+    {{-- Confirm before disabling an instructor --}}
+    <div class="modal modal-blur fade" id="pp-disable-confirm" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-status bg-danger"></div>
+                <div class="modal-body text-center py-4">
+                    <i class="ti ti-user-off text-danger mb-2" style="font-size: 3rem;"></i>
+                    <h3 data-pp-title>Disable this account?</h3>
+                    <div class="text-secondary">They won’t be able to use the instructor dashboard or manage courses until you enable the account again.</div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row g-2">
+                            <div class="col"><button type="button" class="btn w-100" data-bs-dismiss="modal">Cancel</button></div>
+                            <div class="col"><button type="button" class="btn btn-danger w-100" data-pp-confirm>Disable</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 @push('scripts')
     <script>
-        (function() {
-            var btnList = document.getElementById('btn-list');
-            var btnGrid = document.getElementById('btn-grid');
-            var listView = document.getElementById('list-view');
-            var gridView = document.getElementById('grid-view');
+        (function () {
+            // ── List / grid preference (desktop only) ──
+            var root = document.getElementById('pp-root');
             var KEY = 'instructors_view_pref';
-
             function setView(mode) {
-                if (mode === 'grid') {
-                    listView.style.display = 'none';
-                    gridView.classList.add('active');
-                    btnGrid.classList.add('active');
-                    btnList.classList.remove('active');
-                } else {
-                    listView.style.display = 'block';
-                    gridView.classList.remove('active');
-                    btnList.classList.add('active');
-                    btnGrid.classList.remove('active');
-                }
-                localStorage.setItem(KEY, mode);
+                if (!root) return;
+                root.classList.toggle('pp-mode-grid', mode === 'grid');
+                document.querySelectorAll('[data-pp-view]').forEach(function (b) {
+                    b.classList.toggle('active', b.getAttribute('data-pp-view') === mode);
+                });
+                try { localStorage.setItem(KEY, mode); } catch (e) {}
             }
-            btnList.addEventListener('click', function() {
-                setView('list');
+            document.querySelectorAll('[data-pp-view]').forEach(function (b) {
+                b.addEventListener('click', function () { setView(b.getAttribute('data-pp-view')); });
             });
-            btnGrid.addEventListener('click', function() {
-                setView('grid');
+            try { if (localStorage.getItem(KEY) === 'grid') setView('grid'); } catch (e) {}
+
+            // ── Account switch: enabling is instant, disabling asks first ──
+            var modalEl = document.getElementById('pp-disable-confirm');
+            var pendingForm = null, pendingInput = null;
+            document.querySelectorAll('[data-pp-switch]').forEach(function (input) {
+                input.addEventListener('change', function () {
+                    var form = input.closest('form');
+                    if (input.checked) { lock(form); form.submit(); return; }
+                    input.checked = true; // stay on until confirmed
+                    pendingForm = form; pendingInput = input;
+                    modalEl.querySelector('[data-pp-title]').textContent = 'Disable ' + input.getAttribute('data-name') + '?';
+                    bootstrap.Modal.getOrCreateInstance(modalEl).show();
+                });
             });
-            var saved = localStorage.getItem(KEY);
-            if (saved === 'grid') {
-                setView('grid');
-            }
+            modalEl.querySelector('[data-pp-confirm]').addEventListener('click', function () {
+                if (!pendingForm) return;
+                this.disabled = true;
+                this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Disabling…';
+                pendingInput.checked = false;
+                lock(pendingForm);
+                pendingForm.submit();
+            });
+            function lock(form) { form.querySelectorAll('input[type=checkbox]').forEach(function (i) { i.disabled = true; }); }
         })();
     </script>
 @endpush

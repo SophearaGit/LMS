@@ -167,8 +167,15 @@
                                             <div class="col-xl-12">
                                                 <div class="wsus__dashboard_password_change_input mb-3">
                                                     <label for="gateway_information">Information</label>
+                                                    @php
+                                                        // The editor needs HTML. Details saved as plain text keep their line breaks.
+                                                        $savedInfo = (string) old('gateway_information', optional(auth()->user()->payoutGatewayInfo)->information);
+                                                        if ($savedInfo !== '' && $savedInfo === strip_tags($savedInfo)) {
+                                                            $savedInfo = nl2br(e($savedInfo), false);
+                                                        }
+                                                    @endphp
                                                     <textarea rows="7" class="gateway_description editor" name="gateway_information" id="gateway_information"
-                                                        placeholder="Enter your gateway info here.">{!! optional(auth()->user()->payoutGatewayInfo)->information !!}</textarea>
+                                                        placeholder="Enter your gateway info here.">{{ $savedInfo }}</textarea>
                                                     <x-input-error :messages="$errors->get('gateway_information')" class="mt-2" />
                                                 </div>
                                             </div>
@@ -190,7 +197,36 @@
 @endsection
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        var defaultGatewayPlaceholder = 'Enter your gateway info here.';
+
+        // Selected gateway's description as plain text (line breaks kept).
+        function gatewayPlaceholder() {
+            var id = $('.gateway').find(':selected').data('id');
+            var $src = id ? $('.gateway-' + id) : $();
+            if (!$src.length) return defaultGatewayPlaceholder;
+            var html = $src.html().replace(/<br\s*\/?>/gi, '\n').replace(/<\/(p|div|li)>/gi, '\n');
+            var text = $.trim($('<div>').html(html).text().replace(/\n{3,}/g, '\n\n'));
+            return text || defaultGatewayPlaceholder;
+        }
+
+        // TinyMCE shows its placeholder only while the editor is empty, by putting the text in
+        // the body's data-mce-placeholder attribute (and removing it once there is content).
+        // So: swap the text only when that attribute is present, never add it ourselves.
+        function setEditorPlaceholder(editor, text) {
+            var body = editor && editor.getBody();
+            if (body && body.hasAttribute('data-mce-placeholder')) {
+                body.setAttribute('data-mce-placeholder', text);
+                body.setAttribute('aria-placeholder', text);
+            }
+        }
+
+        function updateGatewayPlaceholder() {
+            var text = gatewayPlaceholder();
+            $('#gateway_information').attr('placeholder', text); // fallback if the editor fails to load
+            setEditorPlaceholder(window.tinymce && tinymce.get('gateway_information'), text);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
             tinymce.init({
                 selector: '.editor',
 
@@ -202,17 +238,30 @@
                     'insertdatetime media table help wordcount',
 
                 link_default_protocol: 'https',
-                convert_urls: false
+                convert_urls: false,
+                promotion: false, // hide TinyMCE's "Upgrade" button
+
+                placeholder: gatewayPlaceholder(),
+                // Multi-line placeholder, in a softer colour
+                content_style: '.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {' +
+                    ' white-space: pre-line; color: rgba(34, 47, 62, .5); line-height: 1.6; }',
+
+                setup: function(editor) {
+                    // When the editor becomes empty again, show the CURRENT gateway's text
+                    // (TinyMCE would otherwise reuse the text it started with).
+                    editor.on('PlaceholderToggle', function(e) {
+                        if (e.state) setEditorPlaceholder(editor, gatewayPlaceholder());
+                    });
+                },
+                init_instance_callback: updateGatewayPlaceholder
             });
         });
 
-        $('.gateway').on('change', function() {
-            let id = $(this).find(':selected').data('id');
-            $('.gateway_description').attr('placeholder', $('.gateway-' + id).html());
-        });
+        $(document).on('change', '.gateway', updateGatewayPlaceholder);
 
         $(document).ready(function() {
             $('select').niceSelect();
+            updateGatewayPlaceholder();
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -220,18 +269,16 @@
             if (!form) return;
 
             form.addEventListener('submit', function() {
-                const editor = tinymce.activeEditor;
+                const editor = window.tinymce && tinymce.get('gateway_information');
+                if (!editor) return; // plain textarea fallback submits as-is
 
-                let content = editor.getContent({
-                    format: 'html'
-                });
+                let content = editor.getContent({ format: 'html' });
 
                 // convert ONLY plain URLs (not already linked)
                 content = content.replace(
                     /(^|[\s>])((https?:\/\/)[^\s<]+)/g,
                     function(match, prefix, url) {
-                        return prefix + '<a href="' + url + '" target="_blank" rel="noopener">' + url +
-                            '</a>';
+                        return prefix + '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>';
                     }
                 );
 

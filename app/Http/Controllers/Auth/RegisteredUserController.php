@@ -31,11 +31,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ];
+
+        // Check the instructor document together with the other fields,
+        // so all errors come back in one go on the instructor tab.
+        if ($request->type === 'instructor') {
+            $rules['document'] = ['required', 'mimes:pdf,doc,docx,jpg,png', 'max:12000'];
+        }
+
+        $request->validate($rules);
 
         if ($request->type === 'student') {
             $user = User::create([
@@ -46,9 +54,6 @@ class RegisteredUserController extends Controller
                 'approval_status' => 'approved'
             ]);
         } elseif ($request->type === 'instructor') {
-            $request->validate([
-                'document' => ['required', 'mimes:pdf,doc,docx,jpg,png', 'max:12000'],
-            ]);
             $filePath = $this->uploadFile($request->file('document'));
             $user = User::create([
                 'name' => $request->name,
