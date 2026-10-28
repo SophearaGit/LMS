@@ -4,7 +4,7 @@
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <a href="." class="navbar-brand navbar-brand-autodark">
-                <img src="/admin/assets/static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                @include('admin.layouts.brand-logo', ['on' => 'auto', 'height' => 48])
             </a>
         </div>
         <div class="card card-md">

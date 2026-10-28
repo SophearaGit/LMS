@@ -12,7 +12,7 @@ class PaymentSettingController extends Controller
     public function index()
     {
         $data = [
-            'PageTitle' => 'CAITD | Payment Settings',
+            'pageTitle' => 'CAITD | Payment Settings',
         ];
         return view('admin.pages.payment-settings.index', $data);
     }
@@ -95,12 +95,15 @@ class PaymentSettingController extends Controller
     {
         $validated_data = $request->validate([
             'aba_status' => 'required|string|in:active,inactive',
-            'aba_currency' => 'required|string|max:3',
-            'aba_rate' => 'required|string',
+            'aba_currency' => 'required|string|in:USD,KHR',
+            'aba_rate' => ['required', 'numeric', 'gt:0', $request->input('aba_currency') === 'KHR' ? 'min:100' : 'max:100000'],
             'aba_merchant_id' => 'required|string',
             'aba_public_key' => 'required|string',
             'aba_rsa_public_key' => 'required|string',
             'aba_rsa_secret_key' => 'required|string',
+        ], [
+            'aba_rate.min' => 'When charging in KHR, enter how many riel equal 1 USD (about 4,100).',
+            'aba_rate.gt' => 'The exchange rate must be above 0.',
         ]);
 
         foreach ($validated_data as $key => $value) {

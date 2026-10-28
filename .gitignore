@@ -27,3 +27,8 @@ yarn-error.log
 public/uploads/
 pullmain.bat
 pushsopheara.bat
+
+# Local backups made while editing (never commit)
+_to_delete/
+
+deploy.bat

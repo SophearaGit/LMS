@@ -4,10 +4,21 @@
             aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <h1 class="navbar-brand navbar-brand-autodark">
-            <a href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset(config('settings.site_logo')) }}" width="110" height="32" alt="CAIDT"
-                    class="navbar-brand-image">
+        <style>
+            /* Brand: left edge lines up with the menu icons below it */
+            .navbar-vertical .navbar-brand.sidebar-brand { justify-content: flex-start; padding: 1.1rem var(--tblr-page-padding) .9rem; margin: 0; }
+            .sidebar-brand a { display: inline-flex; align-items: center; text-decoration: none; }
+            .brand-lockup { display: inline-flex; align-items: center; gap: .65rem; line-height: 1; }
+            .brand-lockup-mark { width: auto; display: block; flex-shrink: 0; }
+            .brand-lockup-word { color: #fff; font-size: 1.6rem; font-weight: 800; letter-spacing: .06em; line-height: 1; transform: translateY(1px); }
+            @media (max-width: 991.98px) {
+                .navbar-vertical .navbar-brand.sidebar-brand { padding: .6rem 0; margin-right: auto; }
+                .brand-lockup-word { font-size: 1.35rem; }
+            }
+        </style>
+        <h1 class="navbar-brand sidebar-brand">
+            <a href="{{ route('admin.dashboard') }}" aria-label="{{ config('settings.site_name') ?: 'CAITD' }} dashboard">
+                @include('admin.layouts.brand-logo', ['on' => 'sidebar', 'height' => 34])
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -59,6 +70,13 @@
                         <span class="nav-link-title mt-1">
                             Instructor Requests
                         </span>
+                        @php $pendingInstructorRequests = \App\Models\User::where('approval_status', 'pending')->count(); @endphp
+                        @if ($pendingInstructorRequests > 0)
+                            {{-- Tabler pins nav badges to the corner; keep this one inline, centred on the row --}}
+                            <span class="badge rounded-pill bg-red text-red-fg ms-auto"
+                                style="position: static; transform: none; min-width: 1.05rem; height: 1.05rem; padding: 0 .3rem; display: inline-flex; align-items: center; justify-content: center; font-size: .625rem; font-weight: 600; line-height: 1;"
+                                title="{{ $pendingInstructorRequests }} waiting for review">{{ $pendingInstructorRequests > 99 ? '99+' : $pendingInstructorRequests }}</span>
+                        @endif
                     </a>
                 </li>
                 {{-- user dropdown role student and instructor --}}

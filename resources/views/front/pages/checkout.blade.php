@@ -34,7 +34,8 @@
           <h2>Razorpay</h2>
           </a>
         </div> --}}
-                            {{-- ABA Payway --}}
+                            {{-- ABA Payway (only when enabled in Admin → Payment Settings) --}}
+                            @if (config('gateway_setting.aba_status') === 'active')
                             <div class="col-xl-4 col-6 col-md-4 wow fadeInUp"
                                 style="visibility: visible; animation-name: fadeInUp;">
                                 <a href="#" class="payment_mathod" id="aba_click_pay">
@@ -53,6 +54,7 @@
           @csrf
           </form> --}}
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -140,21 +142,19 @@
                 },
                 success: function(res) {
                     if (res.status !== 'success') {
-                        alert('Payment init failed');
+                        alert(res.message || 'Payment init failed');
                         return;
                     }
                     // 1. Inject QR image
                     $('#modal_body').html(`
                         <div class="text-center">
                             <img src="${res.data.qrImage}" alt="ABA QR Code" class="mb-3 rounded"  />
-                            <strong>
-                                ${res.amountUsd}
-                            </strong> USD
-                            <br/>
-                            <strong>
-                                ${res.amountKhr}
-                            </strong> KHR
-                            <br/>
+                            <div class="fs-4 fw-bold">
+                                ${res.currency === 'KHR'
+                                    ? Number(res.amount).toLocaleString() + ' ៛'
+                                    : '$' + Number(res.amount).toFixed(2)}
+                            </div>
+                            ${res.currency === 'KHR' ? `<small class="text-muted">≈ $${res.amountUsd} USD</small><br/>` : ''}
                             <small class="text-muted">
                                 Transaction ID: ${res.tran_id}
                             </small>
@@ -173,8 +173,8 @@
                     // 3. Start checking payment status
                     startAbaPolling(res.tran_id);
                 },
-                error: function() {
-                    alert('Server error. Please try again.');
+                error: function(xhr) {
+                    alert((xhr.responseJSON && xhr.responseJSON.message) || 'Server error. Please try again.');
                 },
                 complete: function() {
                     $('#aba_click_pay').prop('disabled', false);

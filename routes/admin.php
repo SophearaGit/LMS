@@ -194,6 +194,7 @@ Route::group(["middleware" => "auth:admin", "prefix" => "admin", "as" => "admin.
     Route::get('/logo-favicon-settings', [SettingController::class, 'logoFaviconSettings'])->name('site-settings.logo-favicon-settings');
     Route::post('/update-logo-favicon-settings', [SettingController::class, 'updateLogoFaviconSettings'])->name('site-settings.update-logo-favicon-settings');
     // payout settings resource
+    Route::patch('payout-gateways/{payoutGateway}/toggle', [PayoutGatewayController::class, 'toggle'])->name('payout-gateways.toggle');
     Route::resource('payout-gateways', PayoutGatewayController::class);
     // withdraw request
     Route::get('/withdraw-request', [WithdrawRequestController::class, 'index'])->name('withdraw-request.index');

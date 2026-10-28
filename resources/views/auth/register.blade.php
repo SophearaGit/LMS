@@ -60,6 +60,14 @@
     </style>
 @endpush
 @section('content')
+    @php
+        // Which form was submitted last: after a failed validation, reopen that tab
+        // and only show its old input and errors there.
+        $activeTab = old('register_type', request('type') === 'instructor' ? 'instructor' : 'student');
+        $emptyErrors = new \Illuminate\Support\MessageBag();
+        $studentErrors = $activeTab === 'student' ? $errors : $emptyErrors;
+        $instructorErrors = $activeTab === 'instructor' ? $errors : $emptyErrors;
+    @endphp
     <section class="wsus__sign_in sign_up">
         <div class="row align-items-center">
             <div class="col-xxl-5 col-xl-6 col-lg-6 wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
@@ -75,21 +83,22 @@
                 <div class="wsus__sign_form_area">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                            <button class="nav-link {{ $activeTab === 'student' ? 'active' : '' }}" id="pills-home-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                aria-selected="true">Student</button>
+                                aria-selected="{{ $activeTab === 'student' ? 'true' : 'false' }}">Student</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                            <button class="nav-link {{ $activeTab === 'instructor' ? 'active' : '' }}" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                                aria-selected="false" tabindex="-1">Instructor</button>
+                                aria-selected="{{ $activeTab === 'instructor' ? 'true' : 'false' }}">Instructor</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                        <div class="tab-pane fade {{ $activeTab === 'student' ? 'show active' : '' }}" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <form method="POST" action="{{ route('register', ['type' => 'student']) }}">
                                 @csrf
+                                <input type="hidden" name="register_type" value="student">
                                 <h2>Sign Up<span>!</span></h2>
                                 <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
                                 <div class="row">
@@ -98,18 +107,18 @@
                                         <div class="wsus__login_form_input">
                                             <label>Name</label>
                                             <input type="text" placeholder="Enter your name here." id="name"
-                                                name="name" value="{{ old('name') }}" autofocus autocomplete="name"
+                                                name="name" value="{{ $activeTab === 'student' ? old('name') : '' }}" @if ($activeTab === 'student') autofocus @endif autocomplete="name"
                                                 required>
-                                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                            <x-input-error :messages="$studentErrors->get('name')" class="mt-2" />
                                         </div>
                                     </div>
                                     <!-- Email Address -->
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
                                             <label>Email</label>
-                                            <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                            <input id="email" type="email" name="email" value="{{ $activeTab === 'student' ? old('email') : '' }}"
                                                 autocomplete="username" placeholder="Enter your email here." required>
-                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                            <x-input-error :messages="$studentErrors->get('email')" class="mt-2" />
                                         </div>
                                     </div>
                                     <!-- Password -->
@@ -119,7 +128,7 @@
                                             <input id="password" class="block mt-1 w-full" type="password" name="password"
                                                 autocomplete="new-password" placeholder="Enter your password here."
                                                 required>
-                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                            <x-input-error :messages="$studentErrors->get('password')" class="mt-2" />
                                         </div>
                                     </div>
                                     <!-- Confirm Password -->
@@ -130,7 +139,7 @@
                                                 name="password_confirmation"
                                                 autocomplete="new-password"placeholder="Re-enter your password here."
                                                 required>
-                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                            <x-input-error :messages="$studentErrors->get('password_confirmation')" class="mt-2" />
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
@@ -141,11 +150,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
+                        <div class="tab-pane fade {{ $activeTab === 'instructor' ? 'show active' : '' }}" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                             tabindex="0">
                             <form method="POST" action="{{ route('register', ['type' => 'instructor']) }}"
                                 enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="register_type" value="instructor">
                                 <h2>Sign Up as Instructor<span>!</span></h2>
                                 <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
                                 <div class="row">
@@ -153,20 +163,20 @@
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
                                             <label>Name</label>
-                                            <input type="text" placeholder="Enter your name here." id="name"
-                                                name="name" value="{{ old('name') }}" autofocus autocomplete="name"
+                                            <input type="text" placeholder="Enter your name here." id="instructor_name"
+                                                name="name" value="{{ $activeTab === 'instructor' ? old('name') : '' }}" @if ($activeTab === 'instructor') autofocus @endif autocomplete="name"
                                                 required>
-                                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                            <x-input-error :messages="$instructorErrors->get('name')" class="mt-2" />
                                         </div>
                                     </div>
                                     <!-- Email Address -->
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
                                             <label>Email</label>
-                                            <input id="email" type="email" name="email"
-                                                value="{{ old('email') }}" autocomplete="username"
+                                            <input id="instructor_email" type="email" name="email"
+                                                value="{{ $activeTab === 'instructor' ? old('email') : '' }}" autocomplete="username"
                                                 placeholder="Enter your email here." required>
-                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                            <x-input-error :messages="$instructorErrors->get('email')" class="mt-2" />
                                         </div>
                                     </div>
                                     {{-- Document --}}
@@ -175,28 +185,28 @@
                                             <label>Document (Education/Document)</label>
                                             <input type="file" placeholder="Provide your document here."
                                                 id="document" name="document" required>
-                                            <x-input-error :messages="$errors->get('document')" class="mt-2" />
+                                            <x-input-error :messages="$instructorErrors->get('document')" class="mt-2" />
                                         </div>
                                     </div>
                                     <!-- Password -->
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
                                             <label>Password</label>
-                                            <input id="password" class="block mt-1 w-full" type="password"
+                                            <input id="instructor_password" class="block mt-1 w-full" type="password"
                                                 name="password" autocomplete="new-password"
                                                 placeholder="Enter your password here." required>
-                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                            <x-input-error :messages="$instructorErrors->get('password')" class="mt-2" />
                                         </div>
                                     </div>
                                     <!-- Confirm Password -->
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
                                             <label>Confirm Password</label>
-                                            <input id="password_confirmation" class="block mt-1 w-full" type="password"
+                                            <input id="instructor_password_confirmation" class="block mt-1 w-full" type="password"
                                                 name="password_confirmation"
                                                 autocomplete="new-password"placeholder="Re-enter your password here."
                                                 required>
-                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                            <x-input-error :messages="$instructorErrors->get('password_confirmation')" class="mt-2" />
                                         </div>
                                     </div>
                                     <div class="col-xl-12">

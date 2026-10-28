@@ -8,6 +8,7 @@
     <meta name="base_url" content="{{ url('/') }}">
     <meta name="csrf_token" content="{{ csrf_token() }}" />
     <title>@yield('pageTitle')</title>
+    @include('admin.layouts.brand-head')
 
     <!-- CSS files -->
     <script src="/admin/assets/dist/js/jquery-3.7.1.min.js"></script>
